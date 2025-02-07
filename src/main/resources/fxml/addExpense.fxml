@@ -32,7 +32,7 @@
             <Font name="0xProto Nerd Font Mono" size="13.0" />
           </font>
         </TextField>
-        <TextField fx:id="expenseNoteField" layoutX="350.0" layoutY="115.0" prefHeight="25.0" prefWidth="160.0" promptText="Required">
+        <TextField fx:id="expenseNoteField" layoutX="350.0" layoutY="110.0" prefHeight="25.0" prefWidth="160.0" promptText="Required">
           <font>
             <Font name="0xProto Nerd Font Mono" size="13.0" />
           </font>
@@ -42,7 +42,7 @@
             <Font name="0xProto Nerd Font Mono" size="13.0" />
           </font>
         </Label>
-        <Label layoutX="90.0" layoutY="119.0" text="Expense Note">
+        <Label layoutX="90.0" layoutY="114.0" text="Expense Note">
           <font>
             <Font name="0xProto Nerd Font Mono" size="13.0" />
           </font>

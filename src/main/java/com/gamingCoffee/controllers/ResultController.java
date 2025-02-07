@@ -1,7 +1,9 @@
 package com.gamingCoffee.controllers;
 
 import com.gamingCoffee.database.entities.Session;
+import com.gamingCoffee.services.ExpenseService;
 import com.gamingCoffee.services.SessionService;
+import com.gamingCoffee.utiles.CalculateNetProfit;
 import com.gamingCoffee.utiles.PopupUtil;
 import com.gamingCoffee.utiles.TableViewUtils;
 import java.sql.SQLException;
@@ -17,14 +19,15 @@ import javafx.stage.Stage;
 
 public class ResultController {
 
-//  private final ISessionDao sessionDao = new SessionDao(
-//      DatabaseConnection.INSTANCE.getConnection());
-
   // Label
   @FXML
   private Label sessionCountHolder;
   @FXML
   private Label sessionPriceHolder;
+  @FXML
+  private Label expenseHolder;
+  @FXML
+  private Label resultHolder;
 
   // Buttons
   @FXML
@@ -51,10 +54,10 @@ public class ResultController {
   }
 
   @FXML
-  void getDataAction() throws SQLException {
+  void datePickerAction() throws SQLException {
     LocalDate date = datePickerFiled.getValue();
     makeResultTable(date);
-    fillLabels(SessionService.getSessionsCountAndPrice(date));
+    fillLabels(date);
   }
 
   private void makeResultTable(LocalDate date) {
@@ -70,9 +73,13 @@ public class ResultController {
     }
   }
 
-  private void fillLabels(double[] values) {
-    fillCountLabel(values[0]);
-    fillPriceLabel(values[1]);
+  private void fillLabels(LocalDate date) throws SQLException {
+    double[] sessionCountAndPrice = SessionService.getSessionsCountAndPrice(date);
+    double expense = ExpenseService.getTotalTodayExpense(date);
+    fillCountLabel(sessionCountAndPrice[0]);
+    fillPriceLabel(sessionCountAndPrice[1]);
+    fillExpenseLabel(expense);
+    fillResultLabel(CalculateNetProfit.calcResult(sessionCountAndPrice[1], expense));
   }
 
   private void fillCountLabel(double count) {
@@ -81,5 +88,13 @@ public class ResultController {
 
   private void fillPriceLabel(double price) {
     sessionPriceHolder.setText(String.valueOf(price));
+  }
+
+  private void fillExpenseLabel(double expenses) {
+    expenseHolder.setText(String.valueOf(expenses));
+  }
+
+  private void fillResultLabel(double result) {
+    resultHolder.setText(String.valueOf(result));
   }
 }
