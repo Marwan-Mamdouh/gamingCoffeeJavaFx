@@ -1,0 +1,572 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gamingCoffee.controllers.OwnerPageController">
+  <tabs>
+    <Tab closable="false" text="Admins">
+      <content>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+          <children>
+            <TabPane prefHeight="370.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE">
+              <tabs>
+                <Tab text="List Admins">
+                  <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="340.0" prefWidth="600.0">
+                      <children>
+                        <TableView fx:id="adminsTable" layoutY="15.0" prefHeight="275.0" prefWidth="600.0">
+                          <columns>
+                            <TableColumn fx:id="usernameColumn" maxWidth="120.0" prefWidth="100.0" style="-fx-alignment: center;" text="username" />
+                            <TableColumn fx:id="ageColumn" maxWidth="1.7976931348623157E308" minWidth="5.0" prefWidth="98.0" style="-fx-alignment: center;" text="Age" />
+                            <TableColumn fx:id="hireDateColumn" maxWidth="1.7976931348623157E308" prefWidth="125.0" style="-fx-alignment: center;" text="Hire date" />
+                            <TableColumn fx:id="salaryColumn" maxWidth="1.7976931348623157E308" prefWidth="125.0" style="-fx-alignment: center;" text="Salary" />
+                            <TableColumn fx:id="phoneNumberColumn" maxWidth="1.7976931348623157E308" prefWidth="150.0" style="-fx-alignment: center;" text="Phone Number" />
+                          </columns>
+                        </TableView>
+                        <Button layoutX="220.0" layoutY="300.0" mnemonicParsing="false" onAction="#refreshAdminsTableButtonAction" prefWidth="160.0" text="Refresh">
+                          <font>
+                            <Font name="0xProto Nerd Font Mono" size="13.0" />
+                          </font>
+                        </Button>
+                      </children>
+                    </AnchorPane>
+                  </content>
+                </Tab>
+                <Tab text="Add New Admin">
+                  <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="340.0" prefWidth="600.0">
+                      <children>
+                        <Label layoutX="90.0" layoutY="29.0" text="Username">
+                          <font>
+                            <Font name="0xProto Nerd Font Mono" size="13.0" />
+                          </font>
+                        </Label>
+                        <TextField fx:id="usernameField" layoutX="350.0" layoutY="25.0" prefHeight="26.0" prefWidth="160.0" promptText="Required">
+                          <font>
+                            <Font name="0xProto Nerd Font Mono" size="13.0" />
+                          </font>
+                        </TextField>
+                        <Label layoutX="90.0" layoutY="75.0" text="Password">
+                          <font>
+                            <Font name="0xProto Nerd Font Mono" size="13.0" />
+                          </font>
+                        </Label>
+                        <PasswordField fx:id="passwordAddUser" layoutX="350.0" layoutY="70.0" prefHeight="26.0" prefWidth="160.0" promptText="Hidden">
+                          <font>
+                            <Font name="0xProto Nerd Font Mono" size="13.0" />
+                          </font>
+                        </PasswordField>
+                        <TextField fx:id="passwordTextAddUser" layoutX="350.0" layoutY="70.0" prefWidth="160.0" promptText="Visible" visible="false" />
+                        <CheckBox fx:id="showPasswordCheckBoxAddUser" layoutX="530.0" layoutY="75.0" mnemonicParsing="false" onAction="#showPasswordCheckBoxAddUserAction" />
+                        <Label layoutX="90.0" layoutY="120.0" text="Position" AnchorPane.rightAnchor="445.0">
+                          <font>
+                            <Font name="0xProto Nerd Font Mono" size="13.0" />
+                          </font>
+                        </Label>
+                        <ChoiceBox fx:id="choiceBoxPosition" layoutX="350.0" layoutY="115.0" prefHeight="26.0" prefWidth="160.0" />
+                        <Label layoutX="90.0" layoutY="164.0" text="Age">
+                          <font>
+                            <Font name="0xProto Nerd Font Mono" size="13.0" />
+                          </font>
+                        </Label>
+                        <TextField fx:id="ageField" layoutX="350.0" layoutY="160.0" prefHeight="26.0" prefWidth="160.0" promptText="Required">
+                          <font>
+                            <Font name="0xProto Nerd Font Mono" size="13.0" />
+                          </font>
+                        </TextField>
+                        <Label layoutX="90.0" layoutY="209.0" text="Phone Number">
+                          <font>
+                            <Font name="0xProto Nerd Font Mono" size="13.0" />
+                          </font>
+                        </Label>
+                        <TextField fx:id="phoneNumberField" layoutX="350.0" layoutY="205.0" prefHeight="26.0" prefWidth="160.0" promptText="Required">
+                          <font>
+                            <Font name="0xProto Nerd Font Mono" size="13.0" />
+                          </font>
+                        </TextField>
+                        <Label layoutX="90.0" layoutY="254.0" text="Salary">
+                          <font>
+                            <Font name="0xProto Nerd Font Mono" size="13.0" />
+                          </font>
+                        </Label>
+                        <TextField fx:id="salaryField" layoutX="350.0" layoutY="250.0" prefHeight="26.0" prefWidth="160.0" promptText="Not working yet">
+                          <font>
+                            <Font name="0xProto Nerd Font Mono" size="13.0" />
+                          </font>
+                        </TextField>
+                        <Button contentDisplay="CENTER" layoutX="220.0" layoutY="300.0" mnemonicParsing="false" onAction="#addAdminButtonAction" prefHeight="25.0" prefWidth="160.0" text="Add Admin" textAlignment="CENTER">
+                          <font>
+                            <Font name="0xProto Nerd Font" size="13.0" />
+                          </font>
+                        </Button>
+                      </children>
+                    </AnchorPane>
+                  </content>
+                </Tab>
+                        <Tab text="Change Password">
+                           <content>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="340.0" prefWidth="600.0">
+                                 <children>
+                                    <Label layoutX="91.0" layoutY="74.0" text="Your Username">
+                                       <font>
+                                          <Font name="0xProto Nerd Font Mono" size="13.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField fx:id="usernameChangePassword" layoutX="350.0" layoutY="70.0" prefHeight="25.0" prefWidth="160.0" promptText="Required">
+                                       <font>
+                                          <Font name="0xProto Nerd Font Mono" size="13.0" />
+                                       </font>
+                                    </TextField>
+                                    <Label fx:id="changeUserPasswordLabel" layoutX="90.0" layoutY="100.0" prefHeight="95.0" prefWidth="420.0" wrapText="true">
+                                       <font>
+                                          <Font name="0xProto Nerd Font Mono" size="13.0" />
+                                       </font>
+                                    </Label>
+                                    <Button layoutX="90.0" layoutY="300.0" mnemonicParsing="false" onAction="#checkUserChangePasswordButtonAction" prefWidth="160.0" text="Check user" />
+                                    <Label layoutX="90.0" layoutY="209.0" text="Your Password">
+                                       <font>
+                                          <Font name="0xProto Nerd Font Mono" size="13.0" />
+                                       </font>
+                                    </Label>
+                                    <PasswordField fx:id="passwordChangePassword" layoutX="350.0" layoutY="205.0" prefWidth="160.0" promptText="Hidden">
+                                       <font>
+                                          <Font name="0xProto Nerd Font Mono" size="13.0" />
+                                       </font>
+                                    </PasswordField>
+                                    <TextField fx:id="passwordTextChangePassword" layoutX="350.0" layoutY="205.0" prefWidth="160.0" promptText="Visible" visible="false">
+                                       <font>
+                                          <Font name="0xProto Nerd Font Mono" size="13.0" />
+                                       </font>
+                                    </TextField>
+                                    <CheckBox fx:id="showPasswordCheckBoxChangePassword" layoutX="530.0" layoutY="209.0" mnemonicParsing="false" onAction="#showPasswordCheckBoxChangePasswordAction" />
+                                    <Button fx:id="changePasswordButton" layoutX="350.0" layoutY="300.0" mnemonicParsing="false" onAction="#changePasswordButtonAction" prefWidth="160.0" text="Delete" visible="false" />
+                                    <Label layoutX="90.0" layoutY="247.0" text="New Password">
+                                       <font>
+                                          <Font name="0xProto Nerd Font Mono" size="13.0" />
+                                       </font>
+                                    </Label>
+                                    <PasswordField fx:id="passwordNewPassword" layoutX="350.0" layoutY="243.0" prefWidth="160.0" promptText="Hidden">
+                                       <font>
+                                          <Font name="0xProto Nerd Font Mono" size="13.0" />
+                                       </font>
+                                    </PasswordField>
+                                    <TextField fx:id="passwordTextNewPassword" layoutX="350.0" layoutY="243.0" prefWidth="160.0" promptText="Visible" visible="false">
+                                       <font>
+                                          <Font name="0xProto Nerd Font Mono" size="13.0" />
+                                       </font>
+                                    </TextField>
+                                    <CheckBox fx:id="showPasswordCheckBoxNewPassword" layoutX="530.0" layoutY="247.0" mnemonicParsing="false" onAction="#showPasswordCheckBoxNewPasswordAction" />
+                                 </children>
+                              </AnchorPane>
+                           </content>
+                        </Tab>
+                <Tab text="Remove Admin">
+                  <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="340.0" prefWidth="600.0">
+                      <children>
+                        <Label layoutX="90.0" layoutY="74.0" text="Username Want to Remove">
+                          <font>
+                            <Font name="0xProto Nerd Font Mono" size="13.0" />
+                          </font>
+                        </Label>
+                        <TextField fx:id="removeUsernameField" layoutX="350.0" layoutY="70.0" prefHeight="25.0" prefWidth="160.0" promptText="Required">
+                          <font>
+                            <Font name="0xProto Nerd Font Mono" size="13.0" />
+                          </font>
+                        </TextField>
+                        <Button layoutX="90.0" layoutY="300.0" mnemonicParsing="false" onAction="#checkUserRemoveAdminButtonAction" prefWidth="160.0" text="Check user" />
+                        <Label layoutX="90.0" layoutY="209.0" text="Your Password">
+                          <font>
+                            <Font name="0xProto Nerd Font Mono" size="13.0" />
+                          </font>
+                        </Label>
+                        <PasswordField fx:id="passwordRemoveUser" layoutX="350.0" layoutY="205.0" prefWidth="160.0" promptText="Hidden">
+                          <font>
+                            <Font name="0xProto Nerd Font Mono" size="13.0" />
+                          </font>
+                        </PasswordField>
+                        <TextField fx:id="passwordTextRemoveUser" layoutX="350.0" layoutY="205.0" prefWidth="160.0" promptText="Visible" visible="false">
+                          <font>
+                            <Font name="0xProto Nerd Font Mono" size="13.0" />
+                          </font>
+                        </TextField>
+                        <CheckBox fx:id="showPasswordCheckBoxRemoveUser" layoutX="530.0" layoutY="209.0" mnemonicParsing="false" onAction="#showPasswordCheckBoxRemoveUserAction" />
+                        <Label fx:id="removeUserDataLabel" layoutX="90.0" layoutY="100.0" prefHeight="95.0" prefWidth="420.0" wrapText="true">
+                          <font>
+                            <Font name="0xProto Nerd Font Mono" size="13.0" />
+                          </font>
+                        </Label>
+                        <Button fx:id="deleteUserButton" layoutX="350.0" layoutY="300.0" mnemonicParsing="false" onAction="#deleteUserButtonAction" prefWidth="160.0" text="Delete" visible="false" />
+                      </children>
+                    </AnchorPane>
+                  </content>
+                </Tab>
+              </tabs>
+            </TabPane>
+          </children>
+        </AnchorPane>
+      </content>
+    </Tab>
+    <Tab closable="false" text="Spots">
+      <content>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="370.0" prefWidth="600.0">
+          <children>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="370.0" prefWidth="600.0">
+              <children>
+                <TabPane prefHeight="371.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE">
+                  <tabs>
+                    <Tab text="List Spots">
+                      <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="340.0" prefWidth="600.0">
+                          <children>
+                            <TableView fx:id="spotTable" layoutY="15.0" prefHeight="275.0" prefWidth="600.0">
+                              <columns>
+                                <TableColumn fx:id="spotIdColumn" maxWidth="120.0" prefWidth="49.0" style="-fx-alignment: center;" text="Spot ID" />
+                                <TableColumn fx:id="privacyColumn" maxWidth="1.7976931348623157E308" minWidth="5.0" prefWidth="70.0" style="-fx-alignment: center;" text="Privacy" />
+                                <TableColumn fx:id="spotStateColumn" maxWidth="1.7976931348623157E308" prefWidth="107.0" style="-fx-alignment: center;" text="Spot State" />
+                                <TableColumn fx:id="consoleIdColumn" maxWidth="1.7976931348623157E308" prefWidth="71.0" style="-fx-alignment: center;" text="Console ID" />
+                                <TableColumn fx:id="consoleTypeColumn" maxWidth="1.7976931348623157E308" prefWidth="86.0" style="-fx-alignment: center;" text="Console Type" />
+                                <TableColumn fx:id="screenIdColumn" maxWidth="1.7976931348623157E308" prefWidth="63.0" style="-fx-alignment: center;" text="Screen ID" />
+                                <TableColumn fx:id="screenSizeColumn" maxWidth="1.7976931348623157E308" prefWidth="73.0" style="-fx-alignment: center;" text="Screen Size" />
+                                <TableColumn fx:id="screenTypeColumn" maxWidth="1.7976931348623157E308" prefWidth="79.0" style="-fx-alignment: center;" text="Screen Type" />
+                              </columns>
+                            </TableView>
+                            <Button layoutX="220.0" layoutY="300.0" mnemonicParsing="false" onAction="#refreshSpotsTableButtonAction" prefWidth="160.0" text="Refresh">
+                              <font>
+                                <Font name="0xProto Nerd Font Mono" size="13.0" />
+                              </font>
+                            </Button>
+                          </children>
+                        </AnchorPane>
+                      </content>
+                    </Tab>
+                    <Tab text="Add Spot">
+                      <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="340.0" prefWidth="600.0">
+                          <children>
+                            <Label layoutX="90.0" layoutY="29.0" text="Console ID">
+                              <font>
+                                <Font name="0xProto Nerd Font Mono" size="13.0" />
+                              </font>
+                            </Label>
+                            <TextField fx:id="consoleIdAddSpotField" layoutX="350.0" layoutY="25.0" prefHeight="25.0" prefWidth="160.0" promptText="Required">
+                              <font>
+                                <Font name="0xProto Nerd Font Mono" size="13.0" />
+                              </font>
+                            </TextField>
+                            <Label layoutX="90.0" layoutY="75.0" text="Console Type">
+                              <font>
+                                <Font name="0xProto Nerd Font Mono" size="13.0" />
+                              </font>
+                            </Label>
+                            <ChoiceBox fx:id="consoleTypeChoiceBox" layoutX="350.0" layoutY="70.0" prefHeight="26.0" prefWidth="160.0" />
+                            <Label layoutX="90.0" layoutY="120.0" text="Spot Privacy">
+                              <font>
+                                <Font name="0xProto Nerd Font Mono" size="13.0" />
+                              </font>
+                            </Label>
+                            <ChoiceBox fx:id="spotPrivacyChoiceBox" layoutX="350.0" layoutY="115.0" prefHeight="26.0" prefWidth="160.0" />
+                            <Label layoutX="90.0" layoutY="164.0" text="Display ID">
+                              <font>
+                                <Font name="0xProto Nerd Font Mono" size="13.0" />
+                              </font>
+                            </Label>
+                            <TextField fx:id="displayIdField" layoutX="350.0" layoutY="160.0" prefHeight="25.0" prefWidth="160.0" promptText="Required">
+                              <font>
+                                <Font name="0xProto Nerd Font Mono" size="13.0" />
+                              </font>
+                            </TextField>
+                            <Label layoutX="90.0" layoutY="209.0" text="Display Type">
+                              <font>
+                                <Font name="0xProto Nerd Font Mono" size="13.0" />
+                              </font>
+                            </Label>
+                            <TextField fx:id="displayTypeField" layoutX="350.0" layoutY="205.0" prefHeight="25.0" prefWidth="160.0" promptText="Required">
+                              <font>
+                                <Font name="0xProto Nerd Font Mono" size="13.0" />
+                              </font>
+                            </TextField>
+                            <Label layoutX="90.0" layoutY="254.0" text="Display Size">
+                              <font>
+                                <Font name="0xProto Nerd Font Mono" size="13.0" />
+                              </font>
+                            </Label>
+                            <TextField fx:id="displaySizeField" layoutX="350.0" layoutY="250.0" prefHeight="25.0" prefWidth="160.0" promptText="Required">
+                              <font>
+                                <Font name="0xProto Nerd Font Mono" size="13.0" />
+                              </font>
+                            </TextField>
+                            <Button contentDisplay="CENTER" layoutX="220.0" layoutY="300.0" mnemonicParsing="false" onAction="#addSpotButtonAction" prefHeight="25.0" prefWidth="160.0" text="Add Spot" textAlignment="CENTER">
+                              <font>
+                                <Font name="0xProto Nerd Font" size="13.0" />
+                              </font>
+                            </Button>
+                          </children>
+                        </AnchorPane>
+                      </content>
+                    </Tab>
+                    <Tab text="Remove Spot">
+                      <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="340.0" prefWidth="600.0">
+                          <children>
+                            <Label layoutX="90.0" layoutY="74.0" text="Spot Number">
+                              <font>
+                                <Font name="0xProto Nerd Font Mono" size="13.0" />
+                              </font>
+                            </Label>
+                            <TextField fx:id="removeSpotNumber" layoutX="350.0" layoutY="70.0" prefHeight="25.0" prefWidth="160.0" promptText="Required">
+                              <font>
+                                <Font name="0xProto Nerd Font Mono" size="13.0" />
+                              </font>
+                            </TextField>
+                            <Button layoutX="90.0" layoutY="300.0" mnemonicParsing="false" onAction="#checkSpotButtonAction" prefWidth="160.0" text="Check Spot" />
+                            <Label layoutX="90.0" layoutY="209.0" text="Your Password">
+                              <font>
+                                <Font name="0xProto Nerd Font Mono" size="13.0" />
+                              </font>
+                            </Label>
+                            <PasswordField fx:id="passwordRemoveSpot" layoutX="350.0" layoutY="205.0" prefWidth="160.0" promptText="Hidden">
+                              <font>
+                                <Font name="0xProto Nerd Font Mono" size="13.0" />
+                              </font>
+                            </PasswordField>
+                            <TextField fx:id="passwordTextRemoveSpot" layoutX="350.0" layoutY="205.0" prefHeight="25.0" prefWidth="160.0" promptText="Visible" visible="false">
+                              <font>
+                                <Font name="0xProto Nerd Font Mono" size="13.0" />
+                              </font>
+                            </TextField>
+                            <CheckBox fx:id="showPasswordCheckBoxRemoveSpot" layoutX="530.0" layoutY="209.0" mnemonicParsing="false" onAction="#showPasswordCheckBoxRemoveSpotAction" />
+                            <Label fx:id="spotDataLabel" layoutX="90.0" layoutY="100.0" prefHeight="95.0" prefWidth="420.0" wrapText="true">
+                              <font>
+                                <Font name="0xProto Nerd Font Mono" size="13.0" />
+                              </font>
+                            </Label>
+                            <Button fx:id="removeSpotButton" layoutX="350.0" layoutY="300.0" mnemonicParsing="false" onAction="#removeSpotButtonAction" prefWidth="160.0" text="Delete" visible="false" />
+                          </children>
+                        </AnchorPane>
+                      </content>
+                    </Tab>
+                  </tabs>
+                </TabPane>
+              </children>
+            </AnchorPane>
+          </children>
+        </AnchorPane>
+      </content>
+    </Tab>
+    <Tab closable="false" text="Controllers">
+      <content>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="370.0" prefWidth="600.0">
+          <children>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="370.0">
+              <children>
+                <TabPane prefHeight="371.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE">
+                  <tabs>
+                    <Tab text="List Controller">
+                      <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0">
+                          <children>
+                            <TableView fx:id="controllersTable" layoutX="150.0" layoutY="20.0" prefHeight="260.0" prefWidth="300.0">
+                              <columns>
+                                <TableColumn fx:id="controllerIdColumn" prefWidth="133.0" style="-fx-alignment: center;" text="Controller ID" />
+                                <TableColumn fx:id="controllerTypeColumn" prefWidth="150.0" style="-fx-alignment: center;" text="Controller Type" />
+                              </columns>
+                            </TableView>
+                            <Button layoutX="220.0" layoutY="300.0" mnemonicParsing="false" onAction="#refreshControllerTableButtonAction" prefHeight="26.0" prefWidth="160.0" text="Refresh" />
+                          </children>
+                        </AnchorPane>
+                      </content>
+                    </Tab>
+                    <Tab text="Add Controller">
+                      <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0">
+                          <children>
+                            <Label layoutX="90.0" layoutY="85.0" text="Controller ID">
+                              <font>
+                                <Font name="0xProto Nerd Font Mono" size="13.0" />
+                              </font>
+                            </Label>
+                            <Label layoutX="90.0" layoutY="135.0" text="Controller Type">
+                              <font>
+                                <Font name="0xProto Nerd Font Mono" size="13.0" />
+                              </font>
+                            </Label>
+                            <TextField fx:id="addControllerIdField" layoutX="350.0" layoutY="80.0" prefHeight="26.0" prefWidth="160.0" promptText="Required">
+                              <font>
+                                <Font name="0xProto Nerd Font Mono" size="13.0" />
+                              </font>
+                            </TextField>
+                            <ChoiceBox fx:id="controllerTypeChoiceBox" layoutX="350.0" layoutY="130.0" prefHeight="26.0" prefWidth="160.0" />
+                            <Button layoutX="220.0" layoutY="300.0" mnemonicParsing="false" onAction="#addControllerButtonAction" text="Add Controller">
+                              <font>
+                                <Font name="0xProto Nerd Font Mono" size="13.0" />
+                              </font>
+                            </Button>
+                          </children>
+                        </AnchorPane>
+                      </content>
+                    </Tab>
+                    <Tab text="Remove Controller">
+                      <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0">
+                          <children>
+                            <Label layoutX="90.0" layoutY="85.0" text="Controller ID">
+                              <font>
+                                <Font name="0xProto Nerd Font Mono" size="13.0" />
+                              </font>
+                            </Label>
+                            <TextField fx:id="removeControllerIdField" layoutX="350.0" layoutY="80.0" prefHeight="26.0" prefWidth="160.0" promptText="Required">
+                              <font>
+                                <Font name="0xProto Nerd Font Mono" size="13.0" />
+                              </font>
+                            </TextField>
+                            <Button layoutX="90.0" layoutY="300.0" mnemonicParsing="false" onAction="#checkControllerButtonAction" prefHeight="26.0" prefWidth="160.0" text="Check Controller">
+                              <font>
+                                <Font name="0xProto Nerd Font Mono" size="13.0" />
+                              </font>
+                            </Button>
+                            <Label layoutX="90.0" layoutY="210.0" text="Your Password">
+                              <font>
+                                <Font name="0xProto Nerd Font Mono" size="13.0" />
+                              </font>
+                            </Label>
+                            <PasswordField fx:id="passwordRemoveController" layoutX="350.0" layoutY="205.0" prefHeight="26.0" prefWidth="160.0" promptText="Hidden">
+                              <font>
+                                <Font name="0xProto Nerd Font Mono" size="13.0" />
+                              </font>
+                            </PasswordField>
+                            <TextField fx:id="passwordTextRemoveController" layoutX="350.0" layoutY="205.0" prefHeight="26.0" prefWidth="160.0" promptText="Visible" visible="false">
+                              <font>
+                                <Font name="0xProto Nerd Font Mono" size="13.0" />
+                              </font>
+                            </TextField>
+                            <CheckBox fx:id="checkBoxShowPassRemoveController" layoutX="530.0" layoutY="210.0" mnemonicParsing="false" onAction="#checkBoxShowPassRemoveControllerAction" />
+                            <Button fx:id="removeControllerButton" layoutX="350.0" layoutY="300.0" mnemonicParsing="false" onAction="#removeControllerButtonAction" prefHeight="26.0" prefWidth="160.0" text="Remove Controller" visible="false">
+                              <font>
+                                <Font name="0xProto Nerd Font Mono" size="13.0" />
+                              </font>
+                            </Button>
+                                          <Label fx:id="controllerDataLabel" layoutX="90.0" layoutY="110.0" prefHeight="95.0" prefWidth="420.0" wrapText="true">
+                                             <font>
+                                                <Font name="0xProto Nerd Font Mono" size="13.0" />
+                                             </font>
+                                          </Label>
+                          </children>
+                        </AnchorPane>
+                      </content>
+                    </Tab>
+                  </tabs>
+                </TabPane>
+              </children>
+            </AnchorPane>
+          </children>
+        </AnchorPane>
+      </content>
+    </Tab>
+    <Tab closable="false" text="Expenses">
+      <content>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="370.0" prefWidth="600.0">
+          <children>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="370.0" prefWidth="600.0">
+              <children>
+                <TabPane prefHeight="371.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE">
+                  <tabs>
+                    <Tab text="List Expenses">
+                      <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0">
+                          <children>
+                            <TableView fx:id="expensesTable" layoutY="55.0" prefHeight="285.0" prefWidth="600.0">
+                              <columns>
+                                <TableColumn fx:id="expensesIdColumn" prefWidth="75.0" style="-fx-alignment: center;" text="Exp-ID" />
+                                <TableColumn fx:id="expensesCreatorColumn" prefWidth="100.0" style="-fx-alignment: center;" text="Exp_Creator" />
+                                <TableColumn fx:id="expensesAmountColumn" prefWidth="100.0" style="-fx-alignment: center;" text="Exp-Amount" />
+                                <TableColumn fx:id="expensesDateColumn" prefWidth="100.0" style="-fx-alignment: center;" text="Exp-Date" />
+                                <TableColumn fx:id="expensesNoteColumn" prefWidth="223.0" style="-fx-alignment: center;" text="Exp-Note" />
+                              </columns>
+                            </TableView>
+                            <DatePicker fx:id="expensesDatePicker" layoutX="330.0" layoutY="15.0" prefHeight="26.0" prefWidth="180.0" promptText="Pick a Month" />
+                            <Button layoutX="90.0" layoutY="15.0" mnemonicParsing="false" onAction="#getExpensesButtonAction" prefHeight="26.0" prefWidth="180.0" text="Get Expenses">
+                              <font>
+                                <Font name="0xProto Nerd Font Mono" size="13.0" />
+                              </font>
+                            </Button>
+                          </children>
+                        </AnchorPane>
+                      </content>
+                    </Tab>
+                    <Tab text="Remove Expense">
+                      <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0">
+                          <children>
+                            <Label layoutX="90.0" layoutY="94.0" text="Expense ID">
+                              <font>
+                                <Font name="0xProto Nerd Font Mono" size="13.0" />
+                              </font>
+                            </Label>
+                            <TextField fx:id="expensesIdField" layoutX="350.0" layoutY="90.0" prefHeight="26.0" prefWidth="160.0" promptText="Required">
+                              <font>
+                                <Font name="0xProto Nerd Font Mono" size="13.0" />
+                              </font>
+                            </TextField>
+                            <Button layoutX="90.0" layoutY="300.0" mnemonicParsing="false" onAction="#checkExpenseButtonAction" prefHeight="26.0" prefWidth="160.0" text="Check Expense">
+                              <font>
+                                <Font name="0xProto Nerd Font Mono" size="13.0" />
+                              </font>
+                            </Button>
+                            <Label layoutX="90.0" layoutY="210.0" prefWidth="105.0" text="Your Password">
+                              <font>
+                                <Font name="0xProto Nerd Font Mono" size="13.0" />
+                              </font>
+                            </Label>
+                            <PasswordField fx:id="passwordExpenses" layoutX="350.0" layoutY="205.0" prefHeight="26.0" prefWidth="160.0" promptText="Hidden">
+                              <font>
+                                <Font name="0xProto Nerd Font Mono" size="13.0" />
+                              </font>
+                            </PasswordField>
+                            <TextField fx:id="passwordTextExpenses" layoutX="350.0" layoutY="205.0" prefHeight="26.0" prefWidth="160.0" promptText="Visible" visible="false">
+                              <font>
+                                <Font name="0xProto Nerd Font Mono" size="13.0" />
+                              </font>
+                            </TextField>
+                            <CheckBox fx:id="checkBoxPasswordExpenses" layoutX="530.0" layoutY="210.0" mnemonicParsing="false" onAction="#checkBoxPasswordExpensesAction" />
+                            <Button fx:id="removeExpenseButton" layoutX="350.0" layoutY="300.0" mnemonicParsing="false" onAction="#removeExpenseButtonAction" prefHeight="26.0" prefWidth="160.0" text="Remove Expense" visible="false">
+                              <font>
+                                <Font name="0xProto Nerd Font Mono" size="13.0" />
+                              </font>
+                            </Button>
+                                          <Label fx:id="expensesDataLabel" layoutX="90.0" layoutY="123.0" prefHeight="79.0" prefWidth="420.0" wrapText="true">
+                                             <font>
+                                                <Font name="0xProto Nerd Font Mono" size="13.0" />
+                                             </font>
+                                          </Label>
+                          </children>
+                        </AnchorPane>
+                      </content>
+                    </Tab>
+                  </tabs>
+                </TabPane>
+              </children>
+            </AnchorPane>
+          </children>
+        </AnchorPane>
+      </content>
+    </Tab>
+    <Tab closable="false" text="Result">
+      <content>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="370.0" prefWidth="600.0" />
+      </content>
+    </Tab>
+  </tabs>
+</TabPane>

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gamingCoffee.controllers.HomeController">
+  <left>
+    <AnchorPane prefHeight="720.0" prefWidth="360.0" styleClass="lft-background-color" stylesheets="@../styles/style.css" BorderPane.alignment="CENTER">
+      <children>
+        <Circle fill="#6994f066" layoutX="180.0" layoutY="185.0" radius="130.0" stroke="BLACK" strokeType="INSIDE" />
+        <Label layoutX="70.0" layoutY="160.0" text="DashBoard" textAlignment="CENTER">
+          <font>
+            <Font name="0xProto Nerd Font" size="40.0" />
+          </font>
+        </Label>
+            <Button fx:id="onwerMenuButton" alignment="CENTER" contentDisplay="CENTER" layoutX="102.0" layoutY="350.0" mnemonicParsing="false" onAction="#ownerMenuButtonAction" prefHeight="25.0" prefWidth="160.0" styleClass="btn2-background" stylesheets="@../styles/style.css" text="Owner Menu" visible="false">
+               <font>
+                  <Font name="0xProto Nerd Font" size="13.0" />
+               </font>
+            </Button>
+        <Button fx:id="createSessionButton" alignment="CENTER" contentDisplay="CENTER" layoutX="102.0" layoutY="400.0" mnemonicParsing="false" onAction="#createSessionButtonAction" prefHeight="25.0" prefWidth="160.0" styleClass="btn2-background" stylesheets="@../styles/style.css" text="Create Session">
+          <font>
+            <Font name="0xProto Nerd Font" size="13.0" />
+          </font>
+        </Button>
+        <Button fx:id="endSessionButton" alignment="CENTER" contentDisplay="CENTER" layoutX="102.0" layoutY="450.0" mnemonicParsing="false" onAction="#endSessionButtonAction" prefHeight="25.0" prefWidth="160.0" styleClass="btn2-background" stylesheets="@../styles/style.css" text="End Session">
+          <font>
+            <Font name="0xProto Nerd Font" size="13.0" />
+          </font>
+        </Button>
+            <Button fx:id="expensesMenuButton" alignment="CENTER" contentDisplay="CENTER" layoutX="100.0" layoutY="500.0" mnemonicParsing="false" onAction="#expensesMenuButtonAction" prefHeight="25.0" prefWidth="160.0" styleClass="btn2-background" stylesheets="@../styles/style.css" text="Expenses Menu">
+               <font>
+                  <Font name="0xProto Nerd Font" size="13.0" />
+               </font>
+            </Button>
+        <Button fx:id="resultTodayButton" alignment="CENTER" contentDisplay="CENTER" layoutX="100.0" layoutY="550.0" mnemonicParsing="false" onAction="#resultTodayButtonAction" prefHeight="25.0" prefWidth="160.0" styleClass="btn2-background" stylesheets="@../styles/style.css" text="Results Today">
+          <font>
+            <Font name="0xProto Nerd Font" size="13.0" />
+          </font>
+        </Button>
+        <Button fx:id="logOutButton" alignment="CENTER" contentDisplay="CENTER" layoutX="100.0" layoutY="600.0" mnemonicParsing="false" onAction="#logOutButtonAction" prefHeight="25.0" prefWidth="160.0" styleClass="btn-background" stylesheets="@../styles/style.css" text="LogOut">
+          <font>
+            <Font name="0xProto Nerd Font" size="13.0" />
+          </font>
+        </Button>
+        <Button fx:id="exitButton" alignment="CENTER" contentDisplay="CENTER" layoutX="100.0" layoutY="650.0" mnemonicParsing="false" onAction="#exitButtonAction" prefHeight="25.0" prefWidth="160.0" styleClass="btn-background" stylesheets="@../styles/style.css" text="Exit">
+          <font>
+            <Font name="0xProto Nerd Font" size="13.0" />
+          </font>
+        </Button>
+      </children>
+    </AnchorPane>
+  </left>
+  <right>
+    <AnchorPane prefHeight="720.0" prefWidth="720.0" BorderPane.alignment="CENTER">
+      <children>
+        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="35.0" layoutY="38.0" text="Current Sessions">
+          <font>
+            <Font name="0xProto Nerd Font" size="25.0" />
+          </font>
+        </Label>
+        <TableView fx:id="sessionsTableView" editable="true" layoutX="35.0" layoutY="74.0" prefHeight="270.0" prefWidth="650.0" style="-fx-alignment: center;">
+          <columns>
+            <TableColumn fx:id="sessionIdColumn" minWidth="12.0" prefWidth="75.0" style="-fx-alignment: center;" text="Session ID" />
+            <TableColumn fx:id="spotIdColumn" minWidth="12.0" prefWidth="50.0" style="-fx-alignment: center;" text="Spot ID" />
+            <TableColumn fx:id="creatorColumn" minWidth="12.0" prefWidth="65.0" style="-fx-alignment: center;" text="Creator" />
+            <TableColumn fx:id="noControllerColumn" prefWidth="79.0" style="-fx-alignment: center;" text="Controllers" />
+            <TableColumn fx:id="startTimeColumn" prefWidth="132.0" style="-fx-alignment: center;" text="Start Time" />
+            <TableColumn fx:id="endTimeColumn" prefWidth="132.0" style="-fx-alignment: center;" text="End Time" />
+            <TableColumn fx:id="durationColumn" prefWidth="113.0" style="-fx-alignment: center;" text="Duration (Hours)" />
+          </columns>
+        </TableView>
+        <Button fx:id="refreshSessionsButton" layoutX="585.0" layoutY="46.0" mnemonicParsing="false" onAction="#refreshSessionsButtonAction" prefHeight="25.0" prefWidth="100.0" styleClass="btn2-background" stylesheets="@../styles/style.css" text="Refresh">
+          <font>
+            <Font name="0xProto Nerd Font" size="13.0" />
+          </font>
+        </Button>
+        <Label layoutX="35.0" layoutY="374.0" text="Free Spots">
+          <font>
+            <Font name="0xProto Nerd Font" size="22.0" />
+          </font>
+        </Label>
+        <TableView fx:id="spotsTableView" layoutX="35.0" layoutY="406.0" prefHeight="270.0" prefWidth="650.0">
+          <columns>
+            <TableColumn fx:id="spotNumberColumn" maxWidth="140.0" prefWidth="130.0" style="-fx-alignment: center;" text="Spot Number" />
+            <TableColumn fx:id="consoleTypeColumn" maxWidth="140.0" prefWidth="130.0" style="-fx-alignment: center;" text="Console Type" />
+            <TableColumn fx:id="spotPrivacyColumn" maxWidth="140.0" prefWidth="130.0" style="-fx-alignment: center;" text="Privacy" />
+            <TableColumn fx:id="screenTypeColumn" maxWidth="140.0" prefWidth="129.0" style="-fx-alignment: center;" text="Screen Type" />
+            <TableColumn fx:id="screenSizeColumn" maxWidth="140.0" prefWidth="129.0" style="-fx-alignment: center;" text="Screen Size" />
+          </columns>
+        </TableView>
+        <Button fx:id="refreshSpotsButton" layoutX="585.0" layoutY="375.0" mnemonicParsing="false" onAction="#refreshSpotsButtonAction" prefHeight="25.0" prefWidth="100.0" styleClass="btn2-background" stylesheets="@../styles/style.css" text="Refresh">
+          <font>
+            <Font name="0xProto Nerd Font" size="13.0" />
+          </font>
+          <opaqueInsets>
+            <Insets />
+          </opaqueInsets>
+        </Button>
+      </children>
+    </AnchorPane>
+  </right>
+</BorderPane>

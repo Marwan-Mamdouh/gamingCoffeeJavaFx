@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="370.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gamingCoffee.controllers.ResultController">
+  <bottom>
+    <AnchorPane prefHeight="50.0" BorderPane.alignment="CENTER">
+      <children>
+        <Button fx:id="closeButton" contentDisplay="CENTER" layoutX="271.0" layoutY="13.0" mnemonicParsing="false" onAction="#closeAction" prefHeight="25.0" prefWidth="160.0" style="-fx-background-color: #ff5656;" text="Close" textAlignment="CENTER" textFill="WHITE">
+          <font>
+            <Font name="0xProto Nerd Font" size="13.0" />
+          </font>
+        </Button>
+      </children>
+    </AnchorPane>
+  </bottom>
+  <center>
+    <AnchorPane BorderPane.alignment="CENTER">
+      <children>
+        <TableView fx:id="resultTable" layoutX="41.0" prefHeight="270.0" prefWidth="301.0">
+          <columns>
+            <TableColumn fx:id="SessionIdColumn" maxWidth="100.0" prefWidth="100.0" style="-fx-alignment: center;" text="Session ID" />
+            <TableColumn fx:id="durationColumn" maxWidth="100.0" prefWidth="100.0" style="-fx-alignment: center;" text="Duration" />
+            <TableColumn fx:id="costColumn" maxWidth="100.0" prefWidth="100.0" style="-fx-alignment: center;" text="Cost" />
+          </columns>
+        </TableView>
+        <DatePicker fx:id="datePickerFiled" layoutX="447.0" layoutY="45.0" onAction="#getDataAction" prefWidth="235.0" promptText="Enter a Date" />
+        <Label layoutX="370.0" layoutY="125.0" text="Sessions count:">
+          <font>
+            <Font name="0xProto Nerd Font Mono" size="15.0" />
+          </font>
+        </Label>
+        <Label layoutX="370.0" layoutY="175.0" prefWidth="142.0" text="Sessions Price:">
+          <font>
+            <Font name="0xProto Nerd Font Mono" size="15.0" />
+          </font>
+        </Label>
+        <Label fx:id="sessionCountHolder" contentDisplay="CENTER" layoutX="510.0" layoutY="125.0" prefWidth="185.0" style="-fx-alignment: center;" textAlignment="CENTER">
+          <font>
+            <Font name="0xProto Nerd Font Mono" size="15.0" />
+          </font>
+        </Label>
+        <Label fx:id="sessionPriceHolder" contentDisplay="CENTER" layoutX="510.0" layoutY="175.0" prefWidth="185.0" style="-fx-alignment: center;">
+          <font>
+            <Font name="0xProto Nerd Font Mono" size="15.0" />
+          </font>
+        </Label>
+            <Label layoutX="370.0" layoutY="50.0" text="Pick Day">
+               <font>
+                  <Font name="0xProto Nerd Font Mono" size="13.0" />
+               </font>
+            </Label>
+      </children>
+    </AnchorPane>
+  </center>
+   <top>
+      <AnchorPane prefHeight="50.0" prefWidth="700.0" BorderPane.alignment="CENTER">
+         <children>
+          <Label fx:id="resultDateLabel" layoutX="257.0" layoutY="12.0" text="Results by data">
+            <font>
+              <Font name="0xProto Nerd Font Mono" size="20.0" />
+            </font>
+          </Label>
+         </children>
+      </AnchorPane>
+   </top>
+</BorderPane>

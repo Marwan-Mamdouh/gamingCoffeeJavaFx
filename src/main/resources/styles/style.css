@@ -1,0 +1,21 @@
+.white-bg{
+-fx-background-color: #fff
+}
+
+
+
+.lft-background-color{
+ -fx-background-color: linear-gradient(from 0.0% 0.0% to 100.0% 0.0%, #193237ff 0.0%, #2e4e58ff 50.0%, #39687cff 100.0%);
+}
+
+.cycle-background{
+-fx-background-color: linear-gradient(from 100.0% 0.0% to 0.0% 0.0% , #193237ff 0.0%, #2e4e58ff 50.0%, #39687cff 100.0%);
+}
+
+.btn2-background{
+-fx-background-color: linear-gradient(from 0.0% 0.0% to 100.0% 0.0%, #bb96e1ff 0.0%, #5c56bbff 100.0%);
+}
+
+.btn-background{
+-fx-background-color: linear-gradient(from 0.0% 0.0% to 100.0% 0.0%, #cd2a5fff 0.0%, #763c89ff 100.0%);
+}
