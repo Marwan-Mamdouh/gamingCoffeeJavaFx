@@ -82,7 +82,7 @@ public class HomeController implements Initializable {
 
   @FXML
   void ownerMenuButtonAction() {
-    ChangeViewUtil.changeView(new Stage(), "Owner Page", "/fxml/remakeOwnerPage.fxml", true);
+    ChangeViewUtil.changeView(new Stage(), "Owner Page", "/fxml/ownerPage.fxml", true);
   }
 
   @FXML
@@ -97,9 +97,6 @@ public class HomeController implements Initializable {
 
   @FXML
   void expensesMenuButtonAction() {
-//    PopupUtil.showPopup("Expenses Page", "this page is under development for now",
-//        AlertType.INFORMATION);
-    // todo complete this function
     ChangeViewUtil.changeView(new Stage(), "Expenses Page", "/fxml/addExpense.fxml", true);
   }
 
@@ -147,7 +144,6 @@ public class HomeController implements Initializable {
     screenSizeColumn.setCellValueFactory(new PropertyValueFactory<>("displaySize"));
 
     spotsTableView.setItems(SpotService.getFreeSpots());
-    spotsTableView.getSelectionModel().setCellSelectionEnabled(true);
   }
 
   public void showOwnerButton() {
