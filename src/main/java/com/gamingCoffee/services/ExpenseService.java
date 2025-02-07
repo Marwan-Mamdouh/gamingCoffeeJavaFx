@@ -18,10 +18,10 @@ public class ExpenseService {
   private static final IExpenseDao expenseDao = new ExpenseDao(
       DatabaseConnection.INSTANCE.getConnection());
 
-  public static void addExpense(int expenseId, String creator, double amount, LocalDate date,
-      String note) {
-    writeExpense(new Expense.Builder().expenseId(expenseId).creator(creator).expenseAmount(amount)
-        .expenseDate(date).note(note).build());
+  public static boolean addExpense(double amount, String note) {
+    return writeExpense(
+        new Expense.Builder().creator(AdminUsernameHolder.getAdminName()).expenseAmount(amount)
+            .note(note).build());
   }
 
   public static String checkExpense(int expenseId) {
@@ -78,11 +78,12 @@ public class ExpenseService {
     }
   }
 
-  private static void writeExpense(Expense expense) {
+  private static boolean writeExpense(Expense expense) {
     try {
-      expenseDao.addExpense(expense);
+      return expenseDao.addExpense(expense);
     } catch (SQLException e) {
       PopupUtil.showErrorPopup(e);
+      return true;
     }
   }
 }

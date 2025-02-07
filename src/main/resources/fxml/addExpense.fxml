@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gamingCoffee.controllers.AddExpenseController">
+  <bottom>
+    <AnchorPane prefHeight="50.0" prefWidth="500.0" BorderPane.alignment="CENTER">
+      <children>
+        <Button contentDisplay="CENTER" layoutX="350.0" layoutY="13.0" mnemonicParsing="false" onAction="#addExpenseButtonAction" prefHeight="25.0" prefWidth="160.0" text="Add Expense" textAlignment="CENTER">
+          <font>
+            <Font name="0xProto Nerd Font" size="13.0" />
+          </font>
+        </Button>
+        <Button fx:id="cancelButton" contentDisplay="CENTER" layoutX="90.0" layoutY="13.0" mnemonicParsing="false" onAction="#cancelAction" prefHeight="25.0" prefWidth="160.0" text="Cancel" textAlignment="CENTER">
+          <font>
+            <Font name="0xProto Nerd Font" size="13.0" />
+          </font>
+        </Button>
+      </children>
+    </AnchorPane>
+  </bottom>
+  <center>
+    <AnchorPane prefHeight="200.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+      <children>
+        <TextField fx:id="expenseAmountField" layoutX="350.0" layoutY="65.0" prefHeight="25.0" prefWidth="160.0" promptText="Required">
+          <font>
+            <Font name="0xProto Nerd Font Mono" size="13.0" />
+          </font>
+        </TextField>
+        <TextField fx:id="expenseNoteField" layoutX="350.0" layoutY="115.0" prefHeight="25.0" prefWidth="160.0" promptText="Required">
+          <font>
+            <Font name="0xProto Nerd Font Mono" size="13.0" />
+          </font>
+        </TextField>
+        <Label layoutX="90.0" layoutY="69.0" text="Expense Amount">
+          <font>
+            <Font name="0xProto Nerd Font Mono" size="13.0" />
+          </font>
+        </Label>
+        <Label layoutX="90.0" layoutY="119.0" text="Expense Note">
+          <font>
+            <Font name="0xProto Nerd Font Mono" size="13.0" />
+          </font>
+        </Label>
+        <Label layoutX="232.0" layoutY="15.0" text="Add Expense">
+               <font>
+                  <Font name="0xProto Nerd Font Mono" size="20.0" />
+               </font></Label>
+      </children>
+    </AnchorPane>
+  </center>
+</BorderPane>

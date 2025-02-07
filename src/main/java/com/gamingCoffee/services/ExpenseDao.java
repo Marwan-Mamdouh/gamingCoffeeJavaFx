@@ -19,19 +19,18 @@ public class ExpenseDao implements IExpenseDao {
   }
 
   /**
-   * @param expense
-   * @throws SQLException
+   * @param expense object (expenseCreator, expenseAmount, expenseDate, expenseNote)
+   * @return false if the statement done with no result set
+   * @throws SQLException if something went wrong
    */
   @Override
   public boolean addExpense(Expense expense) throws SQLException {
-    String sql = "INSERT INTO expenses (exp_id, exp_creator, exp_amount, exp_date, exp_note)"
-        + " VALUES (?, ?, ?, ?, ?)";
+    String sql = "INSERT INTO expenses (exp_creator, exp_amount, exp_date, exp_note) VALUES "
+        + "(?, ?, date('now', 'localtime'), ?)";
     try (PreparedStatement statement = connection.prepareStatement(sql)) {
-      statement.setInt(1, expense.getExpenseId());
-      statement.setString(2, expense.getCreator());
-      statement.setDouble(3, expense.getExpenseAmount());
-      statement.setString(4, expense.getExpenseDate().toString());
-      statement.setString(5, expense.getNote());
+      statement.setString(1, expense.getCreator());
+      statement.setDouble(2, expense.getExpenseAmount());
+      statement.setString(3, expense.getNote());
       return statement.execute();
     }
   }
@@ -55,8 +54,9 @@ public class ExpenseDao implements IExpenseDao {
   }
 
   /**
-   * @param expenseId
-   * @throws SQLException
+   * @param expenseId int (Expense ID)
+   * @return false if the statement done with no result set
+   * @throws SQLException if something went wrong with the database
    */
   @Override
   public boolean removeExpense(int expenseId) throws SQLException {
