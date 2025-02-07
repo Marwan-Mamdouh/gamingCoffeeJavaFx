@@ -13,7 +13,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -57,8 +56,6 @@ public class HomeController implements Initializable {
   @FXML
   private Button onwerMenuButton;
   @FXML
-  private Button expensesMenuButton;
-  @FXML
   public Button logOutButton;
   @FXML
   private Button exitButton;
@@ -100,10 +97,10 @@ public class HomeController implements Initializable {
 
   @FXML
   void expensesMenuButtonAction() {
-    PopupUtil.showPopup("Expenses Page", "this page is under development for now",
-        AlertType.INFORMATION);
+//    PopupUtil.showPopup("Expenses Page", "this page is under development for now",
+//        AlertType.INFORMATION);
     // todo complete this function
-//    ChangeViewUtil.changeView(new Stage(), "Expenses Page", "/fxml/Expenses.fxml", true);
+    ChangeViewUtil.changeView(new Stage(), "Expenses Page", "/fxml/addExpense.fxml", true);
   }
 
   @FXML
