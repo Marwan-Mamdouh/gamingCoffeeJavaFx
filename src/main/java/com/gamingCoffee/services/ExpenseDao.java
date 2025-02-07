@@ -36,8 +36,8 @@ public class ExpenseDao implements IExpenseDao {
   }
 
   /**
-   * @param expenseId
-   * @throws SQLException
+   * @param expenseId (int) get it from the user
+   * @throws SQLException if something went wrong
    */
   @Override
   public Expense checkExpense(int expenseId) throws SQLException {
@@ -68,9 +68,9 @@ public class ExpenseDao implements IExpenseDao {
   }
 
   /**
-   * @param date
-   * @return
-   * @throws SQLException
+   * @param date LocalDate from date Picker fx
+   * @return a list of Expense based of the date
+   * @throws SQLException if something went wrong with the database
    */
   @Override
   public List<Expense> getExpensesByDate(LocalDate date) throws SQLException {
@@ -88,9 +88,9 @@ public class ExpenseDao implements IExpenseDao {
   }
 
   /**
-   * @param date
-   * @return
-   * @throws SQLException
+   * @param date LocalDate from date Picker fx
+   * @return list of Expense form the start of the month till the date
+   * @throws SQLException if something went wrong with the database
    */
   @Override
   public List<Expense> getExpenseByMonth(LocalDate date) throws SQLException {
@@ -109,6 +109,30 @@ public class ExpenseDao implements IExpenseDao {
     return expenses;
   }
 
+  /**
+   * @param date LocalDate from date Picker fx
+   * @return (double) total Expense based on gavin date
+   * @throws SQLException if something went wrong with the database
+   */
+  @Override
+  public double getExpensePriceByDay(LocalDate date) throws SQLException {
+    String sql = "SELECT SUM(exp_amount) AS expense_price FROM expenses where exp_date = ?";
+    try (PreparedStatement statement = connection.prepareStatement(sql)) {
+      statement.setString(1, date.toString());
+      try (ResultSet rs = statement.executeQuery()) {
+        if (rs.next()) {
+          return rs.getDouble("expense_price");
+        }
+      }
+    }
+    return 0.0;
+  }
+
+  /**
+   * @param rs result set to extract expense object
+   * @return (Expense object) build an Expense object from the result set gavin
+   * @throws SQLException if something went wrong with the database
+   */
   private Expense makeExpense(ResultSet rs) throws SQLException {
     return new Expense.Builder().expenseId(rs.getInt("exp_id")).creator(rs.getString("exp_creator"))
         .expenseAmount(rs.getDouble("exp_amount")).note(rs.getString("exp_note"))

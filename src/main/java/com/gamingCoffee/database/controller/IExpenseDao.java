@@ -1,7 +1,6 @@
 package com.gamingCoffee.database.controller;
 
 import com.gamingCoffee.database.entities.Expense;
-import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
@@ -17,4 +16,6 @@ public interface IExpenseDao {
   List<Expense> getExpensesByDate(LocalDate date) throws SQLException;
 
   List<Expense> getExpenseByMonth(LocalDate date) throws SQLException;
+
+  double getExpensePriceByDay(LocalDate date) throws SQLException;
 }
