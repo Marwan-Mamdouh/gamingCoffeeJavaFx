@@ -7,16 +7,16 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="250.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gamingCoffee.controllers.CreateSessionController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="250.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gamingCoffee.controllers.CreateSessionController">
   <bottom>
     <AnchorPane prefHeight="50.0" prefWidth="500.0" BorderPane.alignment="CENTER">
       <children>
-        <Button fx:id="createSessionButton" contentDisplay="CENTER" layoutX="300.0" layoutY="13.0" mnemonicParsing="false" onAction="#createSessionAction" prefHeight="25.0" prefWidth="160.0" text="Create Session" textAlignment="CENTER">
+        <Button fx:id="createSessionButton" contentDisplay="CENTER" layoutX="350.0" layoutY="13.0" mnemonicParsing="false" onAction="#createSessionAction" prefHeight="25.0" prefWidth="160.0" text="Create Session" textAlignment="CENTER">
           <font>
             <Font name="0xProto Nerd Font" size="13.0" />
           </font>
         </Button>
-        <Button fx:id="cancelButton" contentDisplay="CENTER" layoutX="50.0" layoutY="13.0" mnemonicParsing="false" onAction="#cancelAction" prefHeight="25.0" prefWidth="160.0" text="Cancel" textAlignment="CENTER">
+        <Button fx:id="cancelButton" contentDisplay="CENTER" layoutX="90.0" layoutY="13.0" mnemonicParsing="false" onAction="#cancelAction" prefHeight="25.0" prefWidth="160.0" text="Cancel" textAlignment="CENTER">
           <font>
             <Font name="0xProto Nerd Font" size="13.0" />
           </font>
@@ -25,34 +25,42 @@
     </AnchorPane>
   </bottom>
   <center>
-    <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+    <AnchorPane prefWidth="600.0" BorderPane.alignment="CENTER">
       <children>
-        <TextField fx:id="spotNumberFiled" layoutX="300.0" layoutY="61.0" prefHeight="25.0" prefWidth="160.0" promptText="Required">
+        <TextField fx:id="spotNumberFiled" layoutX="350.0" layoutY="60.0" prefHeight="25.0" prefWidth="160.0" promptText="Required">
           <font>
             <Font name="0xProto Nerd Font Mono" size="13.0" />
           </font>
         </TextField>
-        <TextField fx:id="noControllersFiled" layoutX="300.0" layoutY="105.0" prefHeight="25.0" prefWidth="160.0" promptText="Required">
+        <TextField fx:id="noControllersFiled" layoutX="350.0" layoutY="105.0" prefHeight="25.0" prefWidth="160.0" promptText="Required">
           <font>
             <Font name="0xProto Nerd Font Mono" size="13.0" />
           </font>
         </TextField>
-        <TextField fx:id="endTimeFiled" layoutX="300.0" layoutY="151.0" prefHeight="25.0" prefWidth="160.0" promptText="Not Required">
+        <TextField fx:id="endTimeFiled" layoutX="350.0" layoutY="150.0" prefHeight="25.0" prefWidth="160.0" promptText="Not Required">
           <font>
             <Font name="0xProto Nerd Font Mono" size="13.0" />
           </font>
         </TextField>
-        <Label layoutX="83.0" layoutY="65.0" text="Spot Number">
+        <Label layoutX="90.0" layoutY="64.0" text="Spot Number">
           <font>
             <Font name="0xProto Nerd Font Mono" size="13.0" />
           </font>
         </Label>
-        <Label layoutX="67.0" layoutY="110.0" text="No. controllers">
+        <Label layoutX="90.0" layoutY="110.0" text="No. controllers">
           <font>
             <Font name="0xProto Nerd Font Mono" size="13.0" />
           </font>
         </Label>
-        <Label layoutX="99.0" layoutY="154.0" text="End Time" />
+        <Label layoutX="90.0" layoutY="154.0" text="End Time (Duration)">
+               <font>
+                  <Font name="0xProto Nerd Font Mono" size="13.0" />
+               </font></Label>
+            <Label layoutX="213.0" layoutY="15.0" text="Create Session">
+               <font>
+                  <Font name="0xProto Nerd Font Mono" size="20.0" />
+               </font>
+            </Label>
       </children>
     </AnchorPane>
   </center>
