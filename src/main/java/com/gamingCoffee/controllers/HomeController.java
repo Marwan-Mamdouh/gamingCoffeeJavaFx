@@ -144,7 +144,6 @@ public class HomeController implements Initializable {
     screenSizeColumn.setCellValueFactory(new PropertyValueFactory<>("displaySize"));
 
     spotsTableView.setItems(SpotService.getFreeSpots());
-    spotsTableView.getSelectionModel().setCellSelectionEnabled(true);
   }
 
   public void showOwnerButton() {
