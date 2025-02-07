@@ -33,7 +33,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.KeyCode;
 
 public class OwnerPageController implements Initializable {
 
@@ -302,7 +301,6 @@ public class OwnerPageController implements Initializable {
     // Set the items in the TableView
     try {
       adminsTable.setItems(AdminService.convertAdminsList());
-      adminsTable.getSelectionModel().setCellSelectionEnabled(true);
     } catch (Exception e) {
       throw new RuntimeException(e);
     }
@@ -410,7 +408,6 @@ public class OwnerPageController implements Initializable {
     // Set the items in the TableView
     try {
       spotTable.setItems(SpotService.getAllSpots());
-      spotTable.getSelectionModel().setCellSelectionEnabled(true);
     } catch (Exception e) {
       PopupUtil.showErrorPopup(e);
     }
@@ -474,7 +471,6 @@ public class OwnerPageController implements Initializable {
     // Set the items in the TableView
     try {
       controllersTable.setItems(ControllerService.convertControllerList());
-      controllersTable.getSelectionModel().setCellSelectionEnabled(true);
     } catch (Exception e) {
       PopupUtil.showErrorPopup(e);
     }
@@ -528,12 +524,10 @@ public class OwnerPageController implements Initializable {
     // Set the items in the TableView
     try {
       expensesTable.setItems(ExpenseService.makeTableExpense(date));
-      expensesTable.getSelectionModel().setCellSelectionEnabled(true);
     } catch (Exception e) {
       PopupUtil.showErrorPopup(e);
     }
   }
-
 
   /**
    * @param location  The location used to resolve relative paths for the root object, or
@@ -547,6 +541,10 @@ public class OwnerPageController implements Initializable {
     makeSpotTable();
     makeControllerTable();
     setChoiceBoxValues();
+    TableViewUtils.makeTableCopyable(adminsTable);
+    TableViewUtils.makeTableCopyable(spotTable);
+    TableViewUtils.makeTableCopyable(controllersTable);
+    TableViewUtils.makeTableCopyable(expensesTable);
   }
 
   private void setChoiceBoxValues() {
@@ -557,15 +555,5 @@ public class OwnerPageController implements Initializable {
 
     controllerTypeChoiceBox.getItems()
         .addAll(ControllerType.PS4CONTROLLER, ControllerType.PS5CONTROLLER);
-  }
-
-  private void makeSessionTableCopyable() {
-    adminsTable.getSelectionModel().setCellSelectionEnabled(true);
-    adminsTable.setOnKeyPressed(event -> {
-      if (event.isShortcutDown() && event.getCode() == KeyCode.C) {
-        TableViewUtils.copySelectedCellsToClipboard(adminsTable);
-        event.consume();
-      }
-    });
   }
 }
