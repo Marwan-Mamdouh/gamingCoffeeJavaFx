@@ -8,21 +8,21 @@ public interface IAdminDao {
 
   Admin getUserData(String userName) throws SQLException;
 
-  void addUser(Admin newAdmin) throws SQLException;
+  boolean addUser(Admin newAdmin) throws SQLException;
 
-  void removeUser(String username) throws SQLException;
-
-//  void removeUserByUserId(Admin admin) throws SQLException;
-
-//  void changeUserName(String username, String newUserName) throws SQLException;
-
-//  int getUserId(String userName) throws SQLException;
+  boolean removeUser(String username) throws SQLException;
 
   boolean changePassword(String username, String newPassword) throws SQLException;
 
-  String getUserTitle(String username) throws SQLException;
+  //  void removeUserByUserId(Admin admin) throws SQLException;
 
-  void addPhoneNumber(Admin admin) throws SQLException;
+  //  void changeUserName(String username, String newUserName) throws SQLException;
+
+  //  int getUserId(String userName) throws SQLException;
+
+  //  String getUserTitle(String username) throws SQLException;
+
+  boolean addPhoneNumber(Admin admin) throws SQLException;
 
   List<Admin> getAdmins() throws SQLException;
 
@@ -30,5 +30,5 @@ public interface IAdminDao {
 
   Admin getAdminInfo(String username) throws SQLException;
 
-  void removePhoneNumber(String username) throws SQLException;
+  boolean removePhoneNumber(String username) throws SQLException;
 }
