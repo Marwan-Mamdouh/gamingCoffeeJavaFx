@@ -7,46 +7,38 @@ import java.time.format.DateTimeFormatter;
 
 public class GenerateId {
 
-/*
-  private static int localLastId;
 
-
-  private static int sequence = 250125090; // This should be persisted in a database or file
-
-  public static void main(String[] args) {
-    int generatedId = generateId(2502);
-    System.out.println("Generated ID: " + generatedId);
-  }
-
-
-  private static int getLastId() {
-    return localLastId;
-  }
-
-  private static void setLastId(int lastId) {
-    localLastId = lastId;
-  }
-*/
-
+  /**
+   * @param sessionDao (ISessionDao)
+   * @return (int)
+   * @produce the ID of last created session
+   */
   public static int getLastIdFromDb(ISessionDao sessionDao) throws SQLException {
     return sessionDao.getLastSessionId();
   }
 
+  /**
+   * @param lastId (int)
+   * @return (int) as yyMMdd000, 'yy' is the second two numbers form the year, MM is the month
+   * number, dd is the day number, and all this number are from the today's date then add to them
+   * three zeros to count how many sessions has been created till now
+   * @produce the new Session ID to write in the db
+   */
   public static int generateId(int lastId) {
     // Step 1: validate last ID var
     if (lastId == 0) {
-      throw new IllegalArgumentException("something went wrong, generate ID class.");
+      throw new IllegalArgumentException(
+          "There is no Sessions in 'sessions' Table, or something went wrong with the db.");
 
     } else if (isFiveDigitsOrLess(lastId)) {
+      // if the lastId is less than 6 digits then mak it 6
       lastId = extendInt(lastId);
-//      lastId = Integer.parseInt(String.format("%06d", lastId));
-//      System.out.println(lastId);
     }
 
     // Step 2: Get today's date in the format yyMMdd
     String date = LocalDate.now().format(DateTimeFormatter.ofPattern("yyMMdd"));
 
-    // Step 3: compare the DB ID with today's ID
+    // Step 3: compare the last Session ID form the DB with today's ID
     if (isIdFromToday(lastId, date)) {
       // if they are the same day then increment it
       return ++lastId;
@@ -74,5 +66,16 @@ public class GenerateId {
       newId.append(0);
     }
     return Integer.parseInt(newId.toString());
+  }
+
+  /**
+   * @param id (int)
+   * @throws IllegalArgumentException if the id is not positive
+   * @produce check if id is not positive
+   */
+  public static void validateIdPositive(int id) {
+    if (id <= 0) {
+      throw new IllegalArgumentException("Invalid ID: " + id);
+    }
   }
 }
