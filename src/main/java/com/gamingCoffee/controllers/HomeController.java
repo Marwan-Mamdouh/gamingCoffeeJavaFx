@@ -10,6 +10,7 @@ import com.gamingCoffee.utiles.ChangeViewUtil;
 import com.gamingCoffee.utiles.PopupUtil;
 import com.gamingCoffee.utiles.TableViewUtils;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -143,7 +144,11 @@ public class HomeController implements Initializable {
     screenTypeColumn.setCellValueFactory(new PropertyValueFactory<>("displayType"));
     screenSizeColumn.setCellValueFactory(new PropertyValueFactory<>("displaySize"));
 
-    spotsTableView.setItems(SpotService.getFreeSpots());
+    try {
+      spotsTableView.setItems(SpotService.getSpots());
+    } catch (SQLException e) {
+      PopupUtil.showErrorPopup(e);
+    }
   }
 
   public void showOwnerButton() {

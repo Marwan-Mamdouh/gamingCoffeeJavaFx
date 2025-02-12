@@ -74,8 +74,8 @@ public class ResultController {
   }
 
   private void fillLabels(LocalDate date) throws SQLException {
-    double[] sessionCountAndPrice = SessionService.getSessionsCountAndPrice(date);
-    double expense = ExpenseService.getTotalTodayExpense(date);
+    final double[] sessionCountAndPrice = SessionService.getSessionsCountAndPrice(date);
+    final double expense = ExpenseService.getTotalTodayExpense(date);
     fillCountLabel(sessionCountAndPrice[0]);
     fillPriceLabel(sessionCountAndPrice[1]);
     fillExpenseLabel(expense);

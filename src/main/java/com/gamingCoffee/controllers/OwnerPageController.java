@@ -244,13 +244,20 @@ public class OwnerPageController implements Initializable {
   // Admin
   @FXML
   void addAdminButtonAction() {
+    String username = usernameField.getText();
     try {
-      AdminService.addAdmin(usernameField.getText(),
+      if (AdminService.addAdmin(username,
           PageDataUtil.getPasswordFromFields(showPasswordCheckBoxAddUser, passwordAddUser,
               passwordTextAddUser), choiceBoxPosition.getValue(),
           Integer.parseInt(ageField.getText()), phoneNumberField.getText(),
-          Integer.parseInt(salaryField.getText()));
-      clearAddUserFields();
+          Integer.parseInt(salaryField.getText()))) {
+
+        PopupUtil.showPopup("Success", "Admin " + username + " just added successfully!",
+            AlertType.INFORMATION);
+        clearAddUserFields();
+      } else {
+        PopupUtil.showPopup("Failed", "something went Wrong!", AlertType.ERROR);
+      }
     } catch (Exception e) {
       PopupUtil.showErrorPopup(e);
     }
@@ -264,11 +271,19 @@ public class OwnerPageController implements Initializable {
 
   @FXML
   void deleteUserButtonAction() {
-    if (AdminService.deleteAdmin(removeUsernameField.getText(),
+    String username = removeUsernameField.getText();
+
+    if (AdminService.deleteAdmin(username,
         PageDataUtil.getPasswordFromFields(showPasswordCheckBoxRemoveUser, passwordRemoveUser,
             passwordTextRemoveUser))) {
+
+      PopupUtil.showPopup("Success", "Admin: " + username + " just deleted successfully!",
+          AlertType.INFORMATION);
       deleteUserButton.setVisible(false);
       removeUserDataLabel.setText("");
+    } else {
+      PopupUtil.showPopup("Delete filed", "Can not find username: " + username,
+          AlertType.INFORMATION);
     }
   }
 
@@ -388,7 +403,9 @@ public class OwnerPageController implements Initializable {
   @FXML
   void removeSpotButtonAction() {
     try {
-      SpotService.removeSpotById(Integer.parseInt(removeSpotNumber.getText()));
+      if (SpotService.removeSpotById(Integer.parseInt(removeSpotNumber.getText()))) {
+        PopupUtil.showPopup("Success", "Spot Removed successfully", AlertType.INFORMATION);
+      }
     } catch (NumberFormatException e) {
       PopupUtil.showErrorPopup(e);
     }
@@ -425,7 +442,7 @@ public class OwnerPageController implements Initializable {
       } else {
         PopupUtil.showPopup("Error", "Something went wrong", AlertType.INFORMATION);
       }
-    } catch (NumberFormatException e) {
+    } catch (Exception e) {
       PopupUtil.showErrorPopup(e);
     }
   }
@@ -450,6 +467,7 @@ public class OwnerPageController implements Initializable {
       if (ControllerService.removeController(controllerId,
           PageDataUtil.getPasswordFromFields(checkBoxShowPassRemoveController,
               passwordRemoveController, passwordTextRemoveController))) {
+
         PopupUtil.showPopup("Success",
             "Controller with ID" + controllerId + " just Deleted successfully !",
             AlertType.INFORMATION);

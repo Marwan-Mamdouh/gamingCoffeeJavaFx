@@ -9,9 +9,10 @@ import com.gamingCoffee.models.Position;
 import com.gamingCoffee.utiles.AdminUsernameHolder;
 import com.gamingCoffee.utiles.PopupUtil;
 import java.sql.SQLException;
+import java.util.List;
+import java.util.Objects;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.Alert.AlertType;
 
 public class AdminService {
 
@@ -40,43 +41,36 @@ public class AdminService {
     return BCrypt.withDefaults().hashToString(12, password.toCharArray());
   }
 
-  public static void addAdmin(String username, String password, Position title, int age,
+  /**
+   * @param username    String
+   * @param password    String
+   * @param title       Position
+   * @param age         int
+   * @param phoneNumber String
+   * @param salary      int
+   * @produce add admin (after creating one) to db
+   */
+  public static boolean addAdmin(String username, String password, Position title, int age,
       String phoneNumber, int salary) {
-    try {
-      Admin admin = new Admin.Builder().username(username).title(title).salary(salary)
-          .password(hashPassword(password)).age(age).phoneNumber(phoneNumber).build();
+    try { // create an Admin instance
+      Admin admin = buildAdmin(username, password, phoneNumber, title, salary, age);
 
-      adminDao.addUser(admin);
-      if (!phoneNumber.isBlank()) {
-        adminDao.addPhoneNumber(admin);
-      }
-      PopupUtil.showPopup("Success", "Admin " + username + " just added successfully!",
-          AlertType.INFORMATION);
-
-    } catch (Exception e) {
-      PopupUtil.showErrorPopup(e);
-    }
-  }
-
-/*
-  public static void removeAdmin(String username, String password) {
-    try {
-
-      String dbPassword = adminDao.getPasswordByUsername(username);
-
-      if (verifyPassword(password, dbPassword)) {
-        adminDao.removeUser(username);
-        adminDao.removePhoneNumber(username);
-
+      final boolean result = adminDao.addUser(admin);
+      if (!phoneNumber.isEmpty() && result) {
+        return adminDao.addPhoneNumber(admin);
       } else {
-        PopupUtil.showPopup("Error", "Wrong Password", AlertType.ERROR);
+        return result;
       }
     } catch (Exception e) {
-      PopupUtil.showErrorPopup(e);
+      throw new RuntimeException("Failed, couldn't add Admin: " + username + ". " + e.getMessage(),
+          e);
     }
   }
-*/
 
+  /**
+   * @param username String
+   * @return String description of user to check if he is the one
+   */
   public static String checkToRemoveAdmin(String username) {
     try {
       Admin admin = adminDao.getAdminInfo(username);
@@ -88,40 +82,55 @@ public class AdminService {
             + admin.getSalary() + ", Phone Number: " + admin.getPhoneNumber();
       }
     } catch (SQLException e) {
-      PopupUtil.showErrorPopup(e);
-      return "";
+      throw new RuntimeException("Failed, no match in the db. " + e.getMessage(), e);
     }
   }
 
+  /**
+   * @param username String
+   * @param password String
+   * @return boolean false if the query is done without errors
+   */
   public static boolean deleteAdmin(String username, String password) {
     try {
       if (verifyPassword(password,
           adminDao.getPasswordByUsername(AdminUsernameHolder.getAdminName()))) {
-        adminDao.removeUser(username);
-        PopupUtil.showPopup("Success", "Admin: " + username + " just deleted successfully",
-            AlertType.INFORMATION);
-        return true;
+        return adminDao.removeUser(username);
       } else {
-        PopupUtil.showPopup("Delete filed", "Can not find username: " + username,
-            AlertType.INFORMATION);
-        return false;
+        throw new RuntimeException("Wrong password. layer 2");
       }
-
     } catch (Exception e) {
       PopupUtil.showErrorPopup(e);
       return false;
     }
   }
 
+  /**
+   * @return ObservableList<Admin>
+   * @produce a render able list for app
+   */
   public static ObservableList<Admin> convertAdminsList() {
+    return FXCollections.observableArrayList(Objects.requireNonNull(getAdminsList()));
+  }
+
+  /**
+   * @return List<Admin>
+   * @produce the list of all admins
+   */
+  private static List<Admin> getAdminsList() {
     try {
-      return FXCollections.observableArrayList(adminDao.getAdmins());
-    } catch (Exception e) {
+      return adminDao.getAdmins();
+    } catch (SQLException e) {
       PopupUtil.showErrorPopup(e);
       return null;
     }
   }
 
+  /**
+   * @param username (String)
+   * @return String
+   * @produce description to validate the user to remove it in other function
+   */
   public static String checkToChangePassword(String username) {
     try {
       Admin admin = adminDao.getAdminInfo(username);
@@ -138,6 +147,13 @@ public class AdminService {
     }
   }
 
+  /**
+   * @param username    (String)
+   * @param oldPassword (String)
+   * @param newPassword (String)
+   * @return boolean false if the password changed and everything is good
+   * @produce validate the user and set the new password
+   */
   public static boolean changePassword(String username, String oldPassword, String newPassword) {
     try {
       if (verifyPassword(oldPassword, adminDao.getPasswordByUsername(username))) {
@@ -148,6 +164,16 @@ public class AdminService {
     } catch (Exception e) {
       PopupUtil.showErrorPopup(e);
       return false;
+    }
+  }
+
+  private static Admin buildAdmin(String username, String password, String phoneNumber,
+      Position title, int salary, int age) {
+    try {
+      return new Admin.Builder().username(username).title(title).salary(salary)
+          .password(hashPassword(password)).age(age).phoneNumber(phoneNumber).build();
+    } catch (Exception e) {
+      throw new RuntimeException("Failed, Couldn't build Admin. " + e.getMessage(), e);
     }
   }
 }

@@ -32,9 +32,9 @@ public class CreateSessionController {
   @FXML
   void createSessionAction() {
     try {
-      if (!SessionService.createSession(Integer.parseInt(spotNumberFiled.getText()),
+      if (SessionService.createSession(Integer.parseInt(spotNumberFiled.getText()),
           Integer.parseInt(noControllersFiled.getText()), endTimeFiled.getText())) {
-        PopupUtil.showPopup("Success", "The Session has created.", AlertType.INFORMATION);
+        PopupUtil.showPopup("Success", "Session Created.", AlertType.INFORMATION);
         cancelAction();
       } else {
         PopupUtil.showPopup("Failed", "Something went Wrong. ", AlertType.ERROR);
