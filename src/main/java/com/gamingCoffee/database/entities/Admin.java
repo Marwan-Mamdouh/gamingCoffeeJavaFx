@@ -138,7 +138,7 @@ public class Admin {
     }
 
     public Builder age(int age) {
-      if (age <= 0) {
+      if (age < 1) {
         throw new IllegalArgumentException("Age must be positive.");
       } else if (age >= 80) {
         throw new IllegalArgumentException("Does he still alive?");
@@ -163,8 +163,9 @@ public class Admin {
 
     // Helper method to validate Egyptian phone numbers
     private boolean isValidEgyptianPhoneNumber(String phoneNumber) {
+      // return true if it is null to make it an optional field
       if (phoneNumber == null || phoneNumber.trim().isEmpty()) {
-        return false;
+        return true;
       }
       // Regex pattern for Egyptian phone numbers (local or international format)
       String regex = "^(010|011|012|015)\\d{8}$|^\\+20(10|11|12|15)\\d{8}$";

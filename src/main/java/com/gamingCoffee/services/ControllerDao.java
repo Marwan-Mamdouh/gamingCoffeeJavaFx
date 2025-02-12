@@ -34,7 +34,9 @@ public class ControllerDao implements IControllerDao {
       statement.setString(2, controller.getControllerType().toString());
       return 0 < statement.executeUpdate();
     } catch (SQLException e) {
-      throw new RuntimeException("Failed, Couldn't add new Controller." + controller.toString(), e);
+      throw new RuntimeException(
+          "Failed, Couldn't add new Controller." + controller.toString() + ". " + e.getMessage(),
+          e);
     }
   }
 
@@ -51,7 +53,8 @@ public class ControllerDao implements IControllerDao {
       statement.setInt(1, controllerId);
       return 0 < statement.executeUpdate();
     } catch (SQLException e) {
-      throw new RuntimeException("Failed, Couldn't remove Controller ID:" + controllerId, e);
+      throw new RuntimeException(
+          "Failed, Couldn't remove Controller ID:" + controllerId + ". " + e.getMessage(), e);
     }
   }
 
@@ -73,7 +76,8 @@ public class ControllerDao implements IControllerDao {
         return null;
       }
     } catch (SQLException e) {
-      throw new RuntimeException("Failed, no match for controller ID:" + controllerId, e);
+      throw new RuntimeException(
+          "Failed, no match for controller ID:" + controllerId + ". " + e.getMessage(), e);
     }
   }
 
@@ -95,7 +99,7 @@ public class ControllerDao implements IControllerDao {
       }
       return controllers;
     } catch (SQLException e) {
-      throw new RuntimeException("Failed, Couldn't get Controllers Data.", e);
+      throw new RuntimeException("Failed, Couldn't get Controllers Data. " + e.getMessage(), e);
     }
   }
 }

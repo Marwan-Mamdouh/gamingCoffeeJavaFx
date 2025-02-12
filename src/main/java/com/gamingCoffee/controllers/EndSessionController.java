@@ -37,12 +37,11 @@ public class EndSessionController {
             "Session: " + sessionNumber + " has ended successfully, its total price is: "
                 + sessionPrice, AlertType.INFORMATION);
         cancelAction();
-        return;
       }
-      // tell the Admin the price
-      PopupUtil.showPopup("Failed", "Something went Wrong.", AlertType.ERROR);
     } catch (NumberFormatException e) {
-      PopupUtil.showErrorPopup(e);
+      PopupUtil.showPopup("Failed",
+          "Can not End Session: " + Integer.parseInt(sessionIdFiled.getText()) + " Number, "
+              + e.getMessage(), AlertType.ERROR);
     }
   }
 }

@@ -49,7 +49,8 @@ public class ExpenseService {
           + expense.getExpenseAmount() + ", Date: " + expense.getExpenseDate() + ", Note: "
           + expense.getNote();
     } catch (SQLException e) {
-      throw new RuntimeException("Failed, no match to Expense ID: " + expenseId, e);
+      throw new RuntimeException(
+          "Failed, no match to Expense ID: " + expenseId + ". " + e.getMessage(), e);
     }
   }
 
@@ -67,7 +68,8 @@ public class ExpenseService {
         expenseDao.removeExpense(expenseId);
         PopupUtil.showPopup("Success", "Expense with Id has Removed.", AlertType.INFORMATION);
       } catch (Exception e) {
-        throw new RuntimeException("Failed, Couldn't remove Expense ID:" + expenseId, e);
+        throw new RuntimeException(
+            "Failed, Couldn't remove Expense ID:" + expenseId + ". " + e.getMessage(), e);
       }
     } else {
       PopupUtil.showPopup("Failed", "Wrong Password.", AlertType.ERROR);
@@ -84,7 +86,7 @@ public class ExpenseService {
     try {
       return ListUtils.toObservableList(expenseDao.getExpenseByMonth(date));
     } catch (SQLException e) {
-      throw new RuntimeException("Failed, Couldn't convert Expense list.", e);
+      throw new RuntimeException("Failed, Couldn't convert Expense list. " + e.getMessage(), e);
     }
   }
 
@@ -108,7 +110,7 @@ public class ExpenseService {
     try {
       return expenseDao.addExpense(expense);
     } catch (SQLException e) {
-      throw new RuntimeException("Failed, Couldn't write Expense to db.", e);
+      throw new RuntimeException("Failed, Couldn't write Expense to db. " + e.getMessage(), e);
     }
   }
 }

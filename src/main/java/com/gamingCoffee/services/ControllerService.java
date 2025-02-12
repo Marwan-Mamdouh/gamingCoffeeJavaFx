@@ -28,7 +28,7 @@ public class ControllerService {
           new Controller.Builder().controllerId(controllerId).controllerType(controllerType)
               .build());
     } catch (SQLException e) {
-      throw new RuntimeException("Failed, Couldn't add new Controller.", e);
+      throw new RuntimeException("Failed, Couldn't add new Controller. " + e.getMessage(), e);
     }
   }
 
@@ -49,7 +49,7 @@ public class ControllerService {
         return false;
       }
     } catch (SQLException e) {
-      throw new RuntimeException("Failed, Couldn't remove Controller.", e);
+      throw new RuntimeException("Failed, Couldn't remove Controller. " + e.getMessage(), e);
     }
   }
 
@@ -68,7 +68,8 @@ public class ControllerService {
       return "Are you sure you want to remove Controller with this Information? Controller ID: "
           + controllerId + ", Controller Type: " + controller.getControllerType() + ".";
     } catch (SQLException e) {
-      throw new RuntimeException("Failed, no match for Controller ID:" + controllerId, e);
+      throw new RuntimeException(
+          "Failed, no match for Controller ID:" + controllerId + ". " + e.getMessage(), e);
     }
   }
 
@@ -80,7 +81,7 @@ public class ControllerService {
     try {
       return ListUtils.toObservableList(controllerDao.getAllController());
     } catch (SQLException e) {
-      throw new RuntimeException("Failed, Couldn't convert controllers list.", e);
+      throw new RuntimeException("Failed, Couldn't convert controllers list. " + e.getMessage(), e);
     }
   }
 }

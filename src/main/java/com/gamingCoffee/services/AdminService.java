@@ -53,17 +53,17 @@ public class AdminService {
   public static boolean addAdmin(String username, String password, Position title, int age,
       String phoneNumber, int salary) {
     try { // create an Admin instance
-      Admin admin = new Admin.Builder().username(username).title(title).salary(salary)
-          .password(hashPassword(password)).age(age).phoneNumber(phoneNumber).build();
+      Admin admin = buildAdmin(username, password, phoneNumber, title, salary, age);
 
-      boolean result = adminDao.addUser(admin);
-      if (!phoneNumber.isBlank() && result) {
+      final boolean result = adminDao.addUser(admin);
+      if (!phoneNumber.isEmpty() && result) {
         return adminDao.addPhoneNumber(admin);
       } else {
         return result;
       }
     } catch (Exception e) {
-      throw new RuntimeException("Failed, couldn't add Admin:" + username, e);
+      throw new RuntimeException("Failed, couldn't add Admin: " + username + ". " + e.getMessage(),
+          e);
     }
   }
 
@@ -82,7 +82,7 @@ public class AdminService {
             + admin.getSalary() + ", Phone Number: " + admin.getPhoneNumber();
       }
     } catch (SQLException e) {
-      throw new RuntimeException("Failed, no match in the db", e);
+      throw new RuntimeException("Failed, no match in the db. " + e.getMessage(), e);
     }
   }
 
@@ -97,7 +97,7 @@ public class AdminService {
           adminDao.getPasswordByUsername(AdminUsernameHolder.getAdminName()))) {
         return adminDao.removeUser(username);
       } else {
-        throw new RuntimeException("Wrong password.");
+        throw new RuntimeException("Wrong password. layer 2");
       }
     } catch (Exception e) {
       PopupUtil.showErrorPopup(e);
@@ -164,6 +164,16 @@ public class AdminService {
     } catch (Exception e) {
       PopupUtil.showErrorPopup(e);
       return false;
+    }
+  }
+
+  private static Admin buildAdmin(String username, String password, String phoneNumber,
+      Position title, int salary, int age) {
+    try {
+      return new Admin.Builder().username(username).title(title).salary(salary)
+          .password(hashPassword(password)).age(age).phoneNumber(phoneNumber).build();
+    } catch (Exception e) {
+      throw new RuntimeException("Failed, Couldn't build Admin. " + e.getMessage(), e);
     }
   }
 }

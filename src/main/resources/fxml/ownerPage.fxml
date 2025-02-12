@@ -28,11 +28,12 @@
                       <children>
                         <TableView fx:id="adminsTable" layoutY="15.0" prefHeight="275.0" prefWidth="600.0">
                           <columns>
-                            <TableColumn fx:id="usernameColumn" maxWidth="120.0" prefWidth="100.0" style="-fx-alignment: center;" text="username" />
-                            <TableColumn fx:id="ageColumn" maxWidth="1.7976931348623157E308" minWidth="5.0" prefWidth="98.0" style="-fx-alignment: center;" text="Age" />
-                            <TableColumn fx:id="hireDateColumn" maxWidth="1.7976931348623157E308" prefWidth="125.0" style="-fx-alignment: center;" text="Hire date" />
-                            <TableColumn fx:id="salaryColumn" maxWidth="1.7976931348623157E308" prefWidth="125.0" style="-fx-alignment: center;" text="Salary" />
-                            <TableColumn fx:id="phoneNumberColumn" maxWidth="1.7976931348623157E308" prefWidth="150.0" style="-fx-alignment: center;" text="Phone Number" />
+                            <TableColumn fx:id="usernameColumn" maxWidth="120.0" minWidth="90.0" prefWidth="90.0" style="-fx-alignment: center;" text="username" />
+                                          <TableColumn fx:id="titleColumn" maxWidth="90.0" minWidth="90.0" prefWidth="90.0" style="-fx-alignment: center;" text="Title" />
+                            <TableColumn fx:id="ageColumn" maxWidth="90.0" minWidth="60.0" prefWidth="64.0" style="-fx-alignment: center;" text="Age" />
+                            <TableColumn fx:id="hireDateColumn" maxWidth="125.0" minWidth="120.0" prefWidth="125.0" style="-fx-alignment: center;" text="Hire date" />
+                            <TableColumn fx:id="salaryColumn" maxWidth="80.0" minWidth="79.0" prefWidth="79.0" style="-fx-alignment: center;" text="Salary" />
+                            <TableColumn fx:id="phoneNumberColumn" maxWidth="150.0" minWidth="145.0" prefWidth="150.0" style="-fx-alignment: center;" text="Phone Number" />
                           </columns>
                         </TableView>
                         <Button layoutX="220.0" layoutY="300.0" mnemonicParsing="false" onAction="#refreshAdminsTableButtonAction" prefWidth="160.0" text="Refresh">
@@ -68,7 +69,10 @@
                             <Font name="0xProto Nerd Font Mono" size="13.0" />
                           </font>
                         </PasswordField>
-                        <TextField fx:id="passwordTextAddUser" layoutX="350.0" layoutY="70.0" prefWidth="160.0" promptText="Visible" visible="false" />
+                        <TextField fx:id="passwordTextAddUser" layoutX="350.0" layoutY="70.0" prefWidth="160.0" promptText="Visible" visible="false">
+                                       <font>
+                                          <Font name="0xProto Nerd Font Mono" size="13.0" />
+                                       </font></TextField>
                         <CheckBox fx:id="showPasswordCheckBoxAddUser" layoutX="530.0" layoutY="75.0" mnemonicParsing="false" onAction="#showPasswordCheckBoxAddUserAction" />
                         <Label layoutX="90.0" layoutY="120.0" text="Position" AnchorPane.rightAnchor="445.0">
                           <font>
@@ -91,7 +95,7 @@
                             <Font name="0xProto Nerd Font Mono" size="13.0" />
                           </font>
                         </Label>
-                        <TextField fx:id="phoneNumberField" layoutX="350.0" layoutY="205.0" prefHeight="26.0" prefWidth="160.0" promptText="Required">
+                        <TextField fx:id="phoneNumberField" layoutX="350.0" layoutY="205.0" prefHeight="26.0" prefWidth="160.0" promptText="Not Required">
                           <font>
                             <Font name="0xProto Nerd Font Mono" size="13.0" />
                           </font>
@@ -101,7 +105,7 @@
                             <Font name="0xProto Nerd Font Mono" size="13.0" />
                           </font>
                         </Label>
-                        <TextField fx:id="salaryField" layoutX="350.0" layoutY="250.0" prefHeight="26.0" prefWidth="160.0" promptText="Not working yet">
+                        <TextField fx:id="salaryField" layoutX="350.0" layoutY="250.0" prefHeight="26.0" prefWidth="160.0" promptText="Required">
                           <font>
                             <Font name="0xProto Nerd Font Mono" size="13.0" />
                           </font>
@@ -134,7 +138,10 @@
                                           <Font name="0xProto Nerd Font Mono" size="13.0" />
                                        </font>
                                     </Label>
-                                    <Button layoutX="90.0" layoutY="300.0" mnemonicParsing="false" onAction="#checkUserChangePasswordButtonAction" prefWidth="160.0" text="Check user" />
+                                    <Button layoutX="90.0" layoutY="300.0" mnemonicParsing="false" onAction="#checkUserChangePasswordButtonAction" prefWidth="160.0" text="Check user">
+                                       <font>
+                                          <Font name="0xProto Nerd Font Mono" size="13.0" />
+                                       </font></Button>
                                     <Label layoutX="90.0" layoutY="209.0" text="Your Password">
                                        <font>
                                           <Font name="0xProto Nerd Font Mono" size="13.0" />
@@ -151,7 +158,6 @@
                                        </font>
                                     </TextField>
                                     <CheckBox fx:id="showPasswordCheckBoxChangePassword" layoutX="530.0" layoutY="209.0" mnemonicParsing="false" onAction="#showPasswordCheckBoxChangePasswordAction" />
-                                    <Button fx:id="changePasswordButton" layoutX="350.0" layoutY="300.0" mnemonicParsing="false" onAction="#changePasswordButtonAction" prefWidth="160.0" text="Delete" visible="false" />
                                     <Label layoutX="90.0" layoutY="247.0" text="New Password">
                                        <font>
                                           <Font name="0xProto Nerd Font Mono" size="13.0" />
@@ -168,6 +174,10 @@
                                        </font>
                                     </TextField>
                                     <CheckBox fx:id="showPasswordCheckBoxNewPassword" layoutX="530.0" layoutY="247.0" mnemonicParsing="false" onAction="#showPasswordCheckBoxNewPasswordAction" />
+                                    <Button fx:id="changePasswordButton" layoutX="350.0" layoutY="300.0" mnemonicParsing="false" onAction="#changePasswordButtonAction" prefWidth="160.0" text="Change" visible="false">
+                                       <font>
+                                          <Font name="0xProto Nerd Font Mono" size="13.0" />
+                                       </font></Button>
                                  </children>
                               </AnchorPane>
                            </content>

@@ -34,7 +34,7 @@ public class ExpenseDao implements IExpenseDao {
       statement.setString(3, expense.getNote());
       return 0 < statement.executeUpdate();
     } catch (SQLException e) {
-      throw new RuntimeException("Failed, Couldn't add new Expense.", e);
+      throw new RuntimeException("Failed, Couldn't add new Expense. " + e.getMessage(), e);
     }
   }
 
@@ -55,7 +55,8 @@ public class ExpenseDao implements IExpenseDao {
         return null;
       }
     } catch (SQLException e) {
-      throw new RuntimeException("Failed, no match for Expense ID:" + expenseId, e);
+      throw new RuntimeException(
+          "Failed, no match for Expense ID:" + expenseId + ". " + e.getMessage(), e);
     }
   }
 
@@ -72,7 +73,8 @@ public class ExpenseDao implements IExpenseDao {
       statement.setInt(1, expenseId);
       return 0 < statement.executeUpdate();
     } catch (SQLException e) {
-      throw new RuntimeException("Failed, Couldn't remove Expense ID:" + expenseId, e);
+      throw new RuntimeException(
+          "Failed, Couldn't remove Expense ID:" + expenseId + ". " + e.getMessage(), e);
     }
   }
 
@@ -96,7 +98,7 @@ public class ExpenseDao implements IExpenseDao {
         return expenses;
       }
     } catch (SQLException e) {
-      throw new RuntimeException("Failed, Couldn't get Expense by Date.", e);
+      throw new RuntimeException("Failed, Couldn't get Expense by Date. " + e.getMessage(), e);
     }
   }
 
@@ -107,7 +109,7 @@ public class ExpenseDao implements IExpenseDao {
    * @produce a list of expense from the start of the month till the gavin date
    */
   @Override
-  public List<Expense> getExpenseByMonth(LocalDate date) throws SQLException {
+  public List<Expense> getExpenseByMonth(LocalDate date) {
     final String sql = "SELECT * FROM expenses WHERE DATE(exp_date) BETWEEN "
         + "DATE(?, 'start of month') AND DATE(?)";
     final List<Expense> expenses = new ArrayList<>();
@@ -121,7 +123,7 @@ public class ExpenseDao implements IExpenseDao {
         return expenses;
       }
     } catch (SQLException e) {
-      throw new RuntimeException("Failed, Couldn't get Expense by month.", e);
+      throw new RuntimeException("Failed, Couldn't get Expense by month. " + e.getMessage(), e);
     }
   }
 
@@ -143,7 +145,8 @@ public class ExpenseDao implements IExpenseDao {
         return 0.0;
       }
     } catch (SQLException e) {
-      throw new RuntimeException("Failed to get the Sum of the Expense by Date.", e);
+      throw new RuntimeException("Failed to get the Sum of the Expense by Date. " + e.getMessage(),
+          e);
     }
   }
 
@@ -160,7 +163,7 @@ public class ExpenseDao implements IExpenseDao {
           .note(rs.getString("exp_note")).expenseDate(LocalDate.parse(rs.getString("exp_date")))
           .build();
     } catch (SQLException e) {
-      throw new RuntimeException("Failed to build an Expense object.", e);
+      throw new RuntimeException("Failed to build an Expense object. " + e.getMessage(), e);
     }
   }
 }

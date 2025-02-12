@@ -33,7 +33,7 @@ public class AdminDao implements IAdminDao {
             .password(rs.getString("password")).build();
       }
     } catch (SQLException e) {
-      throw new RuntimeException("Failed, no match for username.", e);
+      throw new RuntimeException("Failed, no match for username. " + e.getMessage(), e);
     }
   }
 
@@ -41,7 +41,7 @@ public class AdminDao implements IAdminDao {
    * @param newAdmin {@code Admin} contains {@code username (String)}, {@code password (String)},
    *                 {@code title (Position)}, {@code age (int)}, {@code number (String)} (if
    *                 possible)
-   * @throws SQLException if something wrong happened while connecting to db
+   * @throws RuntimeException if something wrong happened while connecting to db
    */
   @Override
   public boolean addUser(Admin newAdmin) {
@@ -55,7 +55,7 @@ public class AdminDao implements IAdminDao {
       statement.setInt(5, newAdmin.getSalary());
       return 0 < statement.executeUpdate();
     } catch (SQLException e) {
-      throw new RuntimeException("Failed to Add new Admin.", e);
+      throw new RuntimeException("Failed to Add new Admin. " + e.getMessage(), e);
     }
   }
 
@@ -70,7 +70,7 @@ public class AdminDao implements IAdminDao {
       statement.setString(1, username);
       return 0 < statement.executeUpdate();
     } catch (SQLException e) {
-      throw new RuntimeException("Failed, no match for username.", e);
+      throw new RuntimeException("Failed, no match for username. " + e.getMessage(), e);
     }
   }
 
@@ -87,7 +87,7 @@ public class AdminDao implements IAdminDao {
       statement.setString(2, username);
       return 0 < statement.executeUpdate();
     } catch (SQLException e) {
-      throw new RuntimeException("Failed, can not change password.", e);
+      throw new RuntimeException("Failed, can not change password. " + e.getMessage(), e);
     }
   }
 
@@ -103,7 +103,7 @@ public class AdminDao implements IAdminDao {
       statement.setString(2, admin.getPhoneNumber());
       return 0 < statement.executeUpdate();
     } catch (SQLException e) {
-      throw new RuntimeException("Failed, Can not add phone number.", e);
+      throw new RuntimeException("Failed, Can not add phone number. " + e.getMessage(), e);
     }
   }
 
@@ -122,39 +122,6 @@ public class AdminDao implements IAdminDao {
     return admins.isEmpty() ? null : admins.getFirst();
   }
 
-//  @Override
-//  public List<Admin> getAdmins() {
-//    final String sql = "SELECT a.username, a.age, a.hire_date, a.salary, p.phone_number "
-//        + "FROM admins a LEFT JOIN admin_phones p ON a.username = p.username";
-//    final ArrayList<Admin> admins = new ArrayList<>();
-//    try (PreparedStatement statement = connection.prepareStatement(
-//        sql); ResultSet rs = statement.executeQuery()) {
-//      while (rs.next()) {
-//        admins.add(makeAdmin(rs));
-//      }
-//      return admins;
-//    } catch (SQLException e) {
-//      throw new RuntimeException("Failed, Can not get Admin Data", e);
-//    }
-//  }
-//
-//  @Override
-//  public Admin getAdminInfo(String username) {
-//    final String sql = "SELECT a.username, a.age, a.hire_date, a.salary, p.phone_number FROM admins"
-//        + " a LEFT JOIN admin_phones p ON a.username = p.username WHERE a.username = ?";
-//    try (PreparedStatement statement = connection.prepareStatement(sql)) {
-//      statement.setString(1, username);
-//      try (ResultSet rs = statement.executeQuery()) {
-//        if (rs.next()) {
-//          return makeAdmin(rs);
-//        }
-//        return null;
-//      }
-//    } catch (SQLException e) {
-//      throw new RuntimeException("Failed, Can not get Admin Data", e);
-//    }
-//  }
-
   @Override
   public String getPasswordByUsername(String username) {
     final String sql = "SELECT password FROM admins where username = ?";
@@ -167,7 +134,8 @@ public class AdminDao implements IAdminDao {
         return null;
       }
     } catch (SQLException e) {
-      throw new RuntimeException("Failed, no match for username:" + username, e);
+      throw new RuntimeException(
+          "Failed, no match for username:" + username + ". " + e.getMessage(), e);
     }
   }
 
@@ -178,7 +146,8 @@ public class AdminDao implements IAdminDao {
       statement.setString(1, username);
       return 0 < statement.executeUpdate();
     } catch (SQLException e) {
-      throw new RuntimeException("Failed, Can not remove Admin: " + username + " phone number", e);
+      throw new RuntimeException(
+          "Failed, Can not remove Admin: " + username + " phone number. " + e.getMessage(), e);
     }
   }
 
@@ -188,7 +157,7 @@ public class AdminDao implements IAdminDao {
           .hiringDate(rs.getString("hire_date")).salary(rs.getInt("salary"))
           .phoneNumber(rs.getString("phone_number")).build();
     } catch (SQLException e) {
-      throw new RuntimeException("Failed, Can not build an Admin", e);
+      throw new RuntimeException("Failed, Can not build an Admin. " + e.getMessage(), e);
     }
   }
 
@@ -196,7 +165,7 @@ public class AdminDao implements IAdminDao {
   private List<Admin> queryAdmins(String... parameters) {
     final List<Admin> admins = new ArrayList<>();
     if (parameters == null || parameters.length < 1) {
-      throw new RuntimeException("Failed, can not call queryAdmins with no parameters.");
+      throw new RuntimeException("Failed, can not call queryAdmins with no parameters. layer 1");
     }
     try (PreparedStatement statement = connection.prepareStatement(parameters[0])) {
       // Set query parameters if provided
@@ -209,7 +178,7 @@ public class AdminDao implements IAdminDao {
         }
       }
     } catch (SQLException e) {
-      throw new RuntimeException("Failed, Cannot get Admin Data.", e);
+      throw new RuntimeException("Failed, Cannot get Admin Data. " + e.getMessage(), e);
     }
     return admins;
   }

@@ -5,7 +5,7 @@
       <option name="minLines" value="16" />
     </inspection_tool>
     <inspection_tool class="JavadocDeclaration" enabled="true" level="WARNING" enabled_by_default="true">
-      <option name="ADDITIONAL_TAGS" value="Pram" />
+      <option name="ADDITIONAL_TAGS" value="Pram,produce" />
     </inspection_tool>
     <inspection_tool class="PyPep8NamingInspection" enabled="true" level="WEAK WARNING" enabled_by_default="true">
       <option name="ignoredErrors">
