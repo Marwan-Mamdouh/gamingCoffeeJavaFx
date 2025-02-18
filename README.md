@@ -51,3 +51,9 @@ A JavaFX-based café management system designed for gaming cafés, featuring ord
 - **Other Tools**
   - Scene Builder for FXML design
   - SQLite Browser (for database inspection)
+ 
+  - ## Installation
+
+1. **Clone the Repository:**
+   ```bash
+   git clone https://github.com/Marwan-Mamdouh/gamingCoffeeJavaFx.git
