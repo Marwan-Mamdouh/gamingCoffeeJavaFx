@@ -64,11 +64,11 @@ A JavaFX-based café management system designed for gaming cafés, featuring ord
 
 3. **Clone the Repository:**
    
-     ***On Linux or macOS:***
+   ***1 - On Linux or macOS:***
      ```bash
      ./mvnw javafx:run
 
-    ***On Windows:***
+    ***2 - On Windows:***
     ```bash
-     ./mvnw.cmd javafx:run
+    ./mvnw.cmd javafx:run
 
