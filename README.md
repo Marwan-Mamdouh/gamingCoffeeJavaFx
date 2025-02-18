@@ -63,6 +63,7 @@ A JavaFX-based café management system designed for gaming cafés, featuring ord
    cd gamingCoffeeJavaFx
 
 3. **Clone the Repository:**
+   
    ***On Linux or macOS:***
    ```bash
    ./mvnw javafx:run
