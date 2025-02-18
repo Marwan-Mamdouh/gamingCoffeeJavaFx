@@ -57,3 +57,17 @@ A JavaFX-based café management system designed for gaming cafés, featuring ord
 1. **Clone the Repository:**
    ```bash
    git clone https://github.com/Marwan-Mamdouh/gamingCoffeeJavaFx.git
+
+2. **Navigate to the Project Folder:**
+   ```bash
+   cd gamingCoffeeJavaFx
+
+3. **Clone the Repository:**
+   ***On Linux or macOS:***
+   ```bash
+   ./mvnw javafx:run
+
+  ***On Windows:***
+  ```bash
+   ./mvnw.cmd javafx:run
+
