@@ -143,6 +143,32 @@ public class SpotDao implements ISpotDao {
     return spots;
   }
 
+  @Override
+  public List<String> getBusySpotsNumbers() {
+    return getSpotsByAvailability("NOT AVAILABLE");
+  }
+
+  @Override
+  public List<String> getFreeSpotsNumbers() {
+    return getSpotsByAvailability("AVAILABLE");
+  }
+
+  private List<String> getSpotsByAvailability(String availability) {
+    final String sql = "SELECT spot_id FROM spots WHERE spot_state = ?";
+    final List<String> spots = new ArrayList<>();
+    try (PreparedStatement statement = connection.prepareStatement(sql)) {
+      statement.setString(1, availability);
+      try (ResultSet rs = statement.executeQuery()) {
+        while (rs.next()) {
+          spots.add(rs.getString("spot_id"));
+        }
+        return spots;
+      }
+    } catch (SQLException e) {
+      throw new RuntimeException("Failed to get Spots. " + e.getMessage());
+    }
+  }
+
   private Spot makeFullSpot(ResultSet rs) throws SQLException {
     try {
       return new Spot.Builder().spotId(rs.getInt("spot_id"))
