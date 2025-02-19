@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -27,11 +28,6 @@
   <center>
     <AnchorPane prefWidth="600.0" BorderPane.alignment="CENTER">
       <children>
-        <TextField fx:id="spotNumberFiled" layoutX="350.0" layoutY="60.0" prefHeight="25.0" prefWidth="160.0" promptText="Required">
-          <font>
-            <Font name="0xProto Nerd Font Mono" size="13.0" />
-          </font>
-        </TextField>
         <TextField fx:id="noControllersFiled" layoutX="350.0" layoutY="105.0" prefHeight="25.0" prefWidth="160.0" promptText="Required">
           <font>
             <Font name="0xProto Nerd Font Mono" size="13.0" />
@@ -61,6 +57,7 @@
                   <Font name="0xProto Nerd Font Mono" size="20.0" />
                </font>
             </Label>
+            <ChoiceBox fx:id="spotNumberChoiceBox" layoutX="350.0" layoutY="60.0" prefHeight="25.0" prefWidth="160.0" />
       </children>
     </AnchorPane>
   </center>
