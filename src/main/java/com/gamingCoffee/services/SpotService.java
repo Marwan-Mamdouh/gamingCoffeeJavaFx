@@ -26,19 +26,26 @@ public class SpotService {
     return ListUtils.toObservableList(spotDao.getAllSpots());
   }
 
+  public static ObservableList<Integer> getFreeSpotsNumbers() throws SQLException {
+    return ListUtils.toObservableList(spotDao.getFreeSpotsNumbers());
+  }
+
+  public static ObservableList<Integer> getBusySpotsNumbers() throws SQLException {
+    return ListUtils.toObservableList(spotDao.getBusySpotsNumbers());
+  }
+
   public static void addSpot(int consoleId, ConsoleType consoleType, SpotType spotType,
       int displayId, String displayType, int displaySize) {
     try {
       IdsUtil.validateIdPositive(consoleId);
       IdsUtil.validateIdPositive(displayId);
-      spotDao.addSpot(
+      if (spotDao.addSpot(
           new Spot.Builder().consoleId(consoleId).consoleType(consoleType).spotType(spotType)
-              .displayId(displayId).displayType(displayType).displaySize(displaySize).build());
-
-      PopupUtil.showPopup("Success",
-          "Spot with console ID:" + consoleId + " and display ID:" + displayId
-              + " just added successfully!", AlertType.INFORMATION);
-
+              .displayId(displayId).displayType(displayType).displaySize(displaySize).build())) {
+        PopupUtil.showPopup("Success",
+            "Spot with console ID:" + consoleId + " and display ID:" + displayId
+                + " just added successfully!", AlertType.INFORMATION);
+      }
     } catch (Exception e) {
       PopupUtil.showErrorPopup(e);
     }

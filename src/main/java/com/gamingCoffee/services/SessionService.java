@@ -72,31 +72,28 @@ public class SessionService {
   }
 
   /**
-   * @param sessionNumber (int)
-   * @param spotNumber    (int)
+   * @param spotNumber (int)
    * @return (double)
    * @produce the price of the session based on gavin sessionNumber and spotNumber or 0.0 if
    * something went wrong
    */
-  public static double endSession(int sessionNumber, int spotNumber) {
+  public static double endSession(int spotNumber) {
     try {// send end session order to DB
-      if (endSessionHelper(sessionNumber, spotNumber)) {
+      if (endSessionHelper(spotNumber)) {
         // calculate the price of the session and store it in sessionPrice for reuse it
-        double sessionPrice = calculateSessionPrice(
-            sessionDao.getNoControllersAndDuration(sessionNumber),
+        Session session = sessionDao.getSessionIdAndControllersAndDuration(spotNumber);
+        double sessionPrice = calculateSessionPrice(session,
             spotDao.getSpotPrivacyAndConsoleType(spotNumber));
         // write session price to db
-        if (sessionDao.writeSessionPrice(sessionPrice, sessionNumber)) {
+        if (sessionDao.writeSessionPrice(sessionPrice, session.getSessionId())) {
           return sessionPrice;
         }
       }
     } catch (Exception e) {
       throw new RuntimeException(
-          "Failed, Couldn't end Session ID:" + sessionNumber + "on spot ID: " + spotNumber + ". "
-              + e.getMessage(), e);
+          "Failed, Couldn't end Session on spot ID: " + spotNumber + ". " + e.getMessage(), e);
     }
-    throw new RuntimeException(
-        "Failed, Couldn't end Session ID:" + sessionNumber + "on spot ID: " + spotNumber + " 1.");
+    throw new RuntimeException("Failed, Couldn't end Session on spot ID: " + spotNumber + ", 1.");
   }
 
   /**
@@ -141,10 +138,10 @@ public class SessionService {
     return sessionDao.getCurrentSessions();
   }
 
-  private static boolean endSessionHelper(int sessionId, int spotId) {
+  private static boolean endSessionHelper(int spotId) {
     try {
-      return sessionDao.endSession(new Session.Builder().sessionId(sessionId).spotId(spotId)
-          .creator(AdminUsernameHolder.getAdminName()).build());
+      return sessionDao.endSession(
+          new Session.Builder().spotId(spotId).creator(AdminUsernameHolder.getAdminName()).build());
     } catch (Exception e) {
       PopupUtil.showErrorPopup(e);
       return false;

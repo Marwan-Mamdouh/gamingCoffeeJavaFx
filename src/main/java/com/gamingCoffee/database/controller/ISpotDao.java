@@ -12,6 +12,10 @@ public interface ISpotDao {
 
   List<Spot> getFreeSpots() throws SQLException;
 
+  List<Integer> getFreeSpotsNumbers() throws SQLException;
+
+  List<Integer> getBusySpotsNumbers() throws SQLException;
+
   List<Spot> getAllSpots() throws SQLException;
 
   Spot getSpotPrivacyAndConsoleType(int spotNumber) throws SQLException;

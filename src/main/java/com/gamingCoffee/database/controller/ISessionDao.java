@@ -10,13 +10,13 @@ public interface ISessionDao {
 
   List<Session> getSessionsPerDate(String date) throws SQLException;
 
+  Session getSessionIdAndControllersAndDuration(int sessionId) throws SQLException;
+
   boolean createOpenSession(Session newSession) throws SQLException;
 
   boolean createTimedSession(Session newSession, double hours) throws SQLException;
 
   boolean endSession(Session oldSession) throws SQLException;
-
-  Session getNoControllersAndDuration(int sessionId) throws SQLException;
 
   boolean writeSessionPrice(double sessionPrice, int sessionId) throws SQLException;
 
