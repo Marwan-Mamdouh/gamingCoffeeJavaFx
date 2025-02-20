@@ -144,23 +144,23 @@ public class SpotDao implements ISpotDao {
   }
 
   @Override
-  public List<String> getBusySpotsNumbers() {
-    return getSpotsByAvailability("NOT AVAILABLE");
+  public List<Integer> getBusySpotsNumbers() {
+    return getSpotsByAvailability("NOT_AVAILABLE");
   }
 
   @Override
-  public List<String> getFreeSpotsNumbers() {
+  public List<Integer> getFreeSpotsNumbers() {
     return getSpotsByAvailability("AVAILABLE");
   }
 
-  private List<String> getSpotsByAvailability(String availability) {
+  private List<Integer> getSpotsByAvailability(String availability) {
     final String sql = "SELECT spot_id FROM spots WHERE spot_state = ?";
-    final List<String> spots = new ArrayList<>();
+    final List<Integer> spots = new ArrayList<>();
     try (PreparedStatement statement = connection.prepareStatement(sql)) {
       statement.setString(1, availability);
       try (ResultSet rs = statement.executeQuery()) {
         while (rs.next()) {
-          spots.add(rs.getString("spot_id"));
+          spots.add(rs.getInt("spot_id"));
         }
         return spots;
       }

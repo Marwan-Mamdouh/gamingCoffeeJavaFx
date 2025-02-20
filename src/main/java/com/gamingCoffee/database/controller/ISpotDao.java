@@ -12,9 +12,9 @@ public interface ISpotDao {
 
   List<Spot> getFreeSpots() throws SQLException;
 
-  List<String> getFreeSpotsNumbers() throws SQLException;
+  List<Integer> getFreeSpotsNumbers() throws SQLException;
 
-  List<String> getBusySpotsNumbers() throws SQLException;
+  List<Integer> getBusySpotsNumbers() throws SQLException;
 
   List<Spot> getAllSpots() throws SQLException;
 

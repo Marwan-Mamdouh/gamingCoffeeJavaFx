@@ -18,7 +18,7 @@ public class CreateSessionController implements Initializable {
 
   // field
   @FXML
-  private ChoiceBox<String> spotNumberChoiceBox;
+  private ChoiceBox<Integer> spotNumberChoiceBox;
   @FXML
   private TextField noControllersFiled;
   @FXML
@@ -38,7 +38,7 @@ public class CreateSessionController implements Initializable {
   @FXML
   void createSessionAction() {
     try {
-      if (SessionService.createSession(Integer.parseInt(spotNumberChoiceBox.getValue()),
+      if (SessionService.createSession(spotNumberChoiceBox.getValue(),
           Integer.parseInt(noControllersFiled.getText()), endTimeFiled.getText())) {
         PopupUtil.showPopup("Success", "Session Created.", AlertType.INFORMATION);
         cancelAction();
