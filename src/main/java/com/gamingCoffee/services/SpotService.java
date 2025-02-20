@@ -26,8 +26,12 @@ public class SpotService {
     return ListUtils.toObservableList(spotDao.getAllSpots());
   }
 
-  public static ObservableList<String> getFreeSpotsNumbers() throws SQLException {
+  public static ObservableList<Integer> getFreeSpotsNumbers() throws SQLException {
     return ListUtils.toObservableList(spotDao.getFreeSpotsNumbers());
+  }
+
+  public static ObservableList<Integer> getBusySpotsNumbers() throws SQLException {
+    return ListUtils.toObservableList(spotDao.getBusySpotsNumbers());
   }
 
   public static void addSpot(int consoleId, ConsoleType consoleType, SpotType spotType,

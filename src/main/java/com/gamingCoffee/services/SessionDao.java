@@ -96,11 +96,10 @@ public class SessionDao implements ISessionDao {
   @Override
   public boolean endSession(Session oldSession) throws SQLException {
     final String sql = "UPDATE sessions SET end_time = datetime('now', 'localtime'),"
-        + " creator = ? WHERE session_id = ? AND spot_id = ? AND session_state = 'RUNNING'";
+        + " creator = ? WHERE spot_id = ? AND session_state = 'RUNNING'";
     try (PreparedStatement statement = connection.prepareStatement(sql)) {
       statement.setString(1, oldSession.getCreator());
       statement.setInt(2, oldSession.getSpotId());
-      statement.setInt(3, oldSession.getSessionId());
       return 0 < statement.executeUpdate();
     } catch (SQLException e) {
       throw new RuntimeException(
@@ -109,19 +108,21 @@ public class SessionDao implements ISessionDao {
   }
 
   /**
-   * @param sessionId (int)
+   * @param spotId (int)
    * @return (Session) object contains the controllers number and the duration of the session based
    * on gavin session ID
    * @throws RuntimeException if something want wrong in the db
    */
   @Override
-  public Session getNoControllersAndDuration(int sessionId) {
-    final String sql = "SELECT controllers_number, duration from sessions where session_id = ?";
+  public Session getSessionIdAndControllersAndDuration(int spotId) {
+    final String sql = "SELECT session_id, controllers_number, duration FROM sessions WHERE "
+        + "spot_id = ? ORDER BY session_id DESC LIMIT 1";
     try (PreparedStatement statement = connection.prepareStatement(sql)) {
-      statement.setInt(1, sessionId);
+      statement.setInt(1, spotId);
       try (ResultSet rs = statement.executeQuery()) {
-        return new Session.Builder().noControllers(rs.getInt("controllers_number"))
-            .duration(rs.getDouble("duration")).build();
+        return new Session.Builder().sessionId(rs.getInt("session_id"))
+            .noControllers(rs.getInt("controllers_number")).duration(rs.getDouble("duration"))
+            .build();
       }
     } catch (SQLException e) {
       throw new RuntimeException(

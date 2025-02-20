@@ -10,6 +10,8 @@ public interface ISessionDao {
 
   List<Session> getSessionsPerDate(String date) throws SQLException;
 
+  Session getSessionIdAndControllersAndDuration(int sessionId) throws SQLException;
+
   boolean createOpenSession(Session newSession) throws SQLException;
 
   boolean createTimedSession(Session newSession, double hours) throws SQLException;
@@ -17,10 +19,6 @@ public interface ISessionDao {
   boolean endSession(Session oldSession) throws SQLException;
 
   boolean writeSessionPrice(double sessionPrice, int sessionId) throws SQLException;
-
-  Session getSessionIdAndControllersAndDuration(int sessionId) throws SQLException;
-
-  Session getSessionData(int spotId) throws SQLException;
 
   double[] getSessionCountAndSumPrices(String date) throws SQLException;
 
