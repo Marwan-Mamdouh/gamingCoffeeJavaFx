@@ -16,9 +16,11 @@ public interface ISessionDao {
 
   boolean endSession(Session oldSession) throws SQLException;
 
-  Session getNoControllersAndDuration(int sessionId) throws SQLException;
-
   boolean writeSessionPrice(double sessionPrice, int sessionId) throws SQLException;
+
+  Session getSessionIdAndControllersAndDuration(int sessionId) throws SQLException;
+
+  Session getSessionData(int spotId) throws SQLException;
 
   double[] getSessionCountAndSumPrices(String date) throws SQLException;
 
