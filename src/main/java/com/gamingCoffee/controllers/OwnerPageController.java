@@ -20,6 +20,7 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert.AlertType;
@@ -64,6 +65,10 @@ public class OwnerPageController implements Initializable {
   // Spot
   @FXML
   private Label spotDataLabel;
+  @FXML
+  private Label currentConsolePrice;
+  @FXML
+  private Label currentSpotTypePrice;
 
   // Controller
   @FXML
@@ -148,6 +153,10 @@ public class OwnerPageController implements Initializable {
   private ChoiceBox<ConsoleType> consoleTypeChoiceBox;
   @FXML
   private ChoiceBox<SpotType> spotPrivacyChoiceBox;
+  @FXML
+  private ChoiceBox<ConsoleType> choiceBoxConsolesType;
+  @FXML
+  private ChoiceBox<SpotType> choiceBoxSpotTypes;
 
   //Controller
   @FXML
@@ -221,6 +230,10 @@ public class OwnerPageController implements Initializable {
   private TextField passwordTextRemoveSpot;
   @FXML
   private PasswordField passwordRemoveSpot;
+  @FXML
+  private TextField changeConsolePriceField;
+  @FXML
+  private TextField changeSpotTypePriceField;
 
   // Controller
   @FXML
@@ -411,6 +424,32 @@ public class OwnerPageController implements Initializable {
     }
   }
 
+  @FXML
+  void updateConsolePriceButtonAction() {
+    try {
+      if (SpotService.updatePrices(Integer.parseInt(changeConsolePriceField.getText()),
+          choiceBoxConsolesType.getValue())) {
+        priceUpdated();
+      }
+    } catch (RuntimeException e) {
+      PopupUtil.showErrorPopup(e);
+      throw new RuntimeException(e.getMessage());
+    }
+  }
+
+  @FXML
+  void updateSpotTypePriceButtonAction() {
+    try {
+      if (SpotService.updatePrices(Integer.parseInt(changeSpotTypePriceField.getText()),
+          choiceBoxSpotTypes.getValue())) {
+        priceUpdated();
+      }
+    } catch (RuntimeException e) {
+      PopupUtil.showErrorPopup(e);
+      throw new RuntimeException(e.getMessage());
+    }
+  }
+
   private void makeSpotTable() {
     // Set cell value factories
     spotIdColumn.setCellValueFactory(new PropertyValueFactory<>("spotId"));
@@ -428,6 +467,20 @@ public class OwnerPageController implements Initializable {
     } catch (Exception e) {
       PopupUtil.showErrorPopup(e);
     }
+  }
+
+  private void priceUpdated() {
+    PopupUtil.showPopup("Success", "the Price has updated successfully!", AlertType.INFORMATION);
+  }
+
+  private void getConsolePrice(ActionEvent event) {
+    currentConsolePrice.setText(
+        String.valueOf(SpotService.getPrices(choiceBoxConsolesType.getValue())));
+  }
+
+  private void getSpotPrice(ActionEvent event) {
+    currentSpotTypePrice.setText(
+        String.valueOf(SpotService.getPrices(choiceBoxSpotTypes.getValue())));
   }
 
   // Controller
@@ -559,18 +612,28 @@ public class OwnerPageController implements Initializable {
     makeSpotTable();
     makeControllerTable();
     setChoiceBoxValues();
+
     TableViewUtils.makeTableCopyable(adminsTable);
     TableViewUtils.makeTableCopyable(spotTable);
     TableViewUtils.makeTableCopyable(controllersTable);
     TableViewUtils.makeTableCopyable(expensesTable);
+
+    choiceBoxConsolesType.setOnAction(this::getConsolePrice);
+    choiceBoxSpotTypes.setOnAction(this::getSpotPrice);
   }
 
   private void setChoiceBoxValues() {
+    // Admin
     choiceBoxPosition.getItems().addAll(Position.OWNER, Position.EMPLOYEE);
 
+    // Spot
     consoleTypeChoiceBox.getItems().addAll(ConsoleType.PS4, ConsoleType.PS5);
     spotPrivacyChoiceBox.getItems().addAll(SpotType.PRIVATE, SpotType.PUBLIC);
 
+    choiceBoxConsolesType.getItems().addAll(ConsoleType.PS4, ConsoleType.PS5);
+    choiceBoxSpotTypes.getItems().addAll(SpotType.PRIVATE, SpotType.PUBLIC);
+
+    // Controller
     controllerTypeChoiceBox.getItems()
         .addAll(ControllerType.PS4CONTROLLER, ControllerType.PS5CONTROLLER);
   }

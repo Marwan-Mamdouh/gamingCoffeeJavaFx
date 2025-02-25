@@ -153,6 +153,49 @@ public class SpotDao implements ISpotDao {
     return getSpotsByAvailability("AVAILABLE");
   }
 
+  public double getPricePerHour(SpotType spotType, ConsoleType consoleType) {
+    final String sql = "SELECT price FROM prices WHERE service_type = ? OR service_type = ?";
+    try (PreparedStatement statement = connection.prepareStatement(sql)) {
+      statement.setString(1, spotType.toString());
+      statement.setString(2, consoleType.toString());
+      try (ResultSet rs = statement.executeQuery()) {
+        if (rs.next()) {
+          return addPrices(rs);
+        }
+      }
+      return 0.0;
+    } catch (SQLException e) {
+      throw new RuntimeException(e.getMessage());
+    }
+  }
+
+  public boolean setPrice(Enum<?> serviceType, double price) {
+    final String sql = "UPDATE prices SET price = ? WHERE service_type = ?";
+    try (PreparedStatement statement = connection.prepareStatement(sql)) {
+      statement.setDouble(1, price);
+      statement.setString(2, serviceType.toString());
+      return 0 < statement.executeUpdate();
+    } catch (SQLException e) {
+      throw new RuntimeException(e.getMessage());
+    }
+  }
+
+  public double getServicePrice(Enum<?> serviceType) {
+    final String sql = "SELECT price FROM prices WHERE service_type = ?";
+    try (PreparedStatement statement = connection.prepareStatement(sql)) {
+      statement.setString(1, serviceType.toString());
+      try (ResultSet rs = statement.executeQuery()) {
+        if (rs.next()) {
+          return rs.getDouble("price");
+        } else {
+          throw new RuntimeException("No match for:" + serviceType + " in db.");
+        }
+      }
+    } catch (SQLException e) {
+      throw new RuntimeException(e.getMessage());
+    }
+  }
+
   private List<Integer> getSpotsByAvailability(String availability) {
     final String sql = "SELECT spot_id FROM spots WHERE spot_state = ?";
     final List<Integer> spots = new ArrayList<>();
@@ -201,6 +244,18 @@ public class SpotDao implements ISpotDao {
           .displayType(rs.getString("display_type")).displaySize(rs.getInt("display_size")).build();
     } catch (SQLException e) {
       throw new RuntimeException("Failed to build Spot. " + e.getMessage(), e);
+    }
+  }
+
+  private double addPrices(ResultSet resultSet) throws SQLException {
+    double price = 0.0;
+    try {
+      while (resultSet.next()) {
+        price += resultSet.getDouble("price");
+      }
+      return price;
+    } catch (SQLException e) {
+      throw new RuntimeException(e.getMessage());
     }
   }
 }
