@@ -1,6 +1,8 @@
 package com.gamingCoffee.database.controller;
 
 import com.gamingCoffee.database.entities.Spot;
+import com.gamingCoffee.models.ConsoleType;
+import com.gamingCoffee.models.SpotType;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -21,4 +23,10 @@ public interface ISpotDao {
   Spot getSpotPrivacyAndConsoleType(int spotNumber) throws SQLException;
 
   Spot checkSpot(int spot_id) throws SQLException;
+
+  double getPricePerHour(SpotType spotType, ConsoleType consoleType);
+
+  boolean setPrice(Enum<?> serviceType, double price);
+
+  double getServicePrice(Enum<?> serviceType);
 }
