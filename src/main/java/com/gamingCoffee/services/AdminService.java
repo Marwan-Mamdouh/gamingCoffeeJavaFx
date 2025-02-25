@@ -7,11 +7,9 @@ import com.gamingCoffee.database.controller.IAdminDao;
 import com.gamingCoffee.database.entities.Admin;
 import com.gamingCoffee.models.Position;
 import com.gamingCoffee.utiles.AdminUsernameHolder;
+import com.gamingCoffee.utiles.ListUtils;
 import com.gamingCoffee.utiles.PopupUtil;
 import java.sql.SQLException;
-import java.util.List;
-import java.util.Objects;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 public class AdminService {
@@ -109,21 +107,8 @@ public class AdminService {
    * @return ObservableList<Admin>
    * @produce a render able list for app
    */
-  public static ObservableList<Admin> convertAdminsList() {
-    return FXCollections.observableArrayList(Objects.requireNonNull(getAdminsList()));
-  }
-
-  /**
-   * @return List<Admin>
-   * @produce the list of all admins
-   */
-  private static List<Admin> getAdminsList() {
-    try {
-      return adminDao.getAdmins();
-    } catch (SQLException e) {
-      PopupUtil.showErrorPopup(e);
-      return null;
-    }
+  public static ObservableList<Admin> convertAdminsList() throws SQLException {
+    return ListUtils.toObservableList(adminDao.getAdmins());
   }
 
   /**
