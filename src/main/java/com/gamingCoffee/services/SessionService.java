@@ -30,24 +30,13 @@ public class SessionService {
    * @produce the result of the session (the Cost) based on the gavin Session and spot information
    */
   public static double calculateSessionPrice(Session session, Spot spot) {
-    double basePrice;
+    double basePrice = checkDeviceType(spot.getConsoleType());
 
-    // Base price based on console type
-    if (ConsoleType.PS5 == spot.getConsoleType()) {
-      basePrice = 30.0;
-    } else if (ConsoleType.PS4 == spot.getConsoleType()) {
-      basePrice = 20.0;
-    } else {
-      throw new IllegalArgumentException("Invalid console type: " + spot.getConsoleType());
-    }
     // Additional charge for 4 controllers
-    if (session.getNoControllers() == 4) {
-      basePrice += 10.0;
-    }
+    basePrice = checkNoController(basePrice, session.getNoControllers());
+
     // Additional charge for private spot
-    if (SpotType.PRIVATE == spot.getSpotType()) {
-      basePrice += 10.0;
-    }
+    basePrice = checkSpotType(basePrice, spot.getSpotType());
     // Total price = base price * duration
     return Math.round(basePrice * session.getDuration());
   }
@@ -162,5 +151,45 @@ public class SessionService {
         new Session.Builder().sessionId(IdsUtil.generateId(IdsUtil.getLastIdFromDb(sessionDao)))
             .spotId(spotNumber).creator(AdminUsernameHolder.getAdminName())
             .noControllers(controllersNumber).build(), time);
+  }
+
+  private static double checkDeviceType(ConsoleType consoleType) {
+    // Base price based on console type
+    switch (consoleType) {
+      case PS4 -> {
+        return 20.0;
+      }
+      case PS5 -> {
+        return 30.0;
+      }
+      default -> throw new IllegalArgumentException("Invalid console type: " + consoleType);
+    }
+  }
+
+  private static double checkNoController(double price, int noControllers) {
+    switch (noControllers) {
+      case 1, 2 -> {
+        return price;
+      }
+      case 3, 4 -> {
+        return price + 10;
+      }
+      case 5, 6 -> {
+        return price + 15;
+      }
+      default -> throw new IllegalArgumentException("Invalid Controller numbers.");
+    }
+  }
+
+  private static double checkSpotType(double price, SpotType spotType) {
+    switch (spotType) {
+      case PRIVATE -> {
+        return price + 10;
+      }
+      case PUBLIC -> {
+        return price;
+      }
+      default -> throw new IllegalArgumentException("Invalid Spot Type: " + spotType + ".");
+    }
   }
 }

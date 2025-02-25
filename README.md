@@ -70,8 +70,8 @@ A JavaFX-based café management system designed for gaming cafés, featuring ord
    ```bash
    cd gamingCoffeeJavaFx
 
-3. **Clone the Repository:**
-   
+3. **Run it:**
+   from terminal
     - 1 - On Linux or macOS:
       ```bash
       ./mvnw javafx:run
@@ -79,3 +79,5 @@ A JavaFX-based café management system designed for gaming cafés, featuring ord
     - 2 - On Windows: 
        ```bash 
       ./mvnw.cmd javafx:run
+      
+    - or - simply double-click the file of your system.
