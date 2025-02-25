@@ -1,6 +1,7 @@
 package com.gamingCoffee.database.controller;
 
 import com.gamingCoffee.database.entities.Session;
+import com.gamingCoffee.utiles.SessionData;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -10,7 +11,7 @@ public interface ISessionDao {
 
   List<Session> getSessionsPerDate(String date) throws SQLException;
 
-  Session getSessionIdAndControllersAndDuration(int sessionId) throws SQLException;
+  SessionData getSessionData(int spotId) throws SQLException;
 
   boolean createOpenSession(Session newSession) throws SQLException;
 

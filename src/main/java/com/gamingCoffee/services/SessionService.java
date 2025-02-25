@@ -2,14 +2,13 @@ package com.gamingCoffee.services;
 
 import com.gamingCoffee.database.connection.DatabaseConnection;
 import com.gamingCoffee.database.controller.ISessionDao;
-import com.gamingCoffee.database.controller.ISpotDao;
 import com.gamingCoffee.database.entities.Session;
-import com.gamingCoffee.database.entities.Spot;
 import com.gamingCoffee.models.ConsoleType;
 import com.gamingCoffee.models.SpotType;
 import com.gamingCoffee.utiles.AdminUsernameHolder;
 import com.gamingCoffee.utiles.ListUtils;
 import com.gamingCoffee.utiles.PopupUtil;
+import com.gamingCoffee.utiles.SessionData;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -21,24 +20,22 @@ public class SessionService {
   // make instances of Dao class to read and write in DB
   private static final ISessionDao sessionDao = new SessionDao(
       DatabaseConnection.INSTANCE.getConnection());
-  private static final ISpotDao spotDao = new SpotDao(DatabaseConnection.INSTANCE.getConnection());
 
   /**
    * @param session (Session)
-   * @param spot    (Spot)
    * @return (double)
    * @produce the result of the session (the Cost) based on the gavin Session and spot information
    */
-  public static double calculateSessionPrice(Session session, Spot spot) {
-    double basePrice = checkDeviceType(spot.getConsoleType());
+  public static double calculateSessionPrice(SessionData session) {
+    double basePrice = checkDeviceType(session.consoleType());
 
     // Additional charge for 4 controllers
-    basePrice = checkNoController(basePrice, session.getNoControllers());
+    basePrice = checkNoController(basePrice, session.noController());
 
     // Additional charge for private spot
-    basePrice = checkSpotType(basePrice, spot.getSpotType());
+    basePrice = checkSpotType(basePrice, session.spotType());
     // Total price = base price * duration
-    return Math.round(basePrice * session.getDuration());
+    return Math.round(basePrice * session.duration());
   }
 
   /**
@@ -70,11 +67,10 @@ public class SessionService {
     try {// send end session order to DB
       if (endSessionHelper(spotNumber)) {
         // calculate the price of the session and store it in sessionPrice for reuse it
-        Session session = sessionDao.getSessionIdAndControllersAndDuration(spotNumber);
-        double sessionPrice = calculateSessionPrice(session,
-            spotDao.getSpotPrivacyAndConsoleType(spotNumber));
+        SessionData sessionData = sessionDao.getSessionData(spotNumber);
+        double sessionPrice = calculateSessionPrice(sessionData);
         // write session price to db
-        if (sessionDao.writeSessionPrice(sessionPrice, session.getSessionId())) {
+        if (sessionDao.writeSessionPrice(sessionPrice, sessionData.sessionId())) {
           return sessionPrice;
         }
       }

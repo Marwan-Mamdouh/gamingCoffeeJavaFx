@@ -2,6 +2,9 @@ package com.gamingCoffee.services;
 
 import com.gamingCoffee.database.controller.ISessionDao;
 import com.gamingCoffee.database.entities.Session;
+import com.gamingCoffee.models.ConsoleType;
+import com.gamingCoffee.models.SpotType;
+import com.gamingCoffee.utiles.SessionData;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -19,6 +22,7 @@ public class SessionDao implements ISessionDao {
 
   /**
    * @return a list of current running sessions
+   * @throws RuntimeException if something want wrong in the db
    */
   @Override
   public List<Session> getCurrentSessions() {
@@ -36,13 +40,11 @@ public class SessionDao implements ISessionDao {
       throw new RuntimeException("Failed, Couldn't get Current Sessions. " + e.getMessage(), e);
     }
   }
-  // 250125001
-  // 000000002
-  // 260125001
 
   /**
    * @param date (String)
    * @return a list of session created in gavin date
+   * @throws RuntimeException if something want wrong in the db
    */
   @Override
   public List<Session> getSessionsPerDate(String date) {
@@ -80,6 +82,7 @@ public class SessionDao implements ISessionDao {
    * @return (boolean), false if everything works will
    * @throws RuntimeException if something want wrong in the db
    */
+  @Override
   public boolean createTimedSession(Session newSession, double hours) {
     final String sql = "INSERT INTO sessions (session_id, spot_id, creator, controllers_number, "
         + "start_time, end_time) VALUES (?, ?, ?, ?, datetime('now', 'localtime'), "
@@ -91,12 +94,12 @@ public class SessionDao implements ISessionDao {
   /**
    * @param oldSession (Session)
    * @return (boolean), false if everything works will
-   * @throws SQLException if something want wrong in the db
+   * @throws RuntimeException if something want wrong in the db
    */
   @Override
-  public boolean endSession(Session oldSession) throws SQLException {
-    final String sql = "UPDATE sessions SET end_time = datetime('now', 'localtime'),"
-        + " creator = ? WHERE spot_id = ? AND session_state = 'RUNNING'";
+  public boolean endSession(Session oldSession) {
+    final String sql = "UPDATE sessions SET end_time = datetime('now', 'localtime'), creator = ? "
+        + "WHERE spot_id = ? AND session_state = 'RUNNING'";
     try (PreparedStatement statement = connection.prepareStatement(sql)) {
       statement.setString(1, oldSession.getCreator());
       statement.setInt(2, oldSession.getSpotId());
@@ -114,19 +117,20 @@ public class SessionDao implements ISessionDao {
    * @throws RuntimeException if something want wrong in the db
    */
   @Override
-  public Session getSessionIdAndControllersAndDuration(int spotId) {
-    final String sql = "SELECT session_id, controllers_number, duration FROM sessions WHERE "
-        + "spot_id = ? ORDER BY session_id DESC LIMIT 1";
+  public SessionData getSessionData(int spotId) {
+    final String sql = "SELECT se.session_id, se.controllers_number, se.duration, sp.spot_privacy,"
+        + " sp.console_type FROM sessions se INNER JOIN spots sp ON se.spot_id = sp.spot_id WHERE "
+        + "se.spot_id = ? ORDER BY se.start_time DESC LIMIT 1;";
     try (PreparedStatement statement = connection.prepareStatement(sql)) {
       statement.setInt(1, spotId);
       try (ResultSet rs = statement.executeQuery()) {
-        return new Session.Builder().sessionId(rs.getInt("session_id"))
-            .noControllers(rs.getInt("controllers_number")).duration(rs.getDouble("duration"))
-            .build();
+        if (rs.next()) {
+          return buildCalculateObject(rs);
+        }
+        return null;
       }
     } catch (SQLException e) {
-      throw new RuntimeException(
-          "Failed, Couldn't get Controllers number and Duration. " + e.getMessage(), e);
+      throw new RuntimeException("Failed, Couldn't get Session Data. " + e.getMessage(), e);
     }
   }
 
@@ -150,10 +154,11 @@ public class SessionDao implements ISessionDao {
 
   /**
    * @param date (String)
-   * @return (array of doubles) if something want wrong in the db
-   * @throws SQLException if something want wrong in the db
+   * @return (array of doubles) if everything go right in the db
+   * @throws RuntimeException if something want wrong in the db
    */
-  public double[] getSessionCountAndSumPrices(String date) throws SQLException {
+  @Override
+  public double[] getSessionCountAndSumPrices(String date) {
     final String sql = "SELECT COUNT(*) AS session_count, SUM(session_price) AS total_price FROM "
         + "sessions WHERE session_id BETWEEN " + date + "000 AND " + date + "999 AND session_state "
         + "= 'DONE'";
@@ -197,7 +202,7 @@ public class SessionDao implements ISessionDao {
       statement.setString(3, newSession.getCreator());
       statement.setInt(4, newSession.getNoControllers());
 
-      return statement.executeUpdate() > 0;
+      return 0 < statement.executeUpdate();
     } catch (SQLException e) {
       throw new RuntimeException(
           "Failed, Couldn't Create Session: " + newSession.toString() + ". " + e.getMessage(), e);
@@ -223,6 +228,16 @@ public class SessionDao implements ISessionDao {
     } catch (SQLException e) {
       throw new RuntimeException(
           "Failed, Couldn't build Session for result Page. " + e.getMessage(), e);
+    }
+  }
+
+  private SessionData buildCalculateObject(ResultSet resultSet) {
+    try {
+      return new SessionData(resultSet.getInt("session_id"), resultSet.getInt("controllers_number"),
+          resultSet.getDouble("duration"), SpotType.valueOf(resultSet.getString("spot_privacy")),
+          ConsoleType.valueOf(resultSet.getString("console_type")));
+    } catch (SQLException e) {
+      throw new RuntimeException("Couldn't build Session Data" + e.getMessage());
     }
   }
 }
