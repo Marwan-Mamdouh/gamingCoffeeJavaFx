@@ -262,6 +262,34 @@
                         </AnchorPane>
                       </content>
                     </Tab>
+                              <Tab text="Change Prices">
+                                <content>
+                                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                       <children>
+                                          <Label layoutX="207.0" layoutY="30.0" text="change Console Price">
+                                             <font>
+                                                <Font name="0xProto Nerd Font Mono" size="15.0" />
+                                             </font>
+                                          </Label>
+                                          <Label layoutX="90.0" layoutY="80.0" prefHeight="25.0" text="Current Console Price" />
+                                          <Label fx:id="currentConsolePrice" layoutX="230.0" layoutY="80.0" prefHeight="25.0" prefWidth="35.0" />
+                                          <ChoiceBox fx:id="choiceBoxConsolesType" layoutX="350.0" layoutY="80.0" prefWidth="162.0" />
+                                          <TextField fx:id="changeConsolePriceField" layoutX="90.0" layoutY="125.0" promptText="New Price" />
+                                          <Button layoutX="350.0" layoutY="125.0" mnemonicParsing="false" onAction="#updateConsolePriceButtonAction" prefWidth="160.0" text="Update price" />
+                                          <Label layoutX="198.0" layoutY="185.0" text="change Spot type Price">
+                                             <font>
+                                                <Font name="0xProto Nerd Font Mono" size="15.0" />
+                                             </font>
+                                          </Label>
+                                          <Label layoutX="90.0" layoutY="235.0" prefHeight="25.0" text="Current Spot Price" />
+                                          <Label fx:id="currentSpotTypePrice" layoutX="215.0" layoutY="235.0" prefHeight="25.0" prefWidth="35.0" />
+                                          <ChoiceBox fx:id="choiceBoxSpotTypes" layoutX="350.0" layoutY="235.0" prefWidth="162.0" />
+                                          <TextField fx:id="changeSpotTypePriceField" layoutX="90.0" layoutY="280.0" promptText="New Price" />
+                                          <Button layoutX="350.0" layoutY="280.0" mnemonicParsing="false" onAction="#updateSpotTypePriceButtonAction" prefWidth="160.0" text="Update price" />
+                                       </children>
+                                    </AnchorPane>
+                                </content>
+                              </Tab>
                     <Tab text="Add Spot">
                       <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="340.0" prefWidth="600.0">

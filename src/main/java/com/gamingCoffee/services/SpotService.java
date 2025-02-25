@@ -88,4 +88,12 @@ public class SpotService {
           "Failed to get Spots. no match for spot ID:" + spotId + ". " + e.getMessage(), e);
     }
   }
+
+  public static boolean updatePrices(double price, Enum<?> consoleType) {
+    return spotDao.setPrice(consoleType, price);
+  }
+
+  public static double getPrices(Enum<?> serviceType) {
+    return spotDao.getServicePrice(serviceType);
+  }
 }
