@@ -85,6 +85,8 @@ public class OwnerPageController implements Initializable {
   @FXML
   private TableColumn<Admin, String> usernameColumn;
   @FXML
+  private TableColumn<Admin, Position> titleColumn;
+  @FXML
   private TableColumn<Admin, Integer> ageColumn;
   @FXML
   private TableColumn<Admin, Date> hireDateColumn;
@@ -321,6 +323,7 @@ public class OwnerPageController implements Initializable {
   private void makeAdminTable() {
     // Set cell value factories
     usernameColumn.setCellValueFactory(new PropertyValueFactory<>("username"));
+    titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
     ageColumn.setCellValueFactory(new PropertyValueFactory<>("age"));
     hireDateColumn.setCellValueFactory(new PropertyValueFactory<>("hiringDate"));
     salaryColumn.setCellValueFactory(new PropertyValueFactory<>("salary"));

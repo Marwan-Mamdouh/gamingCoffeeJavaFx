@@ -109,8 +109,9 @@ public class AdminDao implements IAdminDao {
 
   @Override
   public List<Admin> getAdmins() {
-    final String sql = "SELECT a.username, a.age, a.hire_date, a.salary, p.phone_number FROM "
-        + "admins a LEFT JOIN admin_phones p ON a.username = p.username";
+    final String sql =
+        "SELECT a.username, a.title, a.age, a.hire_date, a.salary, p.phone_number FROM "
+            + "admins a LEFT JOIN admin_phones p ON a.username = p.username";
     return queryAdmins(sql);
   }
 
@@ -155,7 +156,8 @@ public class AdminDao implements IAdminDao {
     try {
       return new Admin.Builder().username(rs.getString("username")).age(rs.getInt("age"))
           .hiringDate(rs.getString("hire_date")).salary(rs.getInt("salary"))
-          .phoneNumber(rs.getString("phone_number")).build();
+          .phoneNumber(rs.getString("phone_number")).title(Position.valueOf(rs.getString("title")))
+          .build();
     } catch (SQLException e) {
       throw new RuntimeException("Failed, Can not build an Admin. " + e.getMessage(), e);
     }
