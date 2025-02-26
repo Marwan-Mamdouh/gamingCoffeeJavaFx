@@ -46,17 +46,7 @@ public class LoginController {
 
   @FXML
   void selectCheckbox() {
-    PageDataUtil.showPasswordCheckBox(showPasswordCheckbox, showPasswordFiled,
-        passwordFiled);
-//    if (showPasswordCheckbox.isSelected()) {
-//      showPasswordFiled.setText(passwordFiled.getText());
-//      showPasswordFiled.setVisible(true);
-//      passwordFiled.setVisible(false);
-//    } else {
-//      passwordFiled.setText(showPasswordFiled.getText());
-//      passwordFiled.setVisible(true);
-//      showPasswordFiled.setVisible(false);
-//    }
+    PageDataUtil.showPasswordCheckBox(showPasswordCheckbox, showPasswordFiled, passwordFiled);
   }
 
   @FXML

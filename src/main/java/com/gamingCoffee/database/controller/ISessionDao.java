@@ -1,7 +1,7 @@
 package com.gamingCoffee.database.controller;
 
 import com.gamingCoffee.database.entities.Session;
-import com.gamingCoffee.utiles.SessionData;
+import com.gamingCoffee.services.SessionData;
 import java.sql.SQLException;
 import java.util.List;
 

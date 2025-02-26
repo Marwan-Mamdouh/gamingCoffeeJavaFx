@@ -6,6 +6,7 @@ import com.gamingCoffee.database.controller.IExpenseDao;
 import com.gamingCoffee.database.entities.Expense;
 import com.gamingCoffee.database.entities.Expense.Builder;
 import com.gamingCoffee.utiles.AdminUsernameHolder;
+import com.gamingCoffee.utiles.IdsUtil;
 import com.gamingCoffee.utiles.ListUtils;
 import com.gamingCoffee.utiles.PopupUtil;
 import java.sql.SQLException;

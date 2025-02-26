@@ -4,7 +4,6 @@ import com.gamingCoffee.database.controller.ISessionDao;
 import com.gamingCoffee.database.entities.Session;
 import com.gamingCoffee.models.ConsoleType;
 import com.gamingCoffee.models.SpotType;
-import com.gamingCoffee.utiles.SessionData;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

@@ -1,4 +1,4 @@
-package com.gamingCoffee.utiles;
+package com.gamingCoffee.services;
 
 import com.gamingCoffee.models.ConsoleType;
 import com.gamingCoffee.models.SpotType;

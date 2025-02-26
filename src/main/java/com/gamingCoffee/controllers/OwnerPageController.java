@@ -37,7 +37,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 public class OwnerPageController implements Initializable {
 
-
   // Buttons
   // Admin
   @FXML
@@ -137,7 +136,6 @@ public class OwnerPageController implements Initializable {
   @FXML
   private TableColumn<Expense, String> expensesNoteColumn;
 
-
   // Data Picker
   @FXML
   private DatePicker birthDayField;
@@ -184,7 +182,6 @@ public class OwnerPageController implements Initializable {
   private CheckBox checkBoxShowPassRemoveController;
   @FXML
   private CheckBox checkBoxPasswordExpenses;
-
 
   // Fields
   // admin

@@ -5,6 +5,7 @@ import com.gamingCoffee.database.controller.ISpotDao;
 import com.gamingCoffee.database.entities.Spot;
 import com.gamingCoffee.models.ConsoleType;
 import com.gamingCoffee.models.SpotType;
+import com.gamingCoffee.utiles.IdsUtil;
 import com.gamingCoffee.utiles.ListUtils;
 import com.gamingCoffee.utiles.PopupUtil;
 import java.sql.SQLException;

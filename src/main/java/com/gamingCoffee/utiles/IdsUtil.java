@@ -1,4 +1,4 @@
-package com.gamingCoffee.services;
+package com.gamingCoffee.utiles;
 
 import com.gamingCoffee.database.controller.ISessionDao;
 import java.sql.SQLException;
