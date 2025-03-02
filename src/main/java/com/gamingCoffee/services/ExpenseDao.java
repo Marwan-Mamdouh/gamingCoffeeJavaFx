@@ -45,7 +45,8 @@ public class ExpenseDao implements IExpenseDao {
    */
   @Override
   public Expense checkExpense(int expenseId) {
-    final String sql = "SELECT * FROM expenses WHERE exp_id = ?";
+    final String sql = "SELECT exp_id, exp_creator, exp_amount, exp_date, exp_note FROM expenses"
+        + " WHERE exp_id = ?";
     try (PreparedStatement statement = connection.prepareStatement(sql)) {
       statement.setInt(1, expenseId);
       try (ResultSet rs = statement.executeQuery()) {
