@@ -48,8 +48,8 @@ public class SessionDao implements ISessionDao {
   @Override
   public List<Session> getSessionsPerDate(String date) {
     final String sql =
-        "SELECT session_id, duration, session_price FROM sessions WHERE session_id BETWEEN " + date
-            + "000 AND " + date + "999 AND session_state = 'DONE'";
+        "SELECT session_id, duration, session_price FROM sessions WHERE session_id LIKE '" + date
+            + "%' AND session_state = 'DONE'";
     // inject date parameter like this bc the "?" way did not work.
     final List<Session> sessions = new ArrayList<>();
     try (PreparedStatement statement = connection.prepareStatement(
@@ -159,8 +159,7 @@ public class SessionDao implements ISessionDao {
   @Override
   public double[] getSessionCountAndSumPrices(String date) {
     final String sql = "SELECT COUNT(*) AS session_count, SUM(session_price) AS total_price FROM "
-        + "sessions WHERE session_id BETWEEN " + date + "000 AND " + date + "999 AND session_state "
-        + "= 'DONE'";
+        + "sessions WHERE session_id LIKE '" + date + "%' AND session_state = 'DONE'";
     try (PreparedStatement statement = connection.prepareStatement(
         sql); ResultSet rs = statement.executeQuery()) {
       if (rs.next()) {
