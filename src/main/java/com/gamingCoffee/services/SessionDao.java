@@ -27,7 +27,7 @@ public class SessionDao implements ISessionDao {
   public List<Session> getCurrentSessions() {
     final String sql = "SELECT session_id, spot_id, creator, controllers_number, start_time, "
         + "end_time, ROUND((JULIANDAY(datetime('now', 'localtime')) - JULIANDAY(start_time)) * 24,"
-        + " 2) AS duration FROM sessions WHERE session_state = 'RUNNING'";
+        + " 2) AS duration FROM sessions WHERE session_state = 'RUNNING' LIMIT 20 OFFSET 0";
     final List<Session> sessions = new ArrayList<>();
     try (PreparedStatement statement = connection.prepareStatement(
         sql); ResultSet rs = statement.executeQuery()) {
@@ -49,7 +49,7 @@ public class SessionDao implements ISessionDao {
   public List<Session> getSessionsPerDate(String date) {
     final String sql =
         "SELECT session_id, duration, session_price FROM sessions WHERE session_id LIKE '" + date
-            + "%' AND session_state = 'DONE'";
+            + "%' AND session_state = 'DONE' LIMIT 999 OFFSET 0";
     // inject date parameter like this bc the "?" way did not work.
     final List<Session> sessions = new ArrayList<>();
     try (PreparedStatement statement = connection.prepareStatement(
@@ -119,7 +119,7 @@ public class SessionDao implements ISessionDao {
   public SessionData getSessionData(int spotId) {
     final String sql = "SELECT se.session_id, se.controllers_number, se.duration, sp.spot_privacy,"
         + " sp.console_type FROM sessions se INNER JOIN spots sp ON se.spot_id = sp.spot_id WHERE "
-        + "se.spot_id = ? ORDER BY se.start_time DESC LIMIT 1;";
+        + "se.spot_id = ? ORDER BY se.start_time DESC LIMIT 1 OFFSET 0";
     try (PreparedStatement statement = connection.prepareStatement(sql)) {
       statement.setInt(1, spotId);
       try (ResultSet rs = statement.executeQuery()) {
@@ -159,7 +159,7 @@ public class SessionDao implements ISessionDao {
   @Override
   public double[] getSessionCountAndSumPrices(String date) {
     final String sql = "SELECT COUNT(*) AS session_count, SUM(session_price) AS total_price FROM "
-        + "sessions WHERE session_id LIKE '" + date + "%' AND session_state = 'DONE'";
+        + "sessions WHERE session_id LIKE '" + date + "%' AND session_state = 'DONE' OFFSET 0";
     try (PreparedStatement statement = connection.prepareStatement(
         sql); ResultSet rs = statement.executeQuery()) {
       if (rs.next()) {
@@ -179,7 +179,7 @@ public class SessionDao implements ISessionDao {
    */
   @Override
   public int getLastSessionId() {
-    final String sql = "SELECT session_id FROM sessions ORDER BY session_id DESC LIMIT 1";
+    final String sql = "SELECT session_id FROM sessions ORDER BY session_id DESC LIMIT 1 OFFSET 0";
     try (PreparedStatement statement = connection.prepareStatement(
         sql); ResultSet rs = statement.executeQuery()) {
       if (rs.next()) {
