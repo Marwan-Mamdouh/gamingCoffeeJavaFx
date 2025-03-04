@@ -15,7 +15,7 @@ public interface IExpenseDao {
 
   List<Expense> getExpensesByDate(LocalDate date) throws SQLException;
 
-  List<Expense> getExpenseByMonth(LocalDate date) throws SQLException;
+  List<Expense> getExpensesByMonth(String date) throws SQLException;
 
   double getExpensePriceByDay(LocalDate date) throws SQLException;
 }

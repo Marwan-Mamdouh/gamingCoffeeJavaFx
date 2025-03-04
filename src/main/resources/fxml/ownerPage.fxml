@@ -79,7 +79,7 @@
                             <Font name="0xProto Nerd Font Mono" size="13.0" />
                           </font>
                         </Label>
-                        <ChoiceBox fx:id="choiceBoxPosition" layoutX="350.0" layoutY="115.0" prefHeight="26.0" prefWidth="160.0" />
+                        <ChoiceBox fx:id="choiceBoxPosition" layoutX="350.0" layoutY="115.0" prefHeight="26.0" prefWidth="160.0" style="-fx-alignment: center;" />
                         <Label layoutX="90.0" layoutY="164.0" text="Age">
                           <font>
                             <Font name="0xProto Nerd Font Mono" size="13.0" />
@@ -273,7 +273,7 @@
                                           </Label>
                                           <Label layoutX="90.0" layoutY="80.0" prefHeight="25.0" text="Current Console Price" />
                                           <Label fx:id="currentConsolePrice" layoutX="230.0" layoutY="80.0" prefHeight="25.0" prefWidth="35.0" />
-                                          <ChoiceBox fx:id="choiceBoxConsolesType" layoutX="350.0" layoutY="80.0" prefWidth="162.0" />
+                                          <ChoiceBox fx:id="choiceBoxConsolesType" layoutX="350.0" layoutY="80.0" prefWidth="162.0" style="-fx-alignment: center;" />
                                           <TextField fx:id="changeConsolePriceField" layoutX="90.0" layoutY="125.0" promptText="New Price" />
                                           <Button layoutX="350.0" layoutY="125.0" mnemonicParsing="false" onAction="#updateConsolePriceButtonAction" prefWidth="160.0" text="Update price" />
                                           <Label layoutX="198.0" layoutY="185.0" text="change Spot type Price">
@@ -283,7 +283,7 @@
                                           </Label>
                                           <Label layoutX="90.0" layoutY="235.0" prefHeight="25.0" text="Current Spot Price" />
                                           <Label fx:id="currentSpotTypePrice" layoutX="215.0" layoutY="235.0" prefHeight="25.0" prefWidth="35.0" />
-                                          <ChoiceBox fx:id="choiceBoxSpotTypes" layoutX="350.0" layoutY="235.0" prefWidth="162.0" />
+                                          <ChoiceBox fx:id="choiceBoxSpotTypes" layoutX="350.0" layoutY="235.0" prefWidth="162.0" style="-fx-alignment: center;" />
                                           <TextField fx:id="changeSpotTypePriceField" layoutX="90.0" layoutY="280.0" promptText="New Price" />
                                           <Button layoutX="350.0" layoutY="280.0" mnemonicParsing="false" onAction="#updateSpotTypePriceButtonAction" prefWidth="160.0" text="Update price" />
                                        </children>
@@ -309,13 +309,13 @@
                                 <Font name="0xProto Nerd Font Mono" size="13.0" />
                               </font>
                             </Label>
-                            <ChoiceBox fx:id="consoleTypeChoiceBox" layoutX="350.0" layoutY="70.0" prefHeight="26.0" prefWidth="160.0" />
+                            <ChoiceBox fx:id="consoleTypeChoiceBox" layoutX="350.0" layoutY="70.0" prefHeight="26.0" prefWidth="160.0" style="-fx-alignment: center;" />
                             <Label layoutX="90.0" layoutY="120.0" text="Spot Privacy">
                               <font>
                                 <Font name="0xProto Nerd Font Mono" size="13.0" />
                               </font>
                             </Label>
-                            <ChoiceBox fx:id="spotPrivacyChoiceBox" layoutX="350.0" layoutY="115.0" prefHeight="26.0" prefWidth="160.0" />
+                            <ChoiceBox fx:id="spotPrivacyChoiceBox" layoutX="350.0" layoutY="115.0" prefHeight="26.0" prefWidth="160.0" style="-fx-alignment: center;" />
                             <Label layoutX="90.0" layoutY="164.0" text="Display ID">
                               <font>
                                 <Font name="0xProto Nerd Font Mono" size="13.0" />
@@ -446,7 +446,7 @@
                                 <Font name="0xProto Nerd Font Mono" size="13.0" />
                               </font>
                             </TextField>
-                            <ChoiceBox fx:id="controllerTypeChoiceBox" layoutX="350.0" layoutY="130.0" prefHeight="26.0" prefWidth="160.0" />
+                            <ChoiceBox fx:id="controllerTypeChoiceBox" layoutX="350.0" layoutY="130.0" prefHeight="26.0" prefWidth="160.0" style="-fx-alignment: center;" />
                             <Button layoutX="220.0" layoutY="300.0" mnemonicParsing="false" onAction="#addControllerButtonAction" text="Add Controller">
                               <font>
                                 <Font name="0xProto Nerd Font Mono" size="13.0" />
@@ -525,6 +525,13 @@
                       <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0">
                           <children>
+                                          <Label layoutX="90.0" layoutY="18.0" text="Expense By">
+                                             <font>
+                                                <Font size="15.0" />
+                                             </font>
+                                          </Label>
+                                          <ChoiceBox fx:id="choiceBoxExpensesBy" layoutX="180.0" layoutY="15.0" prefWidth="150.0" />
+                            <DatePicker fx:id="expensesDatePicker" layoutX="350.0" layoutY="15.0" onAction="#expenseDatePickerAction" prefHeight="26.0" prefWidth="180.0" promptText="Pick a Date" style="-fx-alignment: center;" />
                             <TableView fx:id="expensesTable" layoutY="55.0" prefHeight="285.0" prefWidth="600.0">
                               <columns>
                                 <TableColumn fx:id="expensesIdColumn" prefWidth="75.0" style="-fx-alignment: center;" text="Exp-ID" />
@@ -534,12 +541,6 @@
                                 <TableColumn fx:id="expensesNoteColumn" prefWidth="223.0" style="-fx-alignment: center;" text="Exp-Note" />
                               </columns>
                             </TableView>
-                            <DatePicker fx:id="expensesDatePicker" layoutX="330.0" layoutY="15.0" prefHeight="26.0" prefWidth="180.0" promptText="Pick a Month" />
-                            <Button layoutX="90.0" layoutY="15.0" mnemonicParsing="false" onAction="#getExpensesButtonAction" prefHeight="26.0" prefWidth="180.0" text="Get Expenses">
-                              <font>
-                                <Font name="0xProto Nerd Font Mono" size="13.0" />
-                              </font>
-                            </Button>
                           </children>
                         </AnchorPane>
                       </content>
@@ -603,7 +604,26 @@
     </Tab>
     <Tab closable="false" text="Result">
       <content>
-        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="370.0" prefWidth="600.0" />
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="370.0" prefWidth="600.0">
+               <children>
+                  <Label layoutX="90.0" layoutY="17.0" text="Results By">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+                  <ChoiceBox fx:id="choiceBoxResultBy" layoutX="180.0" layoutY="15.0" prefWidth="150.0" style="-fx-alignment: center;" />
+                  <DatePicker fx:id="resultDatePicker" layoutX="350.0" layoutY="15.0" onAction="#resultDataPickerAction" prefWidth="190.0" promptText="Pick a Date" style="-fx-alignment: center;" />
+                  <TableView fx:id="resultTable" layoutY="59.0" prefHeight="310.0" prefWidth="600.0">
+                    <columns>
+                      <TableColumn fx:id="dateColumn" prefWidth="95.0" style="-fx-alignment: center;" text="Date" />
+                      <TableColumn fx:id="incomeColumn" prefWidth="95.0" style="-fx-alignment: center;" text="Income" />
+                        <TableColumn fx:id="sessionCountColumn" prefWidth="100.0" style="-fx-alignment: center;" text="Sessions Count" />
+                        <TableColumn fx:id="expensesColumn" prefWidth="95.0" style="-fx-alignment: center;" text="Expenses" />
+                        <TableColumn fx:id="expensesCountColumn" prefWidth="100.0" style="-fx-alignment: center;" text="Exp Count" />
+                        <TableColumn fx:id="finalResultColumn" prefWidth="100.0" style="-fx-alignment: center;" text="Final Result" />
+                    </columns>
+                  </TableView>
+               </children></AnchorPane>
       </content>
     </Tab>
   </tabs>

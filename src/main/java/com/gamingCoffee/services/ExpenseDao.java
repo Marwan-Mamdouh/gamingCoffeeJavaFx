@@ -27,7 +27,7 @@ public class ExpenseDao implements IExpenseDao {
   @Override
   public boolean addExpense(Expense expense) {
     final String sql = "INSERT INTO expenses (exp_creator, exp_amount, exp_date, exp_note) VALUES "
-        + "(?, ?, date('now', 'localtime'), ?)";
+        + "(?, ?, DATE('now', 'localtime'), ?)";
     try (PreparedStatement statement = connection.prepareStatement(sql)) {
       statement.setString(1, expense.getCreator());
       statement.setDouble(2, expense.getExpenseAmount());
@@ -46,7 +46,7 @@ public class ExpenseDao implements IExpenseDao {
   @Override
   public Expense checkExpense(int expenseId) {
     final String sql = "SELECT exp_id, exp_creator, exp_amount, exp_date, exp_note FROM expenses"
-        + " WHERE exp_id = ?";
+        + " WHERE exp_id = ? LIMIT 1 OFFSET 0";
     try (PreparedStatement statement = connection.prepareStatement(sql)) {
       statement.setInt(1, expenseId);
       try (ResultSet rs = statement.executeQuery()) {
@@ -110,19 +110,17 @@ public class ExpenseDao implements IExpenseDao {
    * @produce a list of expense from the start of the month till the gavin date
    */
   @Override
-  public List<Expense> getExpenseByMonth(LocalDate date) {
-    final String sql = "SELECT * FROM expenses WHERE DATE(exp_date) BETWEEN "
-        + "DATE(?, 'start of month') AND DATE(?)";
+  public List<Expense> getExpensesByMonth(String date) {
+    final String sql = "SELECT exp_id, exp_creator, exp_amount, exp_date, exp_note FROM expenses"
+        + " WHERE exp_date LIKE '" + date + "%'";
+    // 2025-03-03
     final List<Expense> expenses = new ArrayList<>();
-    try (PreparedStatement statement = connection.prepareStatement(sql)) {
-      statement.setString(1, date.toString());
-      statement.setString(2, date.toString());
-      try (ResultSet rs = statement.executeQuery()) {
-        while (rs.next()) {
-          expenses.add(makeExpense(rs));
-        }
-        return expenses;
+    try (PreparedStatement statement = connection.prepareStatement(
+        sql); ResultSet rs = statement.executeQuery()) {
+      while (rs.next()) {
+        expenses.add(makeExpense(rs));
       }
+      return expenses;
     } catch (SQLException e) {
       throw new RuntimeException("Failed, Couldn't get Expense by month. " + e.getMessage(), e);
     }

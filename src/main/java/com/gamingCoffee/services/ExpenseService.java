@@ -11,6 +11,7 @@ import com.gamingCoffee.utiles.ListUtils;
 import com.gamingCoffee.utiles.PopupUtil;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Alert.AlertType;
 
@@ -66,8 +67,9 @@ public class ExpenseService {
     final String dbPassword = adminDao.getPasswordByUsername(AdminUsernameHolder.getAdminName());
     if (AdminService.verifyPassword(typedPassword, dbPassword)) {
       try {
-        expenseDao.removeExpense(expenseId);
-        PopupUtil.showPopup("Success", "Expense with Id has Removed.", AlertType.INFORMATION);
+        if (expenseDao.removeExpense(expenseId)) {
+          PopupUtil.showPopup("Success", "Expense with Id has Removed.", AlertType.INFORMATION);
+        }
       } catch (Exception e) {
         throw new RuntimeException(
             "Failed, Couldn't remove Expense ID:" + expenseId + ". " + e.getMessage(), e);
@@ -83,9 +85,24 @@ public class ExpenseService {
    * app
    * @produce a list that can javaFX can render
    */
-  public static ObservableList<Expense> makeTableExpense(LocalDate date) {
+  public static ObservableList<Expense> getExpenseByDay(LocalDate date) {
     try {
-      return ListUtils.toObservableList(expenseDao.getExpenseByMonth(date));
+      return ListUtils.toObservableList(expenseDao.getExpensesByDate(date));
+    } catch (SQLException e) {
+      throw new RuntimeException("Failed, Couldn't convert Expense list. " + e.getMessage(), e);
+    }
+  }
+
+  /**
+   * @param date (LocalDate) to send it to db to query with it on db
+   * @return (ObservableList < Expense >) convert list to this type to be able to render it in the
+   * app
+   * @produce a list that can javaFX can render
+   */
+  public static ObservableList<Expense> getExpensesByMonth(LocalDate date) {
+    try {
+      return ListUtils.toObservableList(
+          expenseDao.getExpensesByMonth(date.format(DateTimeFormatter.ofPattern("yyyy-MM"))));
     } catch (SQLException e) {
       throw new RuntimeException("Failed, Couldn't convert Expense list. " + e.getMessage(), e);
     }

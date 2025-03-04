@@ -3,6 +3,7 @@ package com.gamingCoffee.controllers;
 import com.gamingCoffee.database.entities.Admin;
 import com.gamingCoffee.database.entities.Controller;
 import com.gamingCoffee.database.entities.Expense;
+import com.gamingCoffee.database.entities.Result;
 import com.gamingCoffee.database.entities.Spot;
 import com.gamingCoffee.models.ConsoleType;
 import com.gamingCoffee.models.ControllerType;
@@ -12,13 +13,13 @@ import com.gamingCoffee.models.SpotType;
 import com.gamingCoffee.services.AdminService;
 import com.gamingCoffee.services.ControllerService;
 import com.gamingCoffee.services.ExpenseService;
+import com.gamingCoffee.services.ResultService;
 import com.gamingCoffee.services.SpotService;
 import com.gamingCoffee.utiles.PageDataUtil;
 import com.gamingCoffee.utiles.PopupUtil;
 import com.gamingCoffee.utiles.TableViewUtils;
 import java.net.URL;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -88,7 +89,7 @@ public class OwnerPageController implements Initializable {
   @FXML
   private TableColumn<Admin, Integer> ageColumn;
   @FXML
-  private TableColumn<Admin, Date> hireDateColumn;
+  private TableColumn<Admin, LocalDate> hireDateColumn;
   @FXML
   private TableColumn<Admin, Integer> salaryColumn;
   @FXML
@@ -136,12 +137,33 @@ public class OwnerPageController implements Initializable {
   @FXML
   private TableColumn<Expense, String> expensesNoteColumn;
 
+  @FXML
+  private TableView<Result> resultTable;
+  @FXML
+  private TableColumn<Result, LocalDate> dateColumn;
+  @FXML
+  private TableColumn<Result, Double> incomeColumn;
+  @FXML
+  private TableColumn<Result, Double> sessionCountColumn;
+  @FXML
+  private TableColumn<Result, Double> expensesColumn;
+  @FXML
+  private TableColumn<Result, Double> expensesCountColumn;
+  @FXML
+  private TableColumn<Result, Double> finalResultColumn;
+
   // Data Picker
+  // Admins
   @FXML
   private DatePicker birthDayField;
 
+  // Expenses
   @FXML
   private DatePicker expensesDatePicker;
+
+  // Result
+  @FXML
+  private DatePicker resultDatePicker;
 
   // choice Boxes
   // Admin
@@ -158,9 +180,17 @@ public class OwnerPageController implements Initializable {
   @FXML
   private ChoiceBox<SpotType> choiceBoxSpotTypes;
 
-  //Controller
+  // Controller
   @FXML
   private ChoiceBox<ControllerType> controllerTypeChoiceBox;
+
+  // Expenses
+  @FXML
+  private ChoiceBox<String> choiceBoxExpensesBy;
+
+  // Result
+  @FXML
+  private ChoiceBox<String> choiceBoxResultBy;
 
   // check Boxes
   // Admin
@@ -577,15 +607,16 @@ public class OwnerPageController implements Initializable {
   }
 
   @FXML
-  void getExpensesButtonAction() {
-    if (expensesDatePicker.getValue() == null) {
+  void expenseDatePickerAction() {
+    LocalDate date = expensesDatePicker.getValue();
+    if (date == null) {
       PopupUtil.showPopup("Failed", "Can not get Expense without date.", AlertType.ERROR);
       return;
     }
-    makeExpenseTable(expensesDatePicker.getValue());
+    makeExpenseTable(date, choiceBoxExpensesBy.getValue());
   }
 
-  private void makeExpenseTable(LocalDate date) {
+  private void makeExpenseTable(LocalDate date, String period) {
     expensesIdColumn.setCellValueFactory(new PropertyValueFactory<>("expenseId"));
     expensesCreatorColumn.setCellValueFactory(new PropertyValueFactory<>("creator"));
     expensesAmountColumn.setCellValueFactory(new PropertyValueFactory<>("expenseAmount"));
@@ -594,10 +625,53 @@ public class OwnerPageController implements Initializable {
 
     // Set the items in the TableView
     try {
-      expensesTable.setItems(ExpenseService.makeTableExpense(date));
+      switch (period) {
+        case "Month":
+          expensesTable.setItems(ExpenseService.getExpensesByMonth(date));
+          break;
+        case "Day":
+        default:
+          expensesTable.setItems(ExpenseService.getExpenseByDay(date));
+          break;
+      }
     } catch (Exception e) {
       PopupUtil.showErrorPopup(e);
     }
+  }
+
+  private void makeResultTable(LocalDate date, String period) {
+    // Set cell value factories
+    dateColumn.setCellValueFactory(new PropertyValueFactory<>("day"));
+    incomeColumn.setCellValueFactory(new PropertyValueFactory<>("income"));
+    sessionCountColumn.setCellValueFactory(new PropertyValueFactory<>("sessionCount"));
+    expensesColumn.setCellValueFactory(new PropertyValueFactory<>("expenses"));
+    expensesCountColumn.setCellValueFactory(new PropertyValueFactory<>("expensesCount"));
+    finalResultColumn.setCellValueFactory(new PropertyValueFactory<>("finalResult"));
+
+    // Set the items in the TableView
+    try {
+      switch (period) {
+        case "Month":
+          resultTable.setItems(ResultService.getResultByMonth(date));
+          break;
+        case "Day":
+        default:
+          resultTable.setItems(ResultService.getResultDay(date));
+          break;
+      }
+    } catch (Exception e) {
+      PopupUtil.showErrorPopup(e);
+    }
+  }
+
+  @FXML
+  void resultDataPickerAction() {
+    LocalDate date = resultDatePicker.getValue();
+    if (date == null) {
+      PopupUtil.showPopup("Failed", "Can not get Results.", AlertType.ERROR);
+      return;
+    }
+    makeResultTable(date, choiceBoxResultBy.getValue());
   }
 
   /**
@@ -617,12 +691,15 @@ public class OwnerPageController implements Initializable {
     TableViewUtils.makeTableCopyable(spotTable);
     TableViewUtils.makeTableCopyable(controllersTable);
     TableViewUtils.makeTableCopyable(expensesTable);
+    TableViewUtils.makeTableCopyable(resultTable);
 
     choiceBoxConsolesType.setOnAction(this::getConsolePrice);
     choiceBoxSpotTypes.setOnAction(this::getSpotPrice);
   }
 
   private void setChoiceBoxValues() {
+    var day = "Day";
+    String[] elements = new String[]{day, "Month"};
     // Admin
     choiceBoxPosition.getItems().addAll(Position.OWNER, Position.EMPLOYEE);
 
@@ -633,8 +710,16 @@ public class OwnerPageController implements Initializable {
     choiceBoxConsolesType.getItems().addAll(ConsoleType.PS4, ConsoleType.PS5);
     choiceBoxSpotTypes.getItems().addAll(SpotType.PRIVATE, SpotType.PUBLIC);
 
+    // Expenses
+    choiceBoxExpensesBy.getItems().addAll(elements);
+    choiceBoxExpensesBy.setValue(day);
+
     // Controller
     controllerTypeChoiceBox.getItems()
         .addAll(ControllerType.PS4CONTROLLER, ControllerType.PS5CONTROLLER);
+
+    // Result
+    choiceBoxResultBy.getItems().addAll(elements);
+    choiceBoxResultBy.setValue(day);
   }
 }
