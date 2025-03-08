@@ -20,8 +20,6 @@ public interface ISpotDao {
 
   List<Spot> getAllSpots() throws SQLException;
 
-  Spot getSpotPrivacyAndConsoleType(int spotNumber) throws SQLException;
-
   Spot checkSpot(int spot_id) throws SQLException;
 
   double getPricePerHour(SpotType spotType, ConsoleType consoleType);
