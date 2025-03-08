@@ -14,14 +14,6 @@ public interface IAdminDao {
 
   boolean changePassword(String username, String newPassword) throws SQLException;
 
-  //  void removeUserByUserId(Admin admin) throws SQLException;
-
-  //  void changeUserName(String username, String newUserName) throws SQLException;
-
-  //  int getUserId(String userName) throws SQLException;
-
-  //  String getUserTitle(String username) throws SQLException;
-
   boolean addPhoneNumber(Admin admin) throws SQLException;
 
   List<Admin> getAdmins() throws SQLException;
