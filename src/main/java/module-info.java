@@ -3,11 +3,12 @@ module gamingcoffee.demo {
   requires java.sql;
   requires bcrypt;
   requires jdk.compiler;
-  requires java.desktop;
   requires de.jensd.fx.glyphs.fontawesome;
   requires javafx.controls;
+  requires org.jetbrains.annotations;
 
   opens com.gamingCoffee.controllers to javafx.fxml;
+
   exports com.gamingCoffee.controllers;
   exports com.gamingCoffee.database.controller;
   exports com.gamingCoffee.database.connection;
