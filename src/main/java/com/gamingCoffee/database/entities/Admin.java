@@ -12,7 +12,7 @@ public class Admin {
   private final String phoneNumber;
   private final String hiringDate;
   private final int age;
-  private final int salary;
+  private final double salary;
 
   // Private constructor to enforce the use of the Builder
   private Admin(Builder builder) {
@@ -51,7 +51,7 @@ public class Admin {
     return age;
   }
 
-  public int getSalary() {
+  public double getSalary() {
     return salary;
   }
 
@@ -64,13 +64,18 @@ public class Admin {
 
   @Override
   public boolean equals(Object o) {
-    if (o == null || getClass() != o.getClass()) {
-      return false;
+    if (this == o) {
+      return true; // ✅ Same object, no need for deeper checks
     }
-    Admin admin = (Admin) o;
-    return getAge() == admin.getAge() && getSalary() == admin.getSalary() && Objects.equals(
-        getUsername(), admin.getUsername()) && Objects.equals(getPassword(), admin.getPassword())
-        && getTitle() == admin.getTitle() && Objects.equals(getPhoneNumber(),
+    if (!(o instanceof Admin admin)) {
+      return false; // ✅ Type check (instanceof pattern matching)
+    }
+
+    // ✅ Compare fields using Objects.equals() for safety
+    // ✅ Proper floating-point comparison
+    return getAge() == admin.getAge() && Double.compare(getSalary(), admin.getSalary()) == 0
+        && Objects.equals(getUsername(), admin.getUsername()) && Objects.equals(getPassword(),
+        admin.getPassword()) && getTitle() == admin.getTitle() && Objects.equals(getPhoneNumber(),
         admin.getPhoneNumber()) && Objects.equals(getHiringDate(), admin.getHiringDate());
   }
 
@@ -84,23 +89,13 @@ public class Admin {
   public static class Builder {
 
     // Optional fields with default values
-//    private int adminId = 0;
     private String username = null;
     private Position title = null;
     private String password = null;
     private String phoneNumber = null;
     private String hiringDate = null;
     private int age = 0;
-    private int salary = 0;
-
-    // Methods to set optional fields
-//    public Builder adminId(int adminId) {
-//      if (adminId <= 0) {
-//        throw new IllegalArgumentException("Admin ID must be positive.");
-//      }
-//      this.adminId = adminId;
-//      return this;
-//    }
+    private double salary = 0;
 
     public Builder username(String username) {
       if (username == null || username.isBlank()) {
@@ -148,7 +143,7 @@ public class Admin {
       }
     }
 
-    public Builder salary(int salary) {
+    public Builder salary(double salary) {
       if (salary < 0) {
         throw new IllegalArgumentException("Salary must be positive.");
       }
