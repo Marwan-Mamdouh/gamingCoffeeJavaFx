@@ -157,10 +157,9 @@ public class ExpenseDao implements IExpenseDao {
    */
   private Expense makeExpense(ResultSet rs) throws SQLException {
     try {
-      return new Expense.Builder().expenseId(rs.getInt("exp_id"))
-          .creator(rs.getString("exp_creator")).expenseAmount(rs.getDouble("exp_amount"))
-          .note(rs.getString("exp_note")).expenseDate(LocalDate.parse(rs.getString("exp_date")))
-          .build();
+      return Expense.read(rs.getInt("exp_id"), rs.getString("exp_creator"),
+          rs.getDouble("exp_amount"), LocalDate.parse(rs.getString("exp_date")),
+          rs.getString("exp_note"));
     } catch (SQLException e) {
       throw new RuntimeException("Failed to build an Expense object. " + e.getMessage(), e);
     }
