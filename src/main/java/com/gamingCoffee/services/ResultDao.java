@@ -10,6 +10,7 @@ import java.time.LocalDate;
 import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
+import org.jetbrains.annotations.NotNull;
 
 public class ResultDao implements IResultDao {
 
@@ -23,7 +24,7 @@ public class ResultDao implements IResultDao {
    * @param result (Object)
    * @return (boolean) true if every thing goes will false otherwise
    */
-  boolean addNewResult(Result result) {
+  boolean addNewResult(@NotNull Result result) {
     final String sql = "INSERT INTO result (day, income, sessions_count, expenses, expense_count, "
         + "final_result) VALUES (?, ?, ?, ?, ?, ?)";
     try (PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -69,7 +70,7 @@ public class ResultDao implements IResultDao {
    * @return list of results based on gavin month
    */
   @Override
-  public List<Result> getResultByMonth(Month month) {
+  public List<Result> getResultByMonth(@NotNull Month month) {
     final String sql = "SELECT day, income, sessions_count, expenses, expense_count, final_result"
         + " FROM result WHERE day like '25%" + month.getValue() + "%' LIMIT 31 OFFSET 0;";
     final List<Result> results = new ArrayList<>();
@@ -84,7 +85,7 @@ public class ResultDao implements IResultDao {
     }
   }
 
-  private boolean writeResult(int id, LocalDate date) {
+  private boolean writeResult(int id, @NotNull LocalDate date) {
     final String sql = "INSERT INTO result (day, income, sessions_count, expenses, expense_count,"
         + " final_result) SELECT ?, inc.total_income, inc.sessions_count, expe.total_expenses,"
         + " expe.expense_count, COALESCE(inc.total_income - expe.total_expenses, inc.total_income)"
@@ -101,11 +102,10 @@ public class ResultDao implements IResultDao {
     }
   }
 
-  private Result buildResult(ResultSet rs) {
+  private @NotNull Result buildResult(@NotNull ResultSet rs) {
     try {
-      return new Result.Builder().day(rs.getInt("day")).income(rs.getInt("income"))
-          .sessionCount(rs.getInt("sessions_count")).expenses(rs.getInt("expenses"))
-          .expensesCount(rs.getInt("expense_count")).finalResult(rs.getInt("final_result")).build();
+      return Result.create(rs.getInt("day"), rs.getInt("income"), rs.getInt("sessions_count"),
+          rs.getInt("expenses"), rs.getInt("expense_count"), rs.getInt("final_result"));
     } catch (SQLException e) {
       throw new RuntimeException(e.getMessage());
     }
