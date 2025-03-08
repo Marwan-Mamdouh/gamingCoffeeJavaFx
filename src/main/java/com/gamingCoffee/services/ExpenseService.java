@@ -4,7 +4,6 @@ import com.gamingCoffee.database.connection.DatabaseConnection;
 import com.gamingCoffee.database.controller.IAdminDao;
 import com.gamingCoffee.database.controller.IExpenseDao;
 import com.gamingCoffee.database.entities.Expense;
-import com.gamingCoffee.database.entities.Expense.Builder;
 import com.gamingCoffee.utiles.AdminUsernameHolder;
 import com.gamingCoffee.utiles.IdsUtil;
 import com.gamingCoffee.utiles.ListUtils;
@@ -14,6 +13,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Alert.AlertType;
+import org.jetbrains.annotations.NotNull;
 
 public class ExpenseService {
 
@@ -27,9 +27,7 @@ public class ExpenseService {
    * @produce write a new Expense to the db
    */
   public static boolean addExpense(double amount, String note) {
-    return writeExpense(
-        new Builder().creator(AdminUsernameHolder.getAdminName()).expenseAmount(amount).note(note)
-            .build());
+    return writeExpense(Expense.create(AdminUsernameHolder.getAdminName(), amount, note));
   }
 
   /**
@@ -39,7 +37,7 @@ public class ExpenseService {
    * wrong
    * @produce a description for the expense ID gavin
    */
-  public static String checkExpense(int expenseId) {
+  public static @NotNull String checkExpense(int expenseId) {
     try {
       IdsUtil.validateIdPositive(expenseId);
       final Expense expense = expenseDao.checkExpense(expenseId);
@@ -85,7 +83,7 @@ public class ExpenseService {
    * app
    * @produce a list that can javaFX can render
    */
-  public static ObservableList<Expense> getExpenseByDay(LocalDate date) {
+  public static @NotNull ObservableList<Expense> getExpenseByDay(LocalDate date) {
     try {
       return ListUtils.toObservableList(expenseDao.getExpensesByDate(date));
     } catch (SQLException e) {
@@ -99,7 +97,7 @@ public class ExpenseService {
    * app
    * @produce a list that can javaFX can render
    */
-  public static ObservableList<Expense> getExpensesByMonth(LocalDate date) {
+  public static @NotNull ObservableList<Expense> getExpensesByMonth(@NotNull LocalDate date) {
     try {
       return ListUtils.toObservableList(
           expenseDao.getExpensesByMonth(date.format(DateTimeFormatter.ofPattern("yyyy-MM"))));

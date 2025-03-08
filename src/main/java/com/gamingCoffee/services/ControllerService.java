@@ -10,6 +10,7 @@ import com.gamingCoffee.utiles.IdsUtil;
 import com.gamingCoffee.utiles.ListUtils;
 import java.sql.SQLException;
 import javafx.collections.ObservableList;
+import org.jetbrains.annotations.NotNull;
 
 public class ControllerService {
 
@@ -25,9 +26,7 @@ public class ControllerService {
   public static boolean addController(int controllerId, ControllerType controllerType) {
     try {
       IdsUtil.validateIdPositive(controllerId);
-      return controllerDao.addController(
-          new Controller.Builder().controllerId(controllerId).controllerType(controllerType)
-              .build());
+      return controllerDao.addController(Controller.with(controllerId, controllerType));
     } catch (SQLException e) {
       throw new RuntimeException("Failed, Couldn't add new Controller. " + e.getMessage(), e);
     }
@@ -59,7 +58,7 @@ public class ControllerService {
    * @return String
    * @produce a description for the controller that ID sent, null if there is an error
    */
-  public static String checkController(int controllerId) {
+  public static @NotNull String checkController(int controllerId) {
     try {
       IdsUtil.validateIdPositive(controllerId);
       Controller controller = controllerDao.checkController(controllerId);
@@ -78,7 +77,7 @@ public class ControllerService {
    * @return ObservableList<Controller>
    * @produce a type of list can be rendering via the app
    */
-  public static ObservableList<Controller> convertControllerList() {
+  public static @NotNull ObservableList<Controller> convertControllerList() {
     try {
       return ListUtils.toObservableList(controllerDao.getAllController());
     } catch (SQLException e) {
