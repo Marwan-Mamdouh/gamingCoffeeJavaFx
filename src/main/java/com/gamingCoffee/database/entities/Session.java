@@ -68,21 +68,24 @@ public class Session {
 
   @Override
   public boolean equals(Object o) {
-    if (o == null || getClass() != o.getClass()) {
+    if (this == o) {
+      return true;
+    }
+    if (!(o instanceof Session session)) {
       return false;
     }
-    Session session = (Session) o;
     return getSessionId() == session.getSessionId() && getSpotId() == session.getSpotId()
-        && getCreator() == session.getCreator() && getNoControllers() == session.getNoControllers()
+        && getNoControllers() == session.getNoControllers()
         && Double.compare(getDuration(), session.getDuration()) == 0
         && Double.compare(getSessionPrice(), session.getSessionPrice()) == 0 && Objects.equals(
-        getStartTime(), session.getStartTime()) && Objects.equals(getEndTime(),
-        session.getEndTime()) && getSessionState() == session.getSessionState();
+        getCreator(), session.getCreator()) && Objects.equals(getStartTime(),
+        session.getStartTime()) && Objects.equals(getEndTime(), session.getEndTime())
+        && getSessionState() == session.getSessionState();
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(getSessionId(), getSpotId(), getCreator(), getNoControllers(),
+    return Objects.hash(getSessionId(), getSpotId(), getNoControllers(), getCreator(),
         getStartTime(), getEndTime(), getSessionState(), getDuration(), getSessionPrice());
   }
 
@@ -126,9 +129,6 @@ public class Session {
     }
 
     public Builder creator(String creator) {
-//      if (creator <= 0) {
-//        throw new IllegalArgumentException("Admin ID must be positive.");
-//      }
       this.creator = creator;
       return this;
     }

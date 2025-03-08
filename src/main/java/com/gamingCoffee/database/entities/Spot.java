@@ -71,16 +71,20 @@ public class Spot {
     if (this == o) {
       return true;
     }
-    if (o == null || getClass() != o.getClass()) {
+    if (!(o instanceof Spot spot)) {
       return false;
     }
-    Spot spot = (Spot) o;
-    return spotId == spot.spotId && spotType == spot.spotType && spotState == spot.spotState;
+    return getSpotId() == spot.getSpotId() && getDisplayId() == spot.getDisplayId()
+        && getDisplaySize() == spot.getDisplaySize() && getConsoleId() == spot.getConsoleId()
+        && getSpotType() == spot.getSpotType() && getSpotState() == spot.getSpotState()
+        && Objects.equals(getDisplayType(), spot.getDisplayType())
+        && getConsoleType() == spot.getConsoleType();
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(spotId, spotType, spotState);
+    return Objects.hash(getSpotId(), getSpotType(), getSpotState(), getDisplayId(),
+        getDisplaySize(), getDisplayType(), getConsoleId(), getConsoleType());
   }
 
   @Override
