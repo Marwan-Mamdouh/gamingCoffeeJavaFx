@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import org.jetbrains.annotations.NotNull;
 
 public class SpotDao implements ISpotDao {
 
@@ -60,33 +61,13 @@ public class SpotDao implements ISpotDao {
   }
 
   /**
-   * @param spotId (int) The ID of the spot to get its privacy and consoleType
-   * @return (Spot) object  contains spot privacy and console type
-   * @throws RuntimeException if a database error occurs.
-   */
-  @Override
-  public Spot getSpotPrivacyAndConsoleType(int spotId) {
-    final String sql = "SELECT spot_privacy, console_type from spots where spot_id = ?";
-    try (PreparedStatement statement = connection.prepareStatement(sql)) {
-      statement.setInt(1, spotId);
-      try (ResultSet rs = statement.executeQuery()) {
-        return new Spot.Builder().spotType(SpotType.valueOf(rs.getString("spot_privacy")))
-            .consoleType(ConsoleType.valueOf(rs.getString("console_type"))).build();
-      }
-    } catch (SQLException e) {
-      throw new RuntimeException(
-          "Failed to get data from Spot ID : " + spotId + ". " + e.getMessage(), e);
-    }
-  }
-
-  /**
    * @param newSpot (Spot) object
    * @return {@code true} if a spot was inserted, {@code false} otherwise.
    * @throws RuntimeException if a database error occurs.
    */
-  public boolean addSpot(Spot newSpot) {
-    final String sql = "INSERT INTO spots (spot_privacy, spot_state, display_id, display_type, "
-        + "display_size, console_id, console_type) VALUES (?, 'AVAILABLE', ?, ?, ?, ?, ?)";
+  public boolean addSpot(@NotNull Spot newSpot) {
+    final String sql = "INSERT INTO spots (spot_privacy, spot_state, display_id, display_type,"
+        + " display_size, console_id, console_type) VALUES (?, 'AVAILABLE', ?, ?, ?, ?, ?)";
     try (PreparedStatement statement = connection.prepareStatement(sql)) {
       statement.setString(1, newSpot.getSpotType().toString());
       statement.setInt(2, newSpot.getDisplayId());
@@ -106,7 +87,7 @@ public class SpotDao implements ISpotDao {
    * @throws RuntimeException if a database error occurs.
    */
   @Override
-  public Spot checkSpot(int spotId) throws SQLException {
+  public Spot checkSpot(int spotId) {
     final String sql = "SELECT spot_privacy, console_id, console_type, display_id, display_size, "
         + "display_type FROM spots WHERE spotId = ?";
     try (PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -153,7 +134,7 @@ public class SpotDao implements ISpotDao {
     return getSpotsByAvailability("AVAILABLE");
   }
 
-  public double getPricePerHour(SpotType spotType, ConsoleType consoleType) {
+  public double getPricePerHour(@NotNull SpotType spotType, @NotNull ConsoleType consoleType) {
     final String sql = "SELECT price FROM prices WHERE service_type = ? OR service_type = ?";
     try (PreparedStatement statement = connection.prepareStatement(sql)) {
       statement.setString(1, spotType.toString());
@@ -169,7 +150,7 @@ public class SpotDao implements ISpotDao {
     }
   }
 
-  public boolean setPrice(Enum<?> serviceType, double price) {
+  public boolean setPrice(@NotNull Enum<?> serviceType, double price) {
     final String sql = "UPDATE prices SET price = ? WHERE service_type = ?";
     try (PreparedStatement statement = connection.prepareStatement(sql)) {
       statement.setDouble(1, price);
@@ -180,7 +161,7 @@ public class SpotDao implements ISpotDao {
     }
   }
 
-  public double getServicePrice(Enum<?> serviceType) {
+  public double getServicePrice(@NotNull Enum<?> serviceType) {
     final String sql = "SELECT price FROM prices WHERE service_type = ?";
     try (PreparedStatement statement = connection.prepareStatement(sql)) {
       statement.setString(1, serviceType.toString());

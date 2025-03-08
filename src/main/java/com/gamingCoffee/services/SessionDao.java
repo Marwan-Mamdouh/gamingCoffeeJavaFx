@@ -10,6 +10,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 
 public class SessionDao implements ISessionDao {
 
@@ -96,7 +98,7 @@ public class SessionDao implements ISessionDao {
    * @throws RuntimeException if something want wrong in the db
    */
   @Override
-  public boolean endSession(Session oldSession) {
+  public boolean endSession(@NotNull Session oldSession) {
     final String sql = "UPDATE sessions SET end_time = datetime('now', 'localtime'), creator = ? "
         + "WHERE spot_id = ? AND session_state = 'RUNNING'";
     try (PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -105,7 +107,7 @@ public class SessionDao implements ISessionDao {
       return 0 < statement.executeUpdate();
     } catch (SQLException e) {
       throw new RuntimeException(
-          "Failed, Couldn't end session" + oldSession.toString() + ". " + e.getMessage(), e);
+          "Failed, Couldn't end session" + oldSession + ". " + e.getMessage(), e);
     }
   }
 
@@ -158,14 +160,14 @@ public class SessionDao implements ISessionDao {
    */
   @Override
   public double[] getSessionCountAndSumPrices(String date) {
-    final String sql = "SELECT COUNT(*) AS session_count, SUM(session_price) AS total_price FROM "
-        + "sessions WHERE session_id LIKE '" + date + "%' AND session_state = 'DONE' OFFSET 0";
+    final String sql = "SELECT COUNT(*) AS session_count, SUM(session_price) AS total_price FROM"
+        + " sessions WHERE session_id LIKE '" + date + "%' AND session_state = 'DONE'";
     try (PreparedStatement statement = connection.prepareStatement(
         sql); ResultSet rs = statement.executeQuery()) {
       if (rs.next()) {
         return new double[]{rs.getInt("session_count"), rs.getDouble("total_price")};
       }
-      return null;
+      throw new IllegalArgumentException("Couldn't get Result with this Date.");
     } catch (SQLException e) {
       throw new RuntimeException(
           "Failed, Couldn't get Session count and the total prices of them. " + e.getMessage(), e);
@@ -192,7 +194,7 @@ public class SessionDao implements ISessionDao {
   }
 
   // Helper method to execute the insert query with common parameters and extra ones if needed.
-  private boolean createSession(Session newSession, String sql) {
+  private boolean createSession(@NotNull Session newSession, String sql) {
     try (PreparedStatement statement = connection.prepareStatement(sql)) {
       // Set common session parameters
       statement.setInt(1, newSession.getSessionId());
@@ -203,7 +205,7 @@ public class SessionDao implements ISessionDao {
       return 0 < statement.executeUpdate();
     } catch (SQLException e) {
       throw new RuntimeException(
-          "Failed, Couldn't Create Session: " + newSession.toString() + ". " + e.getMessage(), e);
+          "Failed, Couldn't Create Session: " + newSession + ". " + e.getMessage(), e);
     }
   }
 
@@ -219,7 +221,7 @@ public class SessionDao implements ISessionDao {
     }
   }
 
-  private Session readSessionForResults(ResultSet rs) {
+  private Session readSessionForResults(@NotNull ResultSet rs) {
     try {
       return new Session.Builder().sessionId(rs.getInt("session_id"))
           .duration(rs.getDouble("duration")).sessionPrice(rs.getDouble("session_price")).build();
@@ -229,7 +231,8 @@ public class SessionDao implements ISessionDao {
     }
   }
 
-  private SessionData buildCalculateObject(ResultSet resultSet) {
+  @Contract("_ -> new")
+  private @NotNull SessionData buildCalculateObject(@NotNull ResultSet resultSet) {
     try {
       return new SessionData(resultSet.getInt("session_id"), resultSet.getInt("controllers_number"),
           resultSet.getDouble("duration"), SpotType.valueOf(resultSet.getString("spot_privacy")),

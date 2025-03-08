@@ -11,6 +11,8 @@ import com.gamingCoffee.utiles.ListUtils;
 import com.gamingCoffee.utiles.PopupUtil;
 import java.sql.SQLException;
 import javafx.collections.ObservableList;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 
 public class AdminService {
 
@@ -20,10 +22,9 @@ public class AdminService {
   /**
    * @param dbPassword    is a ResultSet contain a password form db
    * @param typedPassword is a String that align with some username in db
-   * @return boolean, true if the password form db = password gavin, false otherwise //   * @throws
-   * SQLException if something wrong happened while connecting to db
+   * @return boolean, true if the password form db = password gavin, false otherwise
    */
-  public static boolean verifyPassword(String typedPassword, String dbPassword) {
+  public static boolean verifyPassword(String typedPassword, @NotNull String dbPassword) {
     if (dbPassword.isBlank()) {
       return false;
     }
@@ -35,7 +36,8 @@ public class AdminService {
    * @param password String
    * @return encrypted password to store in the db
    */
-  public static String hashPassword(String password) {
+  @Contract("_ -> new")
+  public static @NotNull String hashPassword(@NotNull String password) {
     return BCrypt.withDefaults().hashToString(12, password.toCharArray());
   }
 
@@ -69,7 +71,7 @@ public class AdminService {
    * @param username String
    * @return String description of user to check if he is the one
    */
-  public static String checkToRemoveAdmin(String username) {
+  public static @NotNull String checkToRemoveAdmin(String username) {
     try {
       Admin admin = adminDao.getAdminInfo(username);
       if (admin == null) {
@@ -107,7 +109,8 @@ public class AdminService {
    * @return ObservableList<Admin>
    * @produce a render able list for app
    */
-  public static ObservableList<Admin> convertAdminsList() throws SQLException {
+  @Contract(" -> new")
+  public static @NotNull ObservableList<Admin> convertAdminsList() throws SQLException {
     return ListUtils.toObservableList(adminDao.getAdmins());
   }
 
@@ -116,7 +119,7 @@ public class AdminService {
    * @return String
    * @produce description to validate the user to remove it in other function
    */
-  public static String checkToChangePassword(String username) {
+  public static @NotNull String checkToChangePassword(String username) {
     try {
       Admin admin = adminDao.getAdminInfo(username);
       if (admin == null) {
