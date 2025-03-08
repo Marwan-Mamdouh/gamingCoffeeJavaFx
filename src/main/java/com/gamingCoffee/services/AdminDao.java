@@ -9,6 +9,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 
 public class AdminDao implements IAdminDao {
 
@@ -44,7 +46,7 @@ public class AdminDao implements IAdminDao {
    * @throws RuntimeException if something wrong happened while connecting to db
    */
   @Override
-  public boolean addUser(Admin newAdmin) {
+  public boolean addUser(@NotNull Admin newAdmin) {
     final String sql = "INSERT INTO admins (username, password, title, age, salary, hire_date) "
         + "VALUES (?, ?, ?, ?, ?,date('now')) ";
     try (PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -52,7 +54,7 @@ public class AdminDao implements IAdminDao {
       statement.setString(2, newAdmin.getPassword());
       statement.setString(3, newAdmin.getTitle().toString());
       statement.setInt(4, newAdmin.getAge());
-      statement.setInt(5, newAdmin.getSalary());
+      statement.setDouble(5, newAdmin.getSalary());
       return 0 < statement.executeUpdate();
     } catch (SQLException e) {
       throw new RuntimeException("Failed to Add new Admin. " + e.getMessage(), e);
@@ -96,7 +98,7 @@ public class AdminDao implements IAdminDao {
    * @throws RuntimeException if something wrong happened while connecting to db
    */
   @Override
-  public boolean addPhoneNumber(Admin admin) {
+  public boolean addPhoneNumber(@NotNull Admin admin) {
     final String sql = "INSERT INTO admin_phones (username, phone_number) VALUES (?, ?)";
     try (PreparedStatement statement = connection.prepareStatement(sql)) {
       statement.setString(1, admin.getUsername());
@@ -109,16 +111,15 @@ public class AdminDao implements IAdminDao {
 
   @Override
   public List<Admin> getAdmins() {
-    final String sql =
-        "SELECT a.username, a.title, a.age, a.hire_date, a.salary, p.phone_number FROM "
-            + "admins a LEFT JOIN admin_phones p ON a.username = p.username";
+    final String sql = "SELECT a.username, a.title, a.age, a.hire_date, a.salary, p.phone_number"
+        + " FROM admins a LEFT JOIN admin_phones p ON a.username = p.username";
     return queryAdmins(sql);
   }
 
   @Override
   public Admin getAdminInfo(String username) {
-    final String sql = "SELECT a.username, a.age, a.hire_date, a.salary, p.phone_number FROM "
-        + "admins a LEFT JOIN admin_phones p ON a.username = p.username WHERE a.username = ?";
+    final String sql = "SELECT a.username, a.age, a.hire_date, a.salary, p.phone_number FROM"
+        + " admins a LEFT JOIN admin_phones p ON a.username = p.username WHERE a.username = ?";
     final List<Admin> admins = queryAdmins(sql, username);
     return admins.isEmpty() ? null : admins.getFirst();
   }
@@ -152,10 +153,10 @@ public class AdminDao implements IAdminDao {
     }
   }
 
-  private Admin makeAdmin(ResultSet rs) {
+  private Admin makeAdmin(@NotNull ResultSet rs) {
     try {
       return new Admin.Builder().username(rs.getString("username")).age(rs.getInt("age"))
-          .hiringDate(rs.getString("hire_date")).salary(rs.getInt("salary"))
+          .hiringDate(rs.getString("hire_date")).salary(rs.getDouble("salary"))
           .phoneNumber(rs.getString("phone_number")).title(Position.valueOf(rs.getString("title")))
           .build();
     } catch (SQLException e) {
@@ -164,7 +165,8 @@ public class AdminDao implements IAdminDao {
   }
 
   // Helper method to execute the query and map results to Admin objects
-  private List<Admin> queryAdmins(String... parameters) {
+  @Contract("null -> fail")
+  private @NotNull List<Admin> queryAdmins(String... parameters) {
     final List<Admin> admins = new ArrayList<>();
     if (parameters == null || parameters.length < 1) {
       throw new RuntimeException("Failed, can not call queryAdmins with no parameters. layer 1");
