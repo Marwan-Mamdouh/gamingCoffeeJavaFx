@@ -9,8 +9,12 @@ import com.gamingCoffee.utiles.AdminUsernameHolder;
 import com.gamingCoffee.utiles.ChangeViewUtil;
 import com.gamingCoffee.utiles.PageDataUtil;
 import com.gamingCoffee.utiles.PopupUtil;
+import java.net.URL;
 import java.sql.SQLException;
+import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
@@ -18,7 +22,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-public class LoginController {
+public class LoginController implements Initializable {
 
   // buttons
   @FXML
@@ -50,7 +54,7 @@ public class LoginController {
   }
 
   @FXML
-  public void setLoginButtonAction() {
+  void setLoginButtonAction(ActionEvent event) {
     cleanLabels();
     String username = userNameFiled.getText();
     String password = PageDataUtil.getPasswordFromFields(showPasswordCheckbox, passwordFiled,
@@ -90,5 +94,18 @@ public class LoginController {
   private void cleanLabels() {
     usernameMassageLabel.setText("");
     passwordMassageLabel.setText("");
+  }
+
+  /**
+   * @param location  The location used to resolve relative paths for the root object, or
+   *                  {@code null} if the location is not known.
+   * @param resources The resources used to localize the root object, or {@code null} if the root
+   *                  object was not localized.
+   */
+  @Override
+  public void initialize(URL location, ResourceBundle resources) {
+    userNameFiled.setOnAction(this::setLoginButtonAction);
+    passwordFiled.setOnAction(this::setLoginButtonAction);
+    showPasswordFiled.setOnAction(this::setLoginButtonAction);
   }
 }
