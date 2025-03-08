@@ -152,8 +152,8 @@ public class Session {
     }
 
     public Builder duration(double duration) {
-      if (duration < 0) {
-        throw new IllegalArgumentException("duration must be positive.");
+      if (duration <= 0) {
+        throw new IllegalArgumentException("Duration must be positive.");
       }
       this.duration = duration;
       return this;
@@ -165,8 +165,8 @@ public class Session {
     }
 
     public Builder sessionPrice(double sessionPrice) {
-      if (sessionPrice < 0) {
-        throw new IllegalArgumentException("Session price must be positive.");
+      if (sessionPrice <= 0) {
+        throw new IllegalArgumentException("Session price cannot be negative.");
       }
       this.sessionPrice = sessionPrice;
       return this;

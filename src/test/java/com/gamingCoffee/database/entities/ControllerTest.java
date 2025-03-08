@@ -1,8 +1,7 @@
 package com.gamingCoffee.database.entities;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import com.gamingCoffee.models.ControllerType;
 import org.junit.jupiter.api.Test;
@@ -10,81 +9,46 @@ import org.junit.jupiter.api.Test;
 class ControllerTest {
 
   @Test
-  void testBuilderWithRequiredFields() {
-    // Create a Controller object with only the required field (controllerType)
-    Controller controller = new Controller.Builder().controllerType(ControllerType.PS5CONTROLLER)
-        .build();
+  void shouldCreateControllerSuccessfully() {
+    Controller controller = new Controller(1, ControllerType.PS4CONTROLLER);
 
-    assertEquals(ControllerType.PS5CONTROLLER, controller.getControllerType());
-    assertEquals(0, controller.getControllerId()); // Default value for optional field
+    assertThat(controller).isNotNull();
+    assertThat(controller.controllerId()).isEqualTo(1);
+    assertThat(controller.controllerType()).isEqualTo(ControllerType.PS4CONTROLLER);
   }
 
   @Test
-  void testBuilderWithAllFields() {
-    // Create a Controller object with all fields
-    Controller controller = new Controller.Builder().controllerType(ControllerType.PS4CONTROLLER)
-        .controllerId(1) // Optional field
-        .build();
+  void shouldThrowExceptionForInvalidControllerId() {
+    assertThatThrownBy(() -> new Controller(0, ControllerType.PS5CONTROLLER)).isInstanceOf(
+        IllegalArgumentException.class).hasMessage("Controller ID Couldn't be less than 0.");
 
-    assertEquals(ControllerType.PS4CONTROLLER, controller.getControllerType());
-    assertEquals(1, controller.getControllerId());
+    assertThatThrownBy(() -> new Controller(-5, ControllerType.PS5CONTROLLER)).isInstanceOf(
+        IllegalArgumentException.class).hasMessage("Controller ID Couldn't be less than 0.");
   }
 
   @Test
-  void testBuilderValidation() {
-    // Test validation for required fields
-//    assertThrows(IllegalArgumentException.class,
-//        () -> new Controller.Builder().build()); // Null controllerType
+  void shouldCreateControllerUsingWithMethod() {
+    Controller controller = Controller.with(2, ControllerType.PS5CONTROLLER);
 
-    // Test validation for optional fields
-    Controller.Builder builder = new Controller.Builder().controllerType(
-        ControllerType.PS5CONTROLLER);
-    assertThrows(IllegalArgumentException.class,
-        () -> builder.controllerId(0)); // Invalid controllerId (0)
-    assertThrows(IllegalArgumentException.class,
-        () -> builder.controllerId(-1)); // Invalid controllerId (negative)
+    assertThat(controller).isNotNull();
+    assertThat(controller.controllerId()).isEqualTo(2);
+    assertThat(controller.controllerType()).isEqualTo(ControllerType.PS5CONTROLLER);
   }
 
   @Test
-  void testEqualsAndHashCode() {
-    // Create two Controller objects with the same values
-    Controller controller1 = new Controller.Builder().controllerType(ControllerType.PS5CONTROLLER)
-        .controllerId(1).build();
+  void shouldCheckEqualityOfControllers() {
+    Controller controller1 = new Controller(3, ControllerType.PS4CONTROLLER);
+    Controller controller2 = new Controller(3, ControllerType.PS4CONTROLLER);
 
-    Controller controller2 = new Controller.Builder().controllerType(ControllerType.PS5CONTROLLER)
-        .controllerId(1).build();
-
-    // Create a Controller object with different values
-    Controller controller3 = new Controller.Builder().controllerType(ControllerType.PS5CONTROLLER)
-        .controllerId(2).build();
-
-    // Test equality
-    assertEquals(controller1, controller2); // Objects with the same values should be equal
-    assertNotEquals(controller1, controller3); // Objects with different values should not be equal
-
-    // Test hash code
-    assertEquals(controller1.hashCode(),
-        controller2.hashCode()); // Hash codes should be equal for equal objects
+    assertThat(controller1).isEqualTo(controller2);
+    assertThat(controller1.hashCode()).isEqualTo(controller2.hashCode());
   }
 
   @Test
-  void testToString() {
-    // Create a Controller object
-    Controller controller = new Controller.Builder().controllerType(ControllerType.PS5CONTROLLER)
-        .controllerId(1).build();
+  void shouldCheckControllersAreNotEqualWhenDifferent() {
+    Controller controller1 = new Controller(4, ControllerType.PS5CONTROLLER);
+    Controller controller2 = new Controller(5, ControllerType.PS4CONTROLLER);
 
-    // Test the toString method
-    String expected = "Controller{controllerId=1, controllerType=PS5CONTROLLER}";
-    assertEquals(expected, controller.toString());
-  }
-
-  @Test
-  void testDefaultControllerId() {
-    // Create a Controller object without setting the optional controllerId
-    Controller controller = new Controller.Builder().controllerType(ControllerType.PS5CONTROLLER)
-        .build();
-
-    // Test that the default controllerId is 0
-    assertEquals(0, controller.getControllerId());
+    assertThat(controller1).isNotEqualTo(controller2);
   }
 }

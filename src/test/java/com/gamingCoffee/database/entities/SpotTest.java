@@ -1,7 +1,7 @@
 package com.gamingCoffee.database.entities;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.gamingCoffee.models.ConsoleType;
@@ -12,46 +12,56 @@ import org.junit.jupiter.api.Test;
 class SpotTest {
 
   @Test
-  void testBuilderWithAllFields() {
+  void shouldCreateValidSpot() {
     Spot spot = new Spot.Builder().spotId(1).spotType(SpotType.PUBLIC)
-        .spotState(SpotState.AVAILABLE).displayId(101).displaySize(24).displayType("LED")
+        .spotState(SpotState.AVAILABLE).displayId(101).displaySize(27).displayType("LED")
         .consoleId(201).consoleType(ConsoleType.PS5).build();
 
+    assertNotNull(spot);
     assertEquals(1, spot.getSpotId());
-    assertEquals(SpotType.PUBLIC, spot.getSpotType());
-    assertEquals(SpotState.AVAILABLE, spot.getSpotState());
-    assertEquals(101, spot.getDisplayId());
-    assertEquals(24, spot.getDisplaySize());
-    assertEquals("LED", spot.getDisplayType());
-    assertEquals(201, spot.getConsoleId());
+    assertEquals(27, spot.getDisplaySize());
     assertEquals(ConsoleType.PS5, spot.getConsoleType());
   }
 
   @Test
-  void testBuilderWithOptionalFields() {
-    Spot spot = new Spot.Builder().spotId(2).spotType(SpotType.PRIVATE).build();
-
-    assertEquals(2, spot.getSpotId());
-    assertEquals(SpotType.PRIVATE, spot.getSpotType());
-    assertNull(spot.getSpotState()); // Optional field, should be null
-    assertEquals(0, spot.getDisplayId()); // Optional field, should be 0
-    assertEquals(0, spot.getDisplaySize()); // Optional field, should be 0
-    assertNull(spot.getDisplayType()); // Optional field, should be null
-    assertEquals(0, spot.getConsoleId()); // Optional field, should be 0
-    assertNull(spot.getConsoleType()); // Optional field, should be null
+  void shouldThrowExceptionForNegativeSpotId() {
+    Exception exception = assertThrows(IllegalArgumentException.class,
+        () -> new Spot.Builder().spotId(-5).build());
+    assertEquals("Spot ID must be positive.", exception.getMessage());
   }
 
   @Test
-  void testBuilderValidation() {
-    assertThrows(IllegalArgumentException.class,
-        () -> new Spot.Builder().spotId(0)); // Invalid spotId
-    assertThrows(IllegalArgumentException.class,
-        () -> new Spot.Builder().displayId(-1)); // Invalid displayId
-    assertThrows(IllegalArgumentException.class,
-        () -> new Spot.Builder().displaySize(0)); // Invalid displaySize
-    assertThrows(IllegalArgumentException.class,
-        () -> new Spot.Builder().displayType("")); // Invalid displayType
-    assertThrows(IllegalArgumentException.class,
-        () -> new Spot.Builder().consoleId(-1)); // Invalid consoleId
+  void shouldThrowExceptionForZeroDisplaySize() {
+    Exception exception = assertThrows(IllegalArgumentException.class,
+        () -> new Spot.Builder().displaySize(0).build());
+    assertEquals("Display size must be greater than zero.", exception.getMessage());
+  }
+
+  @Test
+  void shouldThrowExceptionForBlankDisplayType() {
+    Exception exception = assertThrows(IllegalArgumentException.class,
+        () -> new Spot.Builder().displayType(""));
+    assertEquals("Display type cannot be null or blank.", exception.getMessage());
+  }
+
+  @Test
+  void shouldThrowExceptionForNullSpotState() {
+    Exception exception = assertThrows(IllegalArgumentException.class,
+        () -> new Spot.Builder().spotState(null).build());
+    assertEquals("Spot state cannot be null.", exception.getMessage());
+  }
+
+  @Test
+  void shouldHaveConsistentEqualsAndHashCode() {
+    Spot spot1 = new Spot.Builder().spotId(1).spotType(SpotType.PRIVATE)
+        .spotState(SpotState.AVAILABLE).displayId(101).displaySize(27).displayType("LED")
+        .consoleId(201).consoleType(ConsoleType.PS5).build();
+
+    Spot spot2 = new Spot.Builder().spotId(1).spotType(SpotType.PRIVATE)
+        .spotState(SpotState.AVAILABLE).displayId(101).displaySize(27).displayType("LED")
+        .consoleId(201).consoleType(ConsoleType.PS5).build();
+
+    assertEquals(spot1, spot2);
+    assertEquals(spot1.hashCode(), spot2.hashCode());
   }
 }

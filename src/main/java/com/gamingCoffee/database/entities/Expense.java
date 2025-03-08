@@ -13,7 +13,7 @@ public record Expense(int expenseId, String creator, double expenseAmount, Local
 
   @Contract("_, _, _ -> new")
   public static @NotNull Expense create(String creator, double expenseAmount, String note) {
-    return new Expense(1, creator, expenseAmount, null, note);
+    return new Expense(1, creator, expenseAmount, LocalDate.now(), note);
   }
 
   @Contract("_, _, _, _, _ -> new")

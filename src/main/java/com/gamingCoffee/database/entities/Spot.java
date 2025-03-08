@@ -126,6 +126,9 @@ public class Spot {
     }
 
     public Builder spotState(SpotState spotState) {
+      if (spotState == null) {
+        throw new IllegalArgumentException("Spot state cannot be null.");
+      }
       this.spotState = spotState;
       return this;
     }
@@ -140,7 +143,7 @@ public class Spot {
 
     public Builder displaySize(int displaySize) {
       if (displaySize <= 0) {
-        throw new IllegalArgumentException("Display size must be positive.");
+        throw new IllegalArgumentException("Display size must be greater than zero.");
       }
       this.displaySize = displaySize;
       return this;
