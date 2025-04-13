@@ -22,7 +22,7 @@
         <artifactId>javafx-maven-plugin</artifactId>
         <version>0.0.8</version>
         <configuration>
-          <mainClass>com.gamingCoffee.controllers.Main</mainClass>
+          <mainClass>com.gamingCoffee.Main</mainClass>
         </configuration>
       </plugin>
       <plugin>
@@ -48,7 +48,7 @@
             <configuration>
               <transformers>
                 <transformer>
-                  <mainClass>com.gamingCoffee.controllers.Main</mainClass>
+                  <mainClass>com.gamingCoffee.Main</mainClass>
                 </transformer>
               </transformers>
               <filters>
@@ -118,7 +118,7 @@
     </dependency>
   </dependencies>
   <properties>
-    <main.class>com.gamingCoffee.controllers.Main</main.class>
+    <main.class>com.gamingCoffee.Main</main.class>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
 </project>

@@ -1,6 +1,6 @@
 package com.gamingCoffee.utiles;
 
-import com.gamingCoffee.database.controller.ISessionDao;
+import com.gamingCoffee.session.repository.SessionRepository;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -13,7 +13,7 @@ public class IdsUtil {
    * @return (int)
    * @produce the ID of last created session
    */
-  public static int getLastIdFromDb(ISessionDao sessionDao) throws SQLException {
+  public static int getLastIdFromDb(SessionRepository sessionDao) throws SQLException {
     return sessionDao.getLastSessionId();
   }
 

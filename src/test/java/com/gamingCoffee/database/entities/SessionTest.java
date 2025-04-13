@@ -4,7 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import com.gamingCoffee.models.SessionState;
+import com.gamingCoffee.session.model.SessionState;
+import com.gamingCoffee.session.model.Session;
 import org.junit.jupiter.api.Test;
 
 class SessionTest {

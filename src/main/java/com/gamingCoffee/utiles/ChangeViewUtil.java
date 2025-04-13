@@ -1,8 +1,8 @@
 package com.gamingCoffee.utiles;
 
-import com.gamingCoffee.controllers.HomeController;
-import com.gamingCoffee.controllers.MainController;
-import com.gamingCoffee.models.Position;
+import com.gamingCoffee.admin.model.Position;
+import com.gamingCoffee.uiController.MainController;
+import com.gamingCoffee.uiController.DashboardController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -26,16 +26,18 @@ public class ChangeViewUtil {
   }
 
   public static void startLoginPage(Stage currentStage) {
-    changeView(currentStage, "Gaming Coffee Management App", "/fxml/login.fxml", false);
+    changeView(currentStage, "Gaming Coffee Management App",
+        "/fxml/login.fxml", false);
   }
 
   public static void dashBoardPage(Position title, Stage currentStage) {
     try {
-      FXMLLoader fxmlLoader = new FXMLLoader(MainController.class.getResource("/fxml/dashBoard.fxml"));
+      FXMLLoader fxmlLoader = new FXMLLoader(
+          MainController.class.getResource("/fxml/dashBoard.fxml"));
       Scene homeScene = new Scene(fxmlLoader.load());
 
       if (title == Position.OWNER) {
-        HomeController homeController = fxmlLoader.getController();
+        DashboardController homeController = fxmlLoader.getController();
         homeController.showOwnerButton();
       }
       currentStage.setScene(homeScene);

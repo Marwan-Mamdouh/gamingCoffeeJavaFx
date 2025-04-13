@@ -3,7 +3,8 @@ package com.gamingCoffee.database.entities;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import com.gamingCoffee.models.Position;
+import com.gamingCoffee.admin.model.Admin;
+import com.gamingCoffee.admin.model.Position;
 import org.junit.jupiter.api.Test;
 
 class AdminTest {

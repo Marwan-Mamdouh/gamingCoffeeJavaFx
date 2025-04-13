@@ -3,6 +3,7 @@ package com.gamingCoffee.database.entities;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import com.gamingCoffee.expense.model.Expense;
 import java.time.LocalDate;
 import org.junit.jupiter.api.Test;
 

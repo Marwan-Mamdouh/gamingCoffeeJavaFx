@@ -4,9 +4,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import com.gamingCoffee.models.ConsoleType;
-import com.gamingCoffee.models.SpotState;
-import com.gamingCoffee.models.SpotType;
+import com.gamingCoffee.spot.model.ConsoleType;
+import com.gamingCoffee.spot.model.Spot;
+import com.gamingCoffee.spot.model.SpotState;
+import com.gamingCoffee.spot.model.SpotType;
 import org.junit.jupiter.api.Test;
 
 class SpotTest {

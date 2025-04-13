@@ -3,7 +3,8 @@ package com.gamingCoffee.database.entities;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import com.gamingCoffee.models.ControllerType;
+import com.gamingCoffee.controller.model.Controller;
+import com.gamingCoffee.controller.model.ControllerType;
 import org.junit.jupiter.api.Test;
 
 class ControllerTest {

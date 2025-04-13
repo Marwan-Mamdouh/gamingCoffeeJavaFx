@@ -90,7 +90,7 @@
           <execution>
             <id>default-cli</id>
             <configuration>
-              <mainClass>com.gamingCoffee.controllers.MainController</mainClass>
+              <mainClass>com.gamingCoffee.uiController.MainController</mainClass>
             </configuration>
           </execution>
         </executions>
