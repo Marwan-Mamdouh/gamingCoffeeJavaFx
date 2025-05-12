@@ -3,8 +3,10 @@
 ![Java](https://img.shields.io/badge/Java-17%2B-blue)
 ![JavaFX](https://img.shields.io/badge/JavaFX-19%2B-yellowgreen)
 ![SQLite](https://img.shields.io/badge/SQLite-3.x-lightgrey)
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/Marwan-Mamdouh/gamingCoffeeJavaFx)
 
 A JavaFX-based café management system designed for gaming cafés, featuring order management, gaming session tracking, and user management capabilities.
+You can check in details here: [![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/Marwan-Mamdouh/gamingCoffeeJavaFx)
 
 ## Features
 
