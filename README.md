@@ -1,85 +1,93 @@
-# Gaming Coffee - JavaFX Café Management System
+# ☕ Gaming Coffee - Café Management System
 
-![Java](https://img.shields.io/badge/Java-17%2B-blue)
-![JavaFX](https://img.shields.io/badge/JavaFX-19%2B-yellowgreen)
-![SQLite](https://img.shields.io/badge/SQLite-3.x-lightgrey)
-[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/Marwan-Mamdouh/gamingCoffeeJavaFx)
+![Java](https://img.shields.io/badge/Java-17%2B-orange)
+![JavaFX](https://img.shields.io/badge/JavaFX-19%2B-blue)
+![SQLite](https://img.shields.io/badge/SQLite-Integrated-lightgrey)
+![Build](https://img.shields.io/badge/Build-Maven-C71A36)
 
-A JavaFX-based café management system designed for gaming cafés, featuring order management, gaming session tracking, and user management capabilities.
-You can check in details here: [![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/Marwan-Mamdouh/gamingCoffeeJavaFx)
+A robust, JavaFX-based desktop application designed to streamline operations for gaming cafés. This system seamlessly integrates Point of Sale (POS) features with gaming session management, offering a comprehensive solution for business owners.
 
-## Features
+## 🚀 Key Features
 
-- **User Authentication**
-  - Secure login system with user roles (Admin/Employee)
-  - Session management
-  - Password security
+### 🎮 Gaming Session Management
 
+- **Real-time Tracking**: Monitor active gaming sessions on multiple stations.
+- **Automated Billing**: specific cost calculation based on usage time.
+- **Session Control**: Start, stop, and manage customer sessions effortlessly.
 
-- **Menu Management**
-  - Add/Edit/Delete food & drink items
-  - Categorize menu items
-  - Price management
+### 🍔 Point of Sale (Order Management)
 
+- **Menu System**: Dynamic menu with categorized items (Food, Drinks, etc.).
+- **Order Processing**: sophisticated cart system with tax calculation and total computation.
+- **Receipts**: Generation of detailed transaction receipts.
 
-- **Order Management**
-  - Create new orders
-  - Track order status
-  - Calculate totals and taxes
-  - Print receipts
+### 🛡️ Security & Administration
 
+- **Secure Authentication**: Implementation of **BCrypt** hashing for robust password security.
+- **Role-Based Access**: Distinct interfaces and permissions for Admins and Employees.
+- **Administrative Dashboard**:
+  - **User Management**: CRUD operations for managing staff (Admin/Employee).
+  - **Analytics**: Sales reporting and performance metrics.
+  - **Database**: Direct management of the underlying SQLite database.
 
-- **Gaming Session Management**
-  - Track PC usage time
-  - Calculate session costs
-  - Manage gaming stations
+## 🏗️ Technical Architecture
 
+This project is built with a focus on clean architecture and maintainability:
 
-- **Admin Features**
-  - User management (CRUD operations)
-  - Sales reports and analytics
-  - Database management
-  - System configuration
+- **MVC Pattern**: Strict separation of concerns using Model-View-Controller architecture.
+- **DAO Pattern**: Data Access Object layer for abstracting and encapsulating all access to the data source.
+- **Singleton Pattern**: Utilized for the Database Connection to ensure efficient resource management.
+- **JavaFX Modern UI**: Responsive and intuitive user interface designed with FXML and CSS3.
+- **Embedded Database**: Zero-configuration deployment using SQLite.
 
+## 🛠️ Technology Stack
 
-## Technologies Used
+- **Core Language**: Java 17
+- **UI Framework**: JavaFX (OpenJFX)
+- **Build Tool**: Maven
+- **Database**: SQLite (JDBC)
+- **Security**: BCrypt (Password Hashing)
+- **Libraries**:
+  - `at.favre.lib:bcrypt`: For secure password hashing.
+  - `org.xerial:sqlite-jdbc`: SQLite driver.
+  - `de.jensd:fontawesomefx`: For modern UI icons.
 
-- **Frontend**
-  - JavaFX 19+
-  - CSS3 for styling
+## 📦 Installation & Setup
 
+### Prerequisites
 
-- **Backend**
-  - Java 17+
-  - JDBC for database connectivity
+- Java JDK 17 or higher
+- Maven 3.x
 
+### Steps
 
-- **Database**
-  - SQLite 3.x (Embedded database)
+1. **Clone the Repository**
 
-
-- **Other Tools**
-  - Scene Builder for FXML design
-  - SQLite Browser (for database inspection)
- 
-  - ## Installation
-
-1. **Clone the Repository:**
    ```bash
    git clone https://github.com/Marwan-Mamdouh/gamingCoffeeJavaFx.git
-
-2. **Navigate to the Project Folder:**
-   ```bash
    cd gamingCoffeeJavaFx
+   ```
 
-3. **Run it:**
-   from terminal
-    - 1 - On Linux or macOS:
-      ```bash
-      ./mvnw javafx:run
-   
-    - 2 - On Windows: 
-       ```bash 
-      ./mvnw.cmd javafx:run
-      
-    - or - simply double-click the file of your system.
+2. **Build the Project**
+
+   ```bash
+   ./mvnw clean install
+   ```
+
+3. **Run the Application**
+
+   **Windows:**
+
+   ```powershell
+   ./mvnw.cmd javafx:run
+   ```
+
+   **Linux / macOS:**
+
+   ```bash
+   ./mvnw javafx:run
+   ```
+
+---
+
+_Built as a comprehensive learning project to demonstrate advanced Java application development patterns and practices._
